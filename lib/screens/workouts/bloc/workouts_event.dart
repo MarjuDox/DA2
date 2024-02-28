@@ -1,0 +1,12 @@
+part of 'workouts_bloc.dart';
+
+@immutable
+abstract class WorkoutsEvent {}
+
+class CardTappedEvent extends WorkoutsEvent {
+  final WorkoutModel workout;
+
+  CardTappedEvent({required this.workout});
+}
+
+class WorkoutsInitialEvent extends WorkoutsEvent {}
