@@ -1,13 +1,21 @@
+import 'package:diabetes/core/const/global_constants.dart';
 import 'package:diabetes/core/extentions/exceptions.dart';
+import 'package:diabetes/core/service/user_storage_service.dart';
+import 'package:diabetes/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   static final FirebaseAuth auth = FirebaseAuth.instance;
 
   static Future<User> signUp(String email, String password, String name) async {
-    UserCredential result = await auth.createUserWithEmailAndPassword(email: email.trim(), password: password.trim());
+    UserCredential result = await auth.createUserWithEmailAndPassword(
+        email: email.trim(), password: password.trim());
     final User user = result.user!;
     await user.updateDisplayName(name);
+
+    final userModel = UserModel.fromFirebase(auth.currentUser);
+    await UserStorageService.writeSecureData(email, userModel.toJsonString());
+    GlobalConstants.currentUser = userModel;
 
     return user;
   }
@@ -33,6 +41,14 @@ class AuthService {
 
       if (user == null) {
         throw Exception("User not found");
+      } else {
+        final userFromLocal = await UserStorageService.readSecureData(email);
+        final userModel = UserModel.fromFirebase(auth.currentUser);
+        if (userFromLocal == null) {
+          await UserStorageService.writeSecureData(
+              email, userModel.toJsonString());
+        }
+        GlobalConstants.currentUser = userModel;
       }
 
       return user;

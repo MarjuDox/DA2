@@ -1,4 +1,4 @@
-import 'package:diabetes/screens/home/page/home_page.dart';
+import 'package:diabetes/screens/workout_details/page/workout_details_page.dart';
 import 'package:diabetes/screens/workouts/bloc/workouts_bloc.dart';
 import 'package:diabetes/screens/workouts/widget/workout_content.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class WorkoutsPage extends StatelessWidget {
           if (state is CardTappedState) {
             await Navigator.of(context, rootNavigator: true).push(
               MaterialPageRoute(
-                builder: (_) => HomePage() //WorkoutDetailsPage(workout: state.workout),
+                builder: (_) => WorkoutDetailsPage(workout: state.workout),
               ),
             );
             // ignore: use_build_context_synchronously

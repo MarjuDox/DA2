@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:diabetes/core/const/Global_constants.dart';
+import 'package:diabetes/core/const/global_constants.dart';
 import 'package:diabetes/core/service/user_storage_service.dart';
 import 'package:diabetes/model/workout_model.dart';
 
 class DataService {
   static Future<List<WorkoutModel>> getWorkoutsForUser() async {
-    final currUserEmail = GlobalConstants.currentUser.mail;
+    final currUserEmail = GlobalConstants.currentUser?.mail;
 
     // await UserStorageService.deleteSecureData('${currUserEmail}Workouts');
 
@@ -32,8 +32,8 @@ class DataService {
     }
     GlobalConstants.workouts = allWorkouts;
     final workoutsStr = allWorkouts.map((e) => e.toJsonString()).toList();
-    final encoded = json.encode(workoutsStr);
-    final currUserEmail = GlobalConstants.currentUser.mail;
+    final encoded = json.encode(workoutsStr);    
+    final currUserEmail = GlobalConstants.currentUser?.mail;
     await UserStorageService.writeSecureData(
       '${currUserEmail}Workouts',
       encoded,

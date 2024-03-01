@@ -26,7 +26,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.da2.diabetes.diabetes"
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 34//flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {

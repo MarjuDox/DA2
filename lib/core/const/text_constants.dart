@@ -1,4 +1,8 @@
 class TextConstants {
+  // common text
+  static const String start = "Start";
+  static const String continueT ="Continue";
+
   // Onboarding
   static const String onboarding1Title = "Workout anywhere";
   static const String onboarding2Title = "Learn techniques";
@@ -23,7 +27,7 @@ class TextConstants {
   static const String email = "Email";
   static const String emailPlaceholder = "example@mail.com";
   static const String emailErrorText =
-      'Email is unvalid, please enter email properly';
+      'Email is invalid, please enter email properly';
 
   static const String password = "Password";
   static const String passwordPlaceholder = "Must be at least 6 symbols";

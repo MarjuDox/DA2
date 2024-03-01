@@ -7,20 +7,55 @@ environment:
   sdk: '>=3.2.1 <4.0.0'
 
 dependencies:
-  firebase_core: ^2.24.0
   flutter:
     sdk: flutter
+  
+  #bloc  
   flutter_bloc: ^7.0.1
+  bloc: ^7.0.1
+
+# Firebase
+  firebase_auth: ^4.15.2
+  firebase_core: ^2.24.0
+  firebase_storage: ^11.6.7
+
+  #secure storage
   flutter_secure_storage: ^9.0.0
+  
+  # Slide up Panel
   sliding_up_panel: ^2.0.0+1
+  
+  # Timer
+  custom_timer: ^0.0.6
 
   # Page View dots indicator
   dots_indicator: ^3.0.0
 
   # Percent circle
   percent_indicator: ^4.0.2
-  firebase_auth: ^4.15.2
-  bloc: ^7.0.1
+  
+  # Video player
+  #video_player: ^2.1.12
+  chewie: ^1.7.5
+
+  # Image library
+  image_picker: ^0.8.2
+
+  # Reminder notification
+  flutter_local_notifications: ^13.0.0
+
+  # Native timezone
+  #flutter_native_timezone: ^2.0.0
+  flutter_timezone: ^1.0.8
+
+  # Permission handler
+  permission_handler: ^11.3.0
+
+  # URL launcher
+  url_launcher: ^6.0.9
+
+  # IOS Icons
+  cupertino_icons: ^1.0.2
 
 dev_dependencies:
   flutter_test:
