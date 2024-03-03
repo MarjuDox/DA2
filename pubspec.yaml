@@ -35,7 +35,7 @@ dependencies:
   percent_indicator: ^4.0.2
   
   # Video player
-  #video_player: ^2.1.12
+  video_player: ^2.1.12
   chewie: ^1.7.5
 
   # Image library
@@ -67,14 +67,17 @@ flutter:
   
   # To add assets to your application, add an assets section, like this:
   assets:
+  # Image
     - assets/images/onboarding/
     - assets/images/auth/
     - assets/images/exercises/
     - assets/images/home/
-    
+    # Icon
     - assets/icons/home/
     - assets/icons/social_networks/
     - assets/icons/workouts/
+    # Video
+    - assets/videos/workouts/
 
 fonts:
 - family: NotoSans

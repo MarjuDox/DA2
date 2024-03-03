@@ -195,7 +195,7 @@ class HomeContent extends StatelessWidget {
               const SizedBox(width: 20),
               WorkoutCard(
                 color: ColorConstants.cardioColor,
-                workout: DataConstants.workouts[0],
+                workout: DataConstants.homeWorkouts[0],
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (_) => WorkoutDetailsPage(workout: DataConstants.workouts[0],),
