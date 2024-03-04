@@ -40,6 +40,10 @@ class PathConstants{
   static const String rectangle = 'assets/icons/workouts/rectangle.png';
   static const String timeTracker = 'assets/icons/workouts/time.png';
   static const String exerciseTracker = 'assets/icons/workouts/exercise.png';
-
   static const String recicling = 'assets/images/exercises/recycling.png';
+
+  //social networks
+  static const String facebook = 'assets/icons/social_networks/facebook.png';
+  static const String instagram = 'assets/icons/social_networks/instagram.png';
+  static const String twitter = 'assets/icons/social_networks/twitter.png';
 }
