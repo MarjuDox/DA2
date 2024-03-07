@@ -15,43 +15,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+class SettingsPage extends StatefulWidget {
+  const SettingsPage({Key? key}) : super(key: key);
 
   @override
-  _SettingsScreenState createState() => _SettingsScreenState();
+  _SettingsPageState createState() => _SettingsPageState();
 }
 
-class _SettingsScreenState extends State {
+class _SettingsPageState extends State {
   String? photoUrl;
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: _buildContext(context));
   }
 
-  // BlocProvider _buildContext(BuildContext context) {
-  //   return BlocProvider(
-  //     create: (context) => SettingsBloc(),
-  //     child: BlocConsumer(
-  //       buildWhen: (_, currState) => currState is SettingsInitial,
-  //       builder: (context, state) {
-  //         final bloc = BlocProvider.of(context);
-  //         if (state is SettingsInitial) {
-  //           bloc.add(SettingsReloadDisplayNameEvent());
-  //           bloc.add(SettingsReloadImageEvent());
-  //         }
-  //         return _settingsContent(context);
-  //       },
-  //       listenWhen: (_, currState) => true,
-  //       listener: (context, state) {},
-  //     ),
-  //   );
-  // }
-
-  BlocProvider _buildContext(BuildContext context) {
+  BlocProvider<SettingsBloc> _buildContext(BuildContext context) {
     return BlocProvider<SettingsBloc>(
       create: (context) => SettingsBloc(),
-      child: BlocConsumer<SettingsBloc, SettingsState>(
+      child: BlocConsumer<SettingsBloc,SettingsState>(
         buildWhen: (_, currState) => currState is SettingsInitial,
         builder: (context, state) {
           final bloc = BlocProvider.of<SettingsBloc>(context);
@@ -77,7 +58,7 @@ class _SettingsScreenState extends State {
           padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
           child: Column(children: [
             Stack(alignment: Alignment.topRight, children: [
-              BlocBuilder(
+              BlocBuilder <SettingsBloc, SettingsState>(
                 buildWhen: (_, currState) =>
                     currState is SettingsReloadImageState,
                 builder: (context, state) {
@@ -119,7 +100,7 @@ class _SettingsScreenState extends State {
                   child: Icon(Icons.edit, color: ColorConstants.primaryColor)),
             ]),
             SizedBox(height: 15),
-            BlocBuilder(
+            BlocBuilder<SettingsBloc, SettingsState>(
               buildWhen: (_, currState) =>
                   currState is SettingsReloadDisplayNameState,
               builder: (context, state) {

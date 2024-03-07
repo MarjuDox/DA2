@@ -18,7 +18,7 @@ class WorkoutsPage extends StatelessWidget {
       child: BlocConsumer<WorkoutsBloc, WorkoutsState>(
         buildWhen: (_, currState) => currState is WorkoutsInitial,
         builder: (context, state) {
-          final bloc = BlocProvider.of<WorkoutsBloc>(context);
+          final bloc = BlocProvider.of<WorkoutsBloc>(context,listen: false);
           bloc.add(WorkoutsInitialEvent());
           return WorkoutContent();
         },

@@ -1,6 +1,7 @@
-import 'package:bloc/bloc.dart';
+import 'dart:async';
 // ignore: depend_on_referenced_packages
-import 'package:meta/meta.dart';
+import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -33,29 +34,29 @@ class ReminderBloc extends Bloc<ReminderEvent, ReminderState> {
     }
   
   Future _scheduleAtParticularTimeAndDate(
-    DateTime dateTime, int? dayTime) async {
-  final flutterNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  const androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'your other channel id',
-      'your other channel name',);//'your other channel description');
-  //final iOSPlatformChannelSpecifics = IOSNotificationDetails();
-  NotificationDetails platformChannelSpecifics = NotificationDetails(
-      android: androidPlatformChannelSpecifics);
-      //iOS: iOSPlatformChannelSpecifics);
+      DateTime dateTime, int? dayTime) async {
+    final flutterNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    final androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'your other channel id',
+        'your other channel name',
+        channelDescription: 'your other channel description');
+    // final iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    NotificationDetails platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics);
+        //iOS: iOSPlatformChannelSpecifics);
 
-  List days = _createNotificationDayOfTheWeek(dayTime);
-  await flutterNotificationsPlugin.zonedSchedule(
-    1,
-    "Fitness",
-    "Hey, it's time to start your exercises!",
-    _scheduleWeekly(dateTime, days: days),
-    platformChannelSpecifics,
-    uiLocalNotificationDateInterpretation:
-        UILocalNotificationDateInterpretation.absoluteTime,
-    androidAllowWhileIdle: true,
-    matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
-  );
-}
+    await flutterNotificationsPlugin.zonedSchedule(
+      1,
+      "Diabetes",
+      "Hey, it's time to start your exercises!",
+      _scheduleWeekly(dateTime, days: _createNotificationDayOfTheWeek(dayTime)),
+      platformChannelSpecifics,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      androidAllowWhileIdle: true,
+      matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
+    );
+  }
 
   tz.TZDateTime _scheduleDaily(DateTime dateTime) {
     final now = tz.TZDateTime.now(tz.local);

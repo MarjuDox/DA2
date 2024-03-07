@@ -13,7 +13,7 @@ class WorkoutCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<WorkoutsBloc>(context);
+    final bloc = BlocProvider.of<WorkoutsBloc>(context,listen: false);
     return Container(
       width: double.infinity,
       height: 140,

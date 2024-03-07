@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class OnboardingTitle extends StatelessWidget {
   final title, imagePath, mainText;
 
-  const OnboardingTitle({super.key, this.imagePath, this.mainText, this.title});
+  OnboardingTitle({this.imagePath, this.mainText, this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class OnboardingTitle extends StatelessWidget {
           const SizedBox(height: 65),
           Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 24.0,
             ),
@@ -33,7 +33,7 @@ class OnboardingTitle extends StatelessWidget {
             ),
             child: Text(
               mainText,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16.0,
               ),
               textAlign: TextAlign.center,

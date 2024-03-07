@@ -12,11 +12,10 @@ dependencies:
   
   #bloc  
   flutter_bloc: ^7.0.1
-  bloc: ^7.0.1
 
 # Firebase
   firebase_auth: ^4.15.2
-  firebase_core: ^2.24.0
+  firebase_core: ^2.26.0
   firebase_storage: ^11.6.7
 
   #secure storage
@@ -42,7 +41,7 @@ dependencies:
   image_picker: ^0.8.2
 
   # Reminder notification
-  flutter_local_notifications: ^13.0.0
+  flutter_local_notifications: ^16.3.3
 
   # Native timezone
   #flutter_native_timezone: ^2.0.0

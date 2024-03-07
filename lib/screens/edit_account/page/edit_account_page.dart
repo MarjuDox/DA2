@@ -64,8 +64,8 @@ class _EditAccountScreenState extends State {
     );
   }
 
-  BlocProvider _buildContext(BuildContext context) {
-    return BlocProvider(
+  BlocProvider<EditAccountBloc> _buildContext(BuildContext context) {
+    return BlocProvider<EditAccountBloc>(
       create: (context) => EditAccountBloc(),
       child: BlocConsumer(
         buildWhen: (_, currState) =>
@@ -114,7 +114,7 @@ class _EditAccountScreenState extends State {
   }
 
   Widget _editAccountContent(BuildContext context) {
-    EditAccountBloc _bloc = BlocProvider.of(context);
+    EditAccountBloc bloc = BlocProvider.of<EditAccountBloc>(context,listen: false);
     double height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: SingleChildScrollView(
@@ -130,7 +130,7 @@ class _EditAccountScreenState extends State {
                 Center(
                   child: TextButton(
                     onPressed: () {
-                      _bloc.add(UploadImage());
+                      bloc.add(UploadImage());
                     },
                     child: Text(
                       TextConstants.editPhoto,
@@ -207,7 +207,7 @@ class _EditAccountScreenState extends State {
                     if (!(isNameInvalid || isEmailInvalid)) {
                       if (userName != _nameController.text ||
                           userEmail != _emailController.text) {
-                        _bloc.add(ChangeUserData(
+                        bloc.add(ChangeUserData(
                             displayName: _nameController.text,
                             email: _emailController.text));
                         userName = _nameController.text;

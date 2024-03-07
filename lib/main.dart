@@ -1,7 +1,9 @@
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/global_constants.dart';
 import 'package:diabetes/core/service/notification_service.dart';
+import 'package:diabetes/firebase_options.dart';
 import 'package:diabetes/model/user_model.dart';
+import 'package:flutter/services.dart';
 // ignore: depend_on_referenced_packages
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:diabetes/screens/onboarding/page/onboarding_page.dart';
@@ -9,7 +11,6 @@ import 'package:diabetes/screens/tabbar/page/tab_bar_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 // void main() async{
@@ -44,21 +45,24 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  await Firebase.initializeApp();
-
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
   runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  _MyAppState createState() => new _MyAppState();
+  // ignore: library_private_types_in_public_api
+  _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State {
-  static late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      NotificationService.flutterLocalNotificationsPlugin;
+  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = NotificationService.flutterLocalNotificationsPlugin;
 
   @override
   initState() {
@@ -68,14 +72,25 @@ class _MyAppState extends State {
     // final IOSInitializationSettings initializationSettingsIOS =
     //     IOSInitializationSettings();
     const InitializationSettings initializationSettings =
-        InitializationSettings(
-            android: initializationSettingsAndroid);
-            //iOS: initializationSettingsIOS);
+        InitializationSettings(android: initializationSettingsAndroid);
+    //iOS: initializationSettingsIOS);
 
     tz.initializeTimeZones();
 
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onDidReceiveNotificationResponse: onDidReceiveNotificationResponse);
+        onDidReceiveNotificationResponse:  (NotificationResponse? notificationResponse) {
+      if (notificationResponse != null) {
+        showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              title: const Text("Payload"),
+              content: Text("Payload : ${notificationResponse.payload}"),
+            );
+          },
+        );
+      }
+    });
   }
 
   @override
@@ -98,16 +113,4 @@ class _MyAppState extends State {
       home: isLoggedIn ? TabBarPage() : OnboardingPage(),
     );
   }
-
-  Future onDidReceiveNotificationResponse(NotificationResponse? payload) async {
-  showDialog(
-    context: context,
-    builder: (_) {
-      return new AlertDialog(
-        title: Text("Payload"),
-        content: Text("Payload : $payload"),
-      );
-    },
-  );
-}
 }

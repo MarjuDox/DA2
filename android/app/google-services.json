@@ -12,7 +12,12 @@
           "package_name": "com.da2.diabetes.diabetes"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "482540848886-tnr8qvtafk2971beu6jk6llfqqm9tpa8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyC-KXzjN0Nls0loL2Mpk3Gp4F8mdNTaMhI"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "482540848886-tnr8qvtafk2971beu6jk6llfqqm9tpa8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

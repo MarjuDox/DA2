@@ -1,9 +1,8 @@
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/path_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
-import 'package:diabetes/core/service/auth_service.dart';
 import 'package:diabetes/screens/home/page/home_page.dart';
-import 'package:diabetes/screens/sign_in/page/sign_in_page.dart';
+import 'package:diabetes/screens/setting_page/page/settings_page.dart';
 import 'package:diabetes/screens/tabbar/bloc/tab_bar_bloc.dart';
 import 'package:diabetes/screens/workouts/page/workout_page.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +39,46 @@ class TabBarPage extends StatelessWidget {
       items: [
         BottomNavigationBarItem(
           icon: Image(
+            image: AssetImage(PathConstants.home),
+            color: bloc.currentIndex == 0 ? ColorConstants.primaryColor : null,
+          ),
+          label: TextConstants.homeIcon,
+        ),
+        BottomNavigationBarItem(
+          icon: Image(
+            image: AssetImage(PathConstants.workouts),
+            color: bloc.currentIndex == 1 ? ColorConstants.primaryColor : null,
+          ),
+          label: TextConstants.workoutsIcon,
+        ),
+        BottomNavigationBarItem(
+          icon: Image(
+            image: AssetImage(PathConstants.settings),
+            color: bloc.currentIndex == 2 ? ColorConstants.primaryColor : null,
+          ),
+          label: TextConstants.settingsIcon,
+        ),
+      ],
+      onTap: (index) {
+        bloc.add(TabBarItemTappedEvent(index: index));
+      },
+    );
+  }
+
+  Widget _createBody(BuildContext context, int index) {
+    final children = [HomePage(), WorkoutsPage(), SettingsPage()];
+    return children[index];
+  }
+}
+
+  Widget _createdBottomTabBar(BuildContext context) {
+    final bloc = BlocProvider.of<TabBarBloc>(context, listen: false);
+    return BottomNavigationBar(
+      currentIndex: bloc.currentIndex,
+      fixedColor: ColorConstants.primaryColor,
+      items: [
+        BottomNavigationBarItem(
+          icon: Image(
             image: const AssetImage(PathConstants.home),
             color: bloc.currentIndex == 0 ? ColorConstants.primaryColor : null,
           ),
@@ -65,33 +104,3 @@ class TabBarPage extends StatelessWidget {
       },
     );
   }
-
-  Widget _createBody(BuildContext context, int index) {
-    final children = [
-        HomePage(),
-        WorkoutsPage(),
-      // SettingsScreen()
-      Scaffold(
-        body: Center(
-          child: RawMaterialButton(
-            fillColor: Colors.red,
-            child: const Text(
-              TextConstants.signOut,
-              style: TextStyle(
-                color: ColorConstants.white,
-              ),
-            ),
-            onPressed: () {
-              AuthService.signOut();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (_) => const SignInPage()),
-              );
-            },
-          ),
-        ),
-      ),
-    ];
-    return children[index];
-  }
-}

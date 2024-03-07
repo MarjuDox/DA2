@@ -7,17 +7,17 @@ import 'package:diabetes/screens/onboarding/widget/onboarding_title.dart';
 class DataConstants {
   // Onboarding
   static final onboardingTiles = [
-    const OnboardingTitle(
+    OnboardingTitle(
       title: TextConstants.onboarding1Title,
       mainText: TextConstants.onboarding1Description,
       imagePath: PathConstants.onboarding1,
     ),
-    const OnboardingTitle(
+    OnboardingTitle(
       title: TextConstants.onboarding2Title,
       mainText: TextConstants.onboarding2Description,
       imagePath: PathConstants.onboarding2,
     ),
-    const OnboardingTitle(
+    OnboardingTitle(
       title: TextConstants.onboarding3Title,
       mainText: TextConstants.onboarding3Description,
       imagePath: PathConstants.onboarding3,

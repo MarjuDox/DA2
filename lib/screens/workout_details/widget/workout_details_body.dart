@@ -35,7 +35,7 @@ class WorkoutDetailsBody extends StatelessWidget {
   }
 
   Widget _createBackButton(BuildContext context) {
-    final bloc = BlocProvider.of<WorkoutDetailsBloc>(context);
+    final bloc = BlocProvider.of<WorkoutDetailsBloc>(context,listen: false);
     return Positioned(
       child: SafeArea(
         child: BlocBuilder<WorkoutDetailsBloc, WorkoutDetailsState>(

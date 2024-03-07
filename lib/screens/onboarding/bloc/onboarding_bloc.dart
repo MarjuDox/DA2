@@ -9,6 +9,7 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   int pageIndex = 0;
   final pageController = PageController(initialPage: 0);
 
+  @override
   Stream<OnboardingState> mapEventToState(
     OnboardingEvent event,
   ) async* {

@@ -4,8 +4,8 @@ import 'package:diabetes/core/const/path_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
 import 'package:diabetes/model/workout_model.dart';
 import 'package:diabetes/screens/common_widget/diabetes_button.dart';
+import 'package:diabetes/screens/edit_account/page/edit_account_page.dart';
 import 'package:diabetes/screens/home/bloc/home_bloc.dart';
-import 'package:diabetes/screens/home/page/home_page.dart';
 import 'package:diabetes/screens/home/widget/home_exercises_card.dart';
 import 'package:diabetes/screens/home/widget/home_statistics.dart';
 import 'package:diabetes/screens/tabbar/bloc/tab_bar_bloc.dart';
@@ -99,7 +99,7 @@ class HomeContent extends StatelessWidget {
                         radius: 25),
                 onTap: () async {
                   await Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => HomePage())); //EditAccountScreen()));
+                      builder: (_) => EditAccountScreen()));
                   BlocProvider.of<HomeBloc>(context).add(ReloadImageEvent());
                 },
               );
