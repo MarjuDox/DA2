@@ -48,9 +48,4 @@ class UserModel {
           )
         : null;
   }
-
-  String toJsonString() {
-    final str = json.encode(this.toJson());
-    return str;
-  }
 }
