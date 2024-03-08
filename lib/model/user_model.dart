@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:diabetes/model/workout_model.dart';
 
@@ -46,5 +47,10 @@ class UserModel {
             workouts: [],
           )
         : null;
+  }
+
+  String toJsonString() {
+    final str = json.encode(this.toJson());
+    return str;
   }
 }
