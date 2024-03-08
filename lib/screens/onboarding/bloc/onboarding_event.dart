@@ -9,3 +9,5 @@ class PageSwipedEvent extends OnboardingEvent{
   final int index;
   PageSwipedEvent({required this.index});
 }
+
+class OnboardSkipEvent extends OnboardingEvent{}

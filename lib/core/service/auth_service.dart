@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:diabetes/core/const/global_constants.dart';
 import 'package:diabetes/core/extentions/exceptions.dart';
 import 'package:diabetes/core/service/user_storage_service.dart';
@@ -14,7 +16,7 @@ class AuthService {
     await user.updateDisplayName(name);
 
     final userModel = UserModel.fromFirebase(auth.currentUser);
-    await UserStorageService.writeSecureData(email, userModel.toJsonString());
+    await UserStorageService.writeSecureData(email, jsonEncode(userModel));
     GlobalConstants.currentUser = userModel;
 
     return user;
@@ -46,7 +48,7 @@ class AuthService {
         final userModel = UserModel.fromFirebase(auth.currentUser);
         if (userFromLocal == null) {
           await UserStorageService.writeSecureData(
-              email, userModel.toJsonString());
+              email, jsonEncode(userModel));
         }
         GlobalConstants.currentUser = userModel;
       }

@@ -1,12 +1,16 @@
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:flutter/material.dart';
 
-class DiabetesButton extends StatelessWidget{
+class DiabetesButton extends StatelessWidget {
   final String title;
   final bool isEnabled;
   final Function() onTap;
 
-  const DiabetesButton({super.key, required this.title, this.isEnabled = true, required this.onTap});
+  const DiabetesButton(
+      {super.key,
+      required this.title,
+      this.isEnabled = true,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +18,16 @@ class DiabetesButton extends StatelessWidget{
       width: double.infinity,
       height: 55,
       decoration: BoxDecoration(
-        color: isEnabled ? ColorConstants.primaryColor : ColorConstants.disabledColor,
+        color: isEnabled
+            ? ColorConstants.primaryColor
+            : ColorConstants.disabledColor,
         borderRadius: BorderRadius.circular(100),
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(100),
-          onTap: onTap,
+          onTap: isEnabled ? onTap : null,
           child: Center(
             child: Text(
               title,

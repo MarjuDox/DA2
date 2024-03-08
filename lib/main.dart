@@ -49,8 +49,10 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
-  runApp(MyApp());
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -62,7 +64,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State {
-  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = NotificationService.flutterLocalNotificationsPlugin;
+  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      NotificationService.flutterLocalNotificationsPlugin;
 
   @override
   initState() {
@@ -78,7 +81,8 @@ class _MyAppState extends State {
     tz.initializeTimeZones();
 
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onDidReceiveNotificationResponse:  (NotificationResponse? notificationResponse) {
+        onDidReceiveNotificationResponse:
+            (NotificationResponse? notificationResponse) {
       if (notificationResponse != null) {
         showDialog(
           context: context,
@@ -104,13 +108,13 @@ class _MyAppState extends State {
       debugShowCheckedModeBanner: false,
       title: 'Diabetes',
       theme: ThemeData(
-        textTheme:
-            TextTheme(bodyText1: TextStyle(color: ColorConstants.textColor)),
+        textTheme: const TextTheme(
+            bodyLarge: TextStyle(color: ColorConstants.textColor)),
         fontFamily: 'NotoSansKR',
         scaffoldBackgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: isLoggedIn ? TabBarPage() : OnboardingPage(),
+      home: isLoggedIn ? const TabBarPage() : const OnboardingPage(),
     );
   }
 }
