@@ -19,7 +19,7 @@ class UserService {
       {required String displayName, required String email}) async {
     try {
       await firebase.currentUser?.updateDisplayName(displayName);
-      await firebase.currentUser?.updateEmail(email);
+      await firebase.currentUser?.verifyBeforeUpdateEmail(email);
       return true;
     } catch (e) {
       print(e);

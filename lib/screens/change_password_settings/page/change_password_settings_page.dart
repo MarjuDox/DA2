@@ -50,9 +50,9 @@ class _ChangePasswordSettingsState extends State {
   }
 
   BlocProvider<ChangePasswordSettingsBloc> _buildContext(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<ChangePasswordSettingsBloc>(
       create: (context) => ChangePasswordSettingsBloc(),
-      child: BlocConsumer(
+      child: BlocConsumer<ChangePasswordSettingsBloc,ChangePasswordSettingsState>(
         buildWhen: (_, currState) =>
             currState is ChangePasswordSettingsInitial || currState is ChangePasswordError || currState is ChangePasswordProgress || currState is ChangePasswordSuccess,
         builder: (context, state) {

@@ -70,7 +70,7 @@ class ReminderContent extends StatelessWidget {
 
 Widget _createDayRepeating(BuildContext context) {
     final bloc = BlocProvider.of<ReminderBloc>(context);
-    return BlocBuilder(
+    return BlocBuilder<ReminderBloc, ReminderState>(
       buildWhen: (_, currState) => currState is RepeatDaySelectedState,
       builder: (context, state) {
         return Wrap(

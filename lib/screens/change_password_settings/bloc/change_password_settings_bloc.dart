@@ -21,6 +21,7 @@ class ChangePasswordSettingsBloc extends Bloc<ChangePasswordSettingsEvent,Change
         yield ChangePasswordSuccess(message: TextConstants.passwordUpdated);
         await Future.delayed(const Duration(seconds: 1));
         yield ChangePasswordSettingsInitial();
+        await UserService.signOut();
       } catch (e) {
         yield ChangePasswordError(e.toString());
         await Future.delayed(const Duration(seconds: 1));

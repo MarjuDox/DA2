@@ -11,9 +11,9 @@ class ReminderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<ReminderBloc>(
       create: (context) => ReminderBloc(),
-      child: BlocBuilder(
+      child: BlocBuilder<ReminderBloc, ReminderState>(
         buildWhen: (_, currState) => currState is ReminderInitial,
         builder: (context, state) {
           return Scaffold(
@@ -53,9 +53,8 @@ class ReminderPage extends StatelessWidget {
     );
   }
 
-  BlocConsumer _buildContext(
-      BuildContext context) {
-    return BlocConsumer(
+  BlocConsumer<ReminderBloc, ReminderState> _buildContext(BuildContext context) {
+    return BlocConsumer<ReminderBloc, ReminderState>(
       buildWhen: (_, currState) => currState is ReminderInitial,
       builder: (context, state) {
         if (state is ReminderInitial) {

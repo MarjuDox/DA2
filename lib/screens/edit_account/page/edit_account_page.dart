@@ -67,7 +67,7 @@ class _EditAccountScreenState extends State {
   BlocProvider<EditAccountBloc> _buildContext(BuildContext context) {
     return BlocProvider<EditAccountBloc>(
       create: (context) => EditAccountBloc(),
-      child: BlocConsumer(
+      child: BlocConsumer<EditAccountBloc, EditAccountState>(
         buildWhen: (_, currState) =>
             currState is EditAccountInitial ||
             currState is EditAccountProgress ||
@@ -198,7 +198,7 @@ class _EditAccountScreenState extends State {
                   isEnabled: true,
                   onTap: () {
                     FocusScope.of(context).unfocus();
-                    setState(() async {
+                    setState(() {
                       isNameInvalid = !(_nameController.text.length > 1);
                       isEmailInvalid =
                           !ValidationService.email(_emailController.text);
