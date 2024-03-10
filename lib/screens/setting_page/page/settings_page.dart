@@ -51,7 +51,7 @@ class _SettingsPageState extends State {
   Widget _settingsContent(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
     // final displayName = user?.displayName ?? "No Username";
-    photoUrl = user?.photoURL ?? null;
+    photoUrl = user?.photoURL;
     return SafeArea(
       child: SingleChildScrollView(
         child: Padding(

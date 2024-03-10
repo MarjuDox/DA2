@@ -13,36 +13,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-// void main() async{
-//   WidgetsFlutterBinding.ensureInitialized();
-//   SystemChrome.setPreferredOrientations([
-//     DeviceOrientation.portraitUp,
-//     DeviceOrientation.portraitDown,
-//   ]);
-//   await Firebase.initializeApp();
-//   runApp(MainApp());
-// }
-
-// class MainApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     final isLoggedIn = FirebaseAuth.instance.currentUser != null;
-
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       title: 'Diabetes',
-//       theme: ThemeData(
-//         textTheme:
-//           const TextTheme(bodyText1: TextStyle(color: ColorConstants.textColor)),
-//         fontFamily: 'NotoSansKR',
-//         scaffoldBackgroundColor: Colors.white,
-//         visualDensity: VisualDensity.adaptivePlatformDensity,
-//      ),
-//      home: isLoggedIn ? const TabBarPage() : OnboardingPage(),
-//    );
-//   }
-// }
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
@@ -64,7 +34,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State {
-  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  static late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       NotificationService.flutterLocalNotificationsPlugin;
 
   @override
@@ -74,27 +44,14 @@ class _MyAppState extends State {
         AndroidInitializationSettings('app_icon');
     // final IOSInitializationSettings initializationSettingsIOS =
     //     IOSInitializationSettings();
-    const InitializationSettings initializationSettings =
+    final InitializationSettings initializationSettings =
         InitializationSettings(android: initializationSettingsAndroid);
     //iOS: initializationSettingsIOS);
 
     tz.initializeTimeZones();
 
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onDidReceiveNotificationResponse:
-            (NotificationResponse? notificationResponse) {
-      if (notificationResponse != null) {
-        showDialog(
-          context: context,
-          builder: (_) {
-            return AlertDialog(
-              title: const Text("Payload"),
-              content: Text("Payload : ${notificationResponse.payload}"),
-            );
-          },
-        );
-      }
-    });
+        onDidReceiveNotificationResponse: onDidReceiveNotificationResponse);
   }
 
   @override
@@ -115,6 +72,18 @@ class _MyAppState extends State {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: isLoggedIn ? const TabBarPage() : const OnboardingPage(),
+    );
+  }
+
+  Future onDidReceiveNotificationResponse(NotificationResponse? payload) async {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return new AlertDialog(
+          title: Text("PayLoad"),
+          content: Text("Payload : $payload"),
+        );
+      },
     );
   }
 }

@@ -46,7 +46,7 @@ class ReminderBloc extends Bloc<ReminderEvent, ReminderState> {
         //iOS: iOSPlatformChannelSpecifics);
 
     await flutterNotificationsPlugin.zonedSchedule(
-      1,
+      0,
       "Diabetes",
       "Hey, it's time to start your exercises!",
       _scheduleWeekly(dateTime, days: _createNotificationDayOfTheWeek(dayTime)),
@@ -70,7 +70,7 @@ class ReminderBloc extends Bloc<ReminderEvent, ReminderState> {
         : scheduleDate;
   }
 
-  tz.TZDateTime _scheduleWeekly(DateTime dateTime, {required List? days}) {
+  tz.TZDateTime _scheduleWeekly(DateTime dateTime, {required List<int>? days}) {
     tz.TZDateTime scheduleDate = _scheduleDaily(dateTime);
 
     for (final int day in days ?? []) {
@@ -80,7 +80,7 @@ class ReminderBloc extends Bloc<ReminderEvent, ReminderState> {
     return scheduleDate;
   }
   
-  List _createNotificationDayOfTheWeek(int? dayTime) {
+  List<int> _createNotificationDayOfTheWeek(int? dayTime) {
     switch (dayTime) {
       case 0:
         return [
