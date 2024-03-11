@@ -70,37 +70,3 @@ class TabBarPage extends StatelessWidget {
     return children[index];
   }
 }
-
-  Widget _createdBottomTabBar(BuildContext context) {
-    final bloc = BlocProvider.of<TabBarBloc>(context, listen: false);
-    return BottomNavigationBar(
-      currentIndex: bloc.currentIndex,
-      fixedColor: ColorConstants.primaryColor,
-      items: [
-        BottomNavigationBarItem(
-          icon: Image(
-            image: const AssetImage(PathConstants.home),
-            color: bloc.currentIndex == 0 ? ColorConstants.primaryColor : null,
-          ),
-          label: TextConstants.homeIcon,
-        ),
-        BottomNavigationBarItem(
-          icon: Image(
-            image: const AssetImage(PathConstants.workouts),
-            color: bloc.currentIndex == 1 ? ColorConstants.primaryColor : null,
-          ),
-          label: TextConstants.workoutsIcon,
-        ),
-        BottomNavigationBarItem(
-          icon: Image(
-            image: const AssetImage(PathConstants.settings),
-            color: bloc.currentIndex == 2 ? ColorConstants.primaryColor : null,
-          ),
-          label: TextConstants.settingsIcon,
-        ),
-      ],
-      onTap: (index) {
-        bloc.add(TabBarItemTappedEvent(index: index));
-      },
-    );
-  }

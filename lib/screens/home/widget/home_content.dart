@@ -10,7 +10,6 @@ import 'package:diabetes/screens/home/widget/home_exercises_card.dart';
 import 'package:diabetes/screens/home/widget/home_statistics.dart';
 import 'package:diabetes/screens/tabbar/bloc/tab_bar_bloc.dart';
 import 'package:diabetes/screens/workout_details/page/workout_details_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
