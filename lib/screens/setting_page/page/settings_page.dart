@@ -24,6 +24,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State {
   String? photoUrl;
+  String? displayName;
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: _buildContext(context));
@@ -32,7 +33,7 @@ class _SettingsPageState extends State {
   BlocProvider<SettingsBloc> _buildContext(BuildContext context) {
     return BlocProvider<SettingsBloc>(
       create: (context) => SettingsBloc(),
-      child: BlocConsumer<SettingsBloc,SettingsState>(
+      child: BlocConsumer<SettingsBloc, SettingsState>(
         buildWhen: (_, currState) => currState is SettingsInitial,
         builder: (context, state) {
           final bloc = BlocProvider.of<SettingsBloc>(context);
@@ -50,86 +51,70 @@ class _SettingsPageState extends State {
 
   Widget _settingsContent(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
-    //final displayName = user?.displayName ?? "No Username";
-    photoUrl = user?.photoURL ?? null;
+    displayName = user?.displayName ?? "No Username";
+    photoUrl = user?.photoURL;
     return SafeArea(
       child: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+          padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
           child: Column(children: [
             Stack(alignment: Alignment.topRight, children: [
-              BlocBuilder <SettingsBloc, SettingsState>(
-                buildWhen: (_, currState) =>
-                    currState is SettingsReloadImageState,
-                builder: (context, state) {
-                  final photoURL =
-                      state is SettingsReloadImageState ? state.photoURL : null;
-                  return Center(
-                    child: photoURL == null
-                        ? CircleAvatar(
-                            backgroundImage: AssetImage(PathConstants.profile),
-                            radius: 60)
-                        : CircleAvatar(
-                            child: ClipOval(
-                                child: FadeInImage.assetNetwork(
-                              placeholder: PathConstants.profile,
-                              image: photoURL,
-                              fit: BoxFit.cover,
-                              width: 200,
-                              height: 120,
-                            )),
-                            radius: 60,
-                          ),
-                  );
-                },
+              Center(
+                child: photoUrl?.isEmpty ?? true
+                    ? const CircleAvatar(
+                        backgroundImage: AssetImage(PathConstants.profile),
+                        radius: 60)
+                    : CircleAvatar(
+                        radius: 60,
+                        child: ClipOval(
+                            child: FadeInImage.assetNetwork(
+                          placeholder: PathConstants.profile,
+                          image: photoUrl!,
+                          fit: BoxFit.cover,
+                          width: 200,
+                          height: 120,
+                        )),
+                      ),
               ),
               TextButton(
                   onPressed: () async {
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => EditAccountScreen()));
+                            builder: (context) => const EditAccountScreen()));
                     setState(() {
-                      photoUrl = user?.photoURL ?? null;
+                      photoUrl = user?.photoURL;
+                      displayName = user?.displayName;
                     });
                   },
                   style: TextButton.styleFrom(
-                      shape: CircleBorder(),
+                      shape: const CircleBorder(),
                       backgroundColor:
                           ColorConstants.primaryColor.withOpacity(0.16)),
-                  child: Icon(Icons.edit, color: ColorConstants.primaryColor)),
+                  child: const Icon(Icons.edit,
+                      color: ColorConstants.primaryColor)),
             ]),
-            SizedBox(height: 15),
-            BlocBuilder<SettingsBloc, SettingsState>(
-              buildWhen: (_, currState) =>
-                  currState is SettingsReloadDisplayNameState,
-              builder: (context, state) {
-                final displayName = state is SettingsReloadDisplayNameState
-                    ? state.displayName
-                    : null;
-                return Text(
-                  '$displayName',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                );
-              },
+            const SizedBox(height: 15),
+            Text(
+              displayName ?? 'No Username',
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             SettingsContainer(
-              child: Text(TextConstants.reminder,
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
               withArrow: true,
               onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => ReminderPage()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const ReminderPage()));
               },
+              child: const Text(TextConstants.reminder,
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
             ),
             if (!kIsWeb)
               SettingsContainer(
                 child: Text(
-                    TextConstants.rateUsOn +
-                        '${Platform.isIOS ? 'App store' : 'Play market'}',
-                    style:
-                        TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
+                    '${TextConstants.rateUsOn}${Platform.isIOS ? 'App store' : 'Play market'}',
+                    style: const TextStyle(
+                        fontSize: 17, fontWeight: FontWeight.w500)),
                 onTap: () {
                   return launch(Platform.isIOS
                       ? 'https://www.apple.com/app-store/'
@@ -142,41 +127,39 @@ class _SettingsPageState extends State {
             //         style:
             //             TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
             SettingsContainer(
-                child: Text(TextConstants.signOut,
+                child: const Text(TextConstants.signOut,
                     style:
                         TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
                 onTap: () {
                   AuthService.signOut();
-                  Navigator.pushReplacement(
-                      context, MaterialPageRoute(builder: (_) => SignInPage()));
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (_) => const SignInPage()));
                 }),
-            SizedBox(height: 15),
-            Text(TextConstants.joinUs,
+            const SizedBox(height: 15),
+            const Text(TextConstants.joinUs,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                    onPressed: () =>
-                        launch('https://www.facebook.com/'),
+                    onPressed: () => launch('https://www.facebook.com/'),
                     style: TextButton.styleFrom(
-                        shape: CircleBorder(),
+                        shape: const CircleBorder(),
                         backgroundColor: Colors.white,
                         elevation: 1),
                     child: Image.asset(PathConstants.facebook)),
                 TextButton(
-                    onPressed: () =>
-                        launch('https://www.instagram.com/'),
+                    onPressed: () => launch('https://www.instagram.com/'),
                     style: TextButton.styleFrom(
-                        shape: CircleBorder(),
+                        shape: const CircleBorder(),
                         backgroundColor: Colors.white,
                         elevation: 1),
                     child: Image.asset(PathConstants.instagram)),
                 TextButton(
                     onPressed: () => launch('https://twitter.com'),
                     style: TextButton.styleFrom(
-                        shape: CircleBorder(),
+                        shape: const CircleBorder(),
                         backgroundColor: Colors.white,
                         elevation: 1),
                     child: Image.asset(PathConstants.twitter)),

@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:diabetes/core/service/firebase_storage_service.dart';
 import 'package:diabetes/core/service/user_service.dart';
@@ -23,12 +22,12 @@ class EditAccountBloc extends Bloc<EditAccountEvent, EditAccountState> {
         if (image != null) {
           yield EditAccountProgress();
           await FirebaseStorageService.uploadImage(filePath: image.path);
-          await UserStorageService.writeSecureData('image', image.path);
+          // await UserStorageService.writeSecureData('image', image.path);
           yield EditPhotoSuccess(image);
         }
       } catch (e) {
         yield EditAccountError(e.toString());
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
         yield EditAccountInitial();
       }
     }
@@ -37,12 +36,12 @@ class EditAccountBloc extends Bloc<EditAccountEvent, EditAccountState> {
       try {
         await UserService.changeUserData(
             displayName: event.displayName, email: event.email);
-        await UserStorageService.writeSecureData('name', event.displayName);
-        await UserStorageService.writeSecureData('email', event.email);
+        // await UserStorageService.writeSecureData('name', event.displayName);
+        // await UserStorageService.writeSecureData('email', event.email);
         yield EditAccountInitial();
       } catch (e) {
         yield EditAccountError(e.toString());
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
         yield EditAccountInitial();
       }
     }
