@@ -25,13 +25,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       workouts = await DataService.getWorkoutsForUser();
       yield WorkoutsGotState(workouts: workouts);
     } else if (event is ReloadImageEvent) {
-      String? photoURL = await UserStorageService.readSecureData('image');
-      if (photoURL == null) {
-        photoURL = AuthService.auth.currentUser?.photoURL;
-        photoURL != null
-            ? await UserStorageService.writeSecureData('image', photoURL)
-            : print('no image');
-      }
+      String? photoURL = AuthService.auth.currentUser?.photoURL;
       yield ReloadImageState(photoURL: photoURL);
     } else if (event is ReloadDisplayNameEvent) {
       final displayName = await UserStorageService.readSecureData('name');
@@ -67,9 +61,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       exercises.addAll(workout.exerciseDataList!);
     }
     final exercise = exercises.where((e) => e.progress == 1).toList();
-    exercise.forEach((e) {
+    for (var e in exercise) {
       timeSent += e.minutes!;
-    });
+    }
     return timeSent;
   }
 }

@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:diabetes/core/const/color_constants.dart';
@@ -39,7 +38,7 @@ class _EditAccountScreenState extends State {
   void initState() {
     userName = user?.displayName ?? "No Username";
     userEmail = user?.email ?? 'No email';
-    photoUrl = user?.photoURL ?? null;
+    photoUrl = user?.photoURL;
     _nameController.text = userName;
     _emailController.text = userEmail;
     super.initState();
@@ -76,7 +75,7 @@ class _EditAccountScreenState extends State {
         builder: (context, state) {
           if (state is EditAccountProgress) {
             return Stack(
-              children: [_editAccountContent(context), DiabetesLoading()],
+              children: [_editAccountContent(context), const DiabetesLoading()],
             );
           }
           if (state is EditAccountError) {
@@ -99,20 +98,20 @@ class _EditAccountScreenState extends State {
     return SafeArea(
       child: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+          padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
           child: SizedBox(
             height: height - 140 - MediaQuery.of(context).padding.bottom,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(child: _getImageWidget()),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 Center(
                   child: TextButton(
                     onPressed: () {
                       bloc.add(UploadImage());
                     },
-                    child: Text(
+                    child: const Text(
                       TextConstants.editPhoto,
                       style: TextStyle(
                         fontSize: 18,
@@ -122,8 +121,8 @@ class _EditAccountScreenState extends State {
                     ),
                   ),
                 ),
-                SizedBox(height: 15),
-                Text(
+                const SizedBox(height: 15),
+                const Text(
                   TextConstants.fullName,
                   style: TextStyle(fontWeight: FontWeight.w600),
                 ),
@@ -133,9 +132,9 @@ class _EditAccountScreenState extends State {
                   placeHolder: TextConstants.fullNamePlaceholder,
                 )),
                 if (isNameInvalid)
-                  Text(TextConstants.nameShouldContain2Char,
+                  const Text(TextConstants.nameShouldContain2Char,
                       style: TextStyle(color: ColorConstants.errorColor)),
-                Text(TextConstants.email,
+                const Text(TextConstants.email,
                     style: TextStyle(fontWeight: FontWeight.w600)),
                 SettingsContainer(
                     child: SettingsTextField(
@@ -143,17 +142,18 @@ class _EditAccountScreenState extends State {
                   placeHolder: TextConstants.emailPlaceholder,
                 )),
                 if (isEmailInvalid)
-                  Text(TextConstants.emailErrorText,
+                  const Text(TextConstants.emailErrorText,
                       style: TextStyle(color: ColorConstants.errorColor)),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 InkWell(
                   onTap: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ChangePasswordScreen()));
+                            builder: (context) =>
+                                const ChangePasswordScreen()));
                   },
-                  child: Row(
+                  child: const Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
@@ -172,7 +172,7 @@ class _EditAccountScreenState extends State {
                     ],
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 DiabetesButton(
                   title: TextConstants.save,
                   isEnabled: true,
@@ -234,15 +234,15 @@ class _EditAccountScreenState extends State {
     showDialog(
       context: context,
       builder: (BuildContext context) => CupertinoAlertDialog(
-        title: Text(TextConstants.cameraPermission),
-        content: Text(TextConstants.cameAccess),
+        title: const Text(TextConstants.cameraPermission),
+        content: const Text(TextConstants.cameAccess),
         actions: [
           CupertinoDialogAction(
-            child: Text(TextConstants.deny),
+            child: const Text(TextConstants.deny),
             onPressed: () => Navigator.of(context).pop(),
           ),
           CupertinoDialogAction(
-            child: Text(TextConstants.settings),
+            child: const Text(TextConstants.settings),
             onPressed: () => openAppSettings(),
           ),
         ],
@@ -250,4 +250,3 @@ class _EditAccountScreenState extends State {
     );
   }
 }
-

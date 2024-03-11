@@ -59,12 +59,15 @@ class HomeContent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               BlocBuilder<HomeBloc, HomeState>(
-                buildWhen: (_, currState) => currState is ReloadDisplayNameState,
+                buildWhen: (_, currState) =>
+                    currState is ReloadDisplayNameState,
                 builder: (context, state) {
-                  final displayName = state is ReloadDisplayNameState ? state.displayName: '[name]';
+                  final displayName = state is ReloadDisplayNameState
+                      ? state.displayName
+                      : '[name]';
                   return Text(
                     'Hi, $displayName',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
@@ -72,7 +75,7 @@ class HomeContent extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 2),
-              Text(
+              const Text(
                 TextConstants.checkActivity,
                 style: TextStyle(
                   fontSize: 18,
@@ -84,24 +87,25 @@ class HomeContent extends StatelessWidget {
           BlocBuilder<HomeBloc, HomeState>(
             buildWhen: (_, currState) => currState is ReloadImageState,
             builder: (context, state) {
-              final photoURL = state is ReloadImageState ? state.photoURL : null;
+              final photoURL =
+                  state is ReloadImageState ? state.photoURL : null;
               return GestureDetector(
                 child: photoURL == null
-                    ? CircleAvatar(
+                    ? const CircleAvatar(
                         backgroundImage: AssetImage(PathConstants.profile),
                         radius: 25)
                     : CircleAvatar(
+                        radius: 25,
                         child: ClipOval(
                             child: FadeInImage.assetNetwork(
                                 placeholder: PathConstants.profile,
                                 image: photoURL,
                                 fit: BoxFit.cover,
                                 width: 200,
-                                height: 120)),
-                        radius: 25),
+                                height: 120))),
                 onTap: () async {
-                  await Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => EditAccountScreen()));
+                  await Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => const EditAccountScreen()));
                   BlocProvider.of<HomeBloc>(context).add(ReloadImageEvent());
                 },
               );
@@ -115,7 +119,7 @@ class HomeContent extends StatelessWidget {
   Widget _showStartWorkout(BuildContext context, HomeBloc bloc) {
     return workouts.isEmpty
         ? _createStartWorkout(context, bloc)
-        : HomeStatistics();
+        : const HomeStatistics();
   }
 
   Widget _createStartWorkout(BuildContext context, HomeBloc bloc) {
@@ -137,7 +141,7 @@ class HomeContent extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image(
@@ -145,16 +149,16 @@ class HomeContent extends StatelessWidget {
                 width: 24,
                 height: 24,
               ),
-              const SizedBox(width: 10),
+              SizedBox(width: 10),
               Text(TextConstants.didYouKnow,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))
             ],
           ),
           const SizedBox(height: 16),
-          Text(TextConstants.sportActivity,
+          const Text(TextConstants.sportActivity,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
           const SizedBox(height: 4),
-          Text(TextConstants.signToStart,
+          const Text(TextConstants.signToStart,
               style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -176,8 +180,8 @@ class HomeContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: Text(
             TextConstants.discoverWorkouts,
             style: TextStyle(
@@ -188,7 +192,7 @@ class HomeContent extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 15),
-        Container(
+        SizedBox(
           height: 160,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -199,7 +203,9 @@ class HomeContent extends StatelessWidget {
                 workout: DataConstants.homeWorkouts[0],
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (_) => WorkoutDetailsPage(workout: DataConstants.workouts[0],),
+                    builder: (_) => WorkoutDetailsPage(
+                      workout: DataConstants.workouts[0],
+                    ),
                   ),
                 ),
               ),
@@ -245,19 +251,19 @@ class HomeContent extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Image(image: AssetImage(PathConstants.progress)),
-          SizedBox(width: 20),
+          const Image(image: AssetImage(PathConstants.progress)),
+          const SizedBox(width: 20),
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(TextConstants.keepProgress,
+                const Text(TextConstants.keepProgress,
                     style:
                         TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 3),
                 Text(
                   '${TextConstants.profileSuccessful} ${bloc.getProgressPercentage()}% of workouts.',
-                  style: TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ),

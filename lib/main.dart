@@ -34,7 +34,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State {
-  static late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       NotificationService.flutterLocalNotificationsPlugin;
 
   @override
@@ -44,7 +44,7 @@ class _MyAppState extends State {
         AndroidInitializationSettings('app_icon');
     // final IOSInitializationSettings initializationSettingsIOS =
     //     IOSInitializationSettings();
-    final InitializationSettings initializationSettings =
+    const InitializationSettings initializationSettings =
         InitializationSettings(android: initializationSettingsAndroid);
     //iOS: initializationSettingsIOS);
 
@@ -56,6 +56,13 @@ class _MyAppState extends State {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user == null) {
+        print('User is currently signed out!');
+      } else {
+        print('User is signed in!');
+      }
+    });
     final currUser = FirebaseAuth.instance.currentUser;
     final isLoggedIn = currUser != null;
     if (isLoggedIn) {
@@ -79,8 +86,8 @@ class _MyAppState extends State {
     showDialog(
       context: context,
       builder: (_) {
-        return new AlertDialog(
-          title: Text("PayLoad"),
+        return AlertDialog(
+          title: const Text("PayLoad"),
           content: Text("Payload : $payload"),
         );
       },
