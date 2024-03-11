@@ -37,7 +37,7 @@ class UserModel {
     return data;
   }
 
-  static UserModel? fromFirebase(User? user) {
+  static fromFirebase(User? user) {
     return user != null
         ? UserModel(
             name: user.displayName ?? "",
@@ -45,6 +45,6 @@ class UserModel {
             mail: user.email ?? "",
             workouts: [],
           )
-        : null;
+        : [];
   }
 }

@@ -50,8 +50,8 @@ class _SettingsPageState extends State {
 
   Widget _settingsContent(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
-    // final displayName = user?.displayName ?? "No Username";
-    photoUrl = user?.photoURL;
+    //final displayName = user?.displayName ?? "No Username";
+    photoUrl = user?.photoURL ?? null;
     return SafeArea(
       child: SingleChildScrollView(
         child: Padding(
@@ -88,7 +88,7 @@ class _SettingsPageState extends State {
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const EditAccountScreen()));
+                            builder: (context) => EditAccountScreen()));
                     setState(() {
                       photoUrl = user?.photoURL ?? null;
                     });

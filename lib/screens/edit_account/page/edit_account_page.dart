@@ -93,28 +93,8 @@ class _EditAccountScreenState extends State {
     );
   }
 
-  void _showOpenSettingsPopUp() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) => CupertinoAlertDialog(
-        title: Text(TextConstants.cameraPermission),
-        content: Text(TextConstants.cameAccess),
-        actions: [
-          CupertinoDialogAction(
-            child: Text(TextConstants.deny),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          CupertinoDialogAction(
-            child: Text(TextConstants.settings),
-            onPressed: () => openAppSettings(),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _editAccountContent(BuildContext context) {
-    EditAccountBloc bloc = BlocProvider.of<EditAccountBloc>(context,listen: false);
+    EditAccountBloc bloc = BlocProvider.of<EditAccountBloc>(context);
     double height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: SingleChildScrollView(
@@ -171,7 +151,7 @@ class _EditAccountScreenState extends State {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const ChangePasswordScreen()));
+                            builder: (context) => ChangePasswordScreen()));
                   },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -250,5 +230,24 @@ class _EditAccountScreenState extends State {
     }
   }
 
+  void _showOpenSettingsPopUp() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text(TextConstants.cameraPermission),
+        content: Text(TextConstants.cameAccess),
+        actions: [
+          CupertinoDialogAction(
+            child: Text(TextConstants.deny),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          CupertinoDialogAction(
+            child: Text(TextConstants.settings),
+            onPressed: () => openAppSettings(),
+          ),
+        ],
+      ),
+    );
+  }
 }
 

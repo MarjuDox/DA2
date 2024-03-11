@@ -51,8 +51,6 @@ class HomeContent extends StatelessWidget {
   }
 
   Widget _createProfileData(BuildContext context) {
-    final User? user = FirebaseAuth.instance.currentUser;
-    final displayName = user?.displayName ?? "No Username";
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
@@ -61,12 +59,18 @@ class HomeContent extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Hi, $displayName',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+              BlocBuilder<HomeBloc, HomeState>(
+                buildWhen: (_, currState) => currState is ReloadDisplayNameState,
+                builder: (context, state) {
+                  final displayName = state is ReloadDisplayNameState ? state.displayName: '[name]';
+                  return Text(
+                    'Hi, $displayName',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                },
               ),
               const SizedBox(height: 2),
               Text(
@@ -81,25 +85,24 @@ class HomeContent extends StatelessWidget {
           BlocBuilder<HomeBloc, HomeState>(
             buildWhen: (_, currState) => currState is ReloadImageState,
             builder: (context, state) {
-              final photoUrl =
-                  FirebaseAuth.instance.currentUser?.photoURL ?? null;
+              final photoURL = state is ReloadImageState ? state.photoURL : null;
               return GestureDetector(
-                child: photoUrl == null
+                child: photoURL == null
                     ? CircleAvatar(
                         backgroundImage: AssetImage(PathConstants.profile),
-                        radius: 60)
+                        radius: 25)
                     : CircleAvatar(
                         child: ClipOval(
                             child: FadeInImage.assetNetwork(
                                 placeholder: PathConstants.profile,
-                                image: photoUrl,
+                                image: photoURL,
                                 fit: BoxFit.cover,
                                 width: 200,
                                 height: 120)),
                         radius: 25),
                 onTap: () async {
-                  await Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => EditAccountScreen()));
+                  await Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => EditAccountScreen()));
                   BlocProvider.of<HomeBloc>(context).add(ReloadImageEvent());
                 },
               );
@@ -161,9 +164,8 @@ class HomeContent extends StatelessWidget {
           DiabetesButton(
             title: TextConstants.startWorkout,
             onTap: () {
-              blocTabBar.add(TabBarItemTappedEvent(
-                  index: blocTabBar.currentIndex =
-                      1)); // add the tabbar bloc with index == 1 to show progress
+              blocTabBar.add(
+                  TabBarItemTappedEvent(index: blocTabBar.currentIndex = 1));
             },
           ),
         ],
