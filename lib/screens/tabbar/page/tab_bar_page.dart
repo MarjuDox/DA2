@@ -53,8 +53,15 @@ class TabBarPage extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Image(
-            image: AssetImage(PathConstants.settings),
+            image: AssetImage(PathConstants.search),
             color: bloc.currentIndex == 2 ? ColorConstants.primaryColor : null,
+          ),
+          label: TextConstants.searchIcon,
+        ),
+        BottomNavigationBarItem(
+          icon: Image(
+            image: AssetImage(PathConstants.settings),
+            color: bloc.currentIndex == 3 ? ColorConstants.primaryColor : null,
           ),
           label: TextConstants.settingsIcon,
         ),
@@ -66,7 +73,7 @@ class TabBarPage extends StatelessWidget {
   }
 
   Widget _createBody(BuildContext context, int index) {
-    final children = [HomePage(), WorkoutsPage(), SettingsPage()];
+    final children = [HomePage() , WorkoutsPage() , SettingsPage() , SettingsPage()];
     return children[index];
   }
 }

@@ -49,6 +49,7 @@ class TextConstants {
   // Tab bar
   static const String homeIcon = "Home";
   static const String workoutsIcon = "Workouts";
+  static const String searchIcon = "Search";
   static const String settingsIcon = "Settings";
 
   // Home screen

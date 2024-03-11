@@ -59,7 +59,7 @@ class StartWorkoutContent extends StatelessWidget {
     );
   }
 
-   Widget _createBackButton(BuildContext context) {
+  Widget _createBackButton(BuildContext context) {
     final bloc = BlocProvider.of<StartWorkoutBloc>(context);
     return Padding(
       padding: const EdgeInsets.only(left: 10, top: 8),
@@ -176,7 +176,7 @@ class StartWorkoutContent extends StatelessWidget {
     );
   }
 
-   Widget _createButton(BuildContext context) {
+  Widget _createButton(BuildContext context) {
     final bloc = BlocProvider.of<workout_bloc.WorkoutDetailsBloc>(context);
     return DiabetesButton(
       title: nextExercise != null ? TextConstants.next : TextConstants.finished,
@@ -217,8 +217,8 @@ class Step extends StatelessWidget {
   final String number;
   final String description;
 
-  const Step({super.key, required this.number, required this.description});
-  
+  Step({required this.number, required this.description});
+
   @override
   Widget build(BuildContext context) {
     return Row(
