@@ -168,7 +168,7 @@ class HomeContent extends StatelessWidget {
             title: TextConstants.startWorkout,
             onTap: () {
               blocTabBar.add(
-                  TabBarItemTappedEvent(index: blocTabBar.currentIndex = 1));
+                  TabBarItemTappedEvent(index: blocTabBar.currentIndex = 2));
             },
           ),
         ],
