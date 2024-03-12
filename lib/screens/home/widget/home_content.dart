@@ -2,6 +2,7 @@ import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/data_constants.dart';
 import 'package:diabetes/core/const/path_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/model/workout_model.dart';
 import 'package:diabetes/screens/common_widget/diabetes_button.dart';
 import 'package:diabetes/screens/edit_account/page/edit_account_page.dart';
@@ -133,7 +134,7 @@ class HomeContent extends StatelessWidget {
         color: ColorConstants.white,
         boxShadow: [
           BoxShadow(
-            color: ColorConstants.textBlack.withOpacity(0.12),
+            color: context.colorScheme.shadow.withOpacity(0.12),
             blurRadius: 5.0,
             spreadRadius: 1.1,
           )
@@ -185,7 +186,6 @@ class HomeContent extends StatelessWidget {
           child: Text(
             TextConstants.discoverWorkouts,
             style: TextStyle(
-              color: ColorConstants.textBlack,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
@@ -234,44 +234,48 @@ class HomeContent extends StatelessWidget {
   }
 
   Widget _createProgress(HomeBloc bloc) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: ColorConstants.white,
-        boxShadow: [
-          BoxShadow(
-            color: ColorConstants.textBlack.withOpacity(0.12),
-            blurRadius: 5.0,
-            spreadRadius: 1.1,
+    return Builder(
+      builder: (context) {
+        return Container(
+          width: double.infinity,
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: ColorConstants.white,
+            boxShadow: [
+              BoxShadow(
+                color: context.colorScheme.shadow.withOpacity(0.12),
+                blurRadius: 5.0,
+                spreadRadius: 1.1,
+              ),
+            ],
           ),
-        ],
-      ),
-      child: Row(
-        children: [
-          const Image(image: AssetImage(PathConstants.progress)),
-          const SizedBox(width: 20),
-          Flexible(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(TextConstants.keepProgress,
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 3),
-                Text(
-                  '${TextConstants.profileSuccessful} ${bloc.getProgressPercentage()}% of workouts.',
-                  style: const TextStyle(fontSize: 16),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
+          child: Row(
+            children: [
+              const Image(image: AssetImage(PathConstants.progress)),
+              const SizedBox(width: 20),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(TextConstants.keepProgress,
+                        style:
+                            TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 3),
+                    Text(
+                      '${TextConstants.profileSuccessful} ${bloc.getProgressPercentage()}% of workouts.',
+                      style: const TextStyle(fontSize: 16),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      }
     );
   }
 }

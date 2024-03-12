@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:chewie/chewie.dart';
 import 'package:diabetes/core/const/color_constants.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/model/exercise_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,7 @@ class _StartWorkoutVideoState extends State<StartWorkoutVideo> {
         aspectRatio: 15 / 10,
         placeholder: Center(child: CupertinoActivityIndicator()),
         materialProgressColors:
-            ChewieProgressColors(playedColor: ColorConstants.primaryColor));
+            ChewieProgressColors(playedColor: context.colorScheme.primary));
     super.initState();
   }
 

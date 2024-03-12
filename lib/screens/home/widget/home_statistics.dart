@@ -1,6 +1,7 @@
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/path_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/screens/home/bloc/home_bloc.dart';
 import 'package:diabetes/screens/home/widget/Dataworkouts.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class HomeStatistics extends StatelessWidget {
         color: ColorConstants.white,
         boxShadow: [
           BoxShadow(
-            color: ColorConstants.textBlack.withOpacity(0.12),
+            color: context.colorScheme.shadow.withOpacity(0.12),
             blurRadius: 5.0,
             spreadRadius: 1.1,
           ),
@@ -56,7 +57,6 @@ class HomeStatistics extends StatelessWidget {
                 child: Text(
                   TextConstants.finished,
                   style: TextStyle(
-                    color: ColorConstants.textBlack,
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
                   ),
@@ -71,7 +71,6 @@ class HomeStatistics extends StatelessWidget {
             style: TextStyle(
               fontSize: 48,
               fontWeight: FontWeight.w700,
-              color: ColorConstants.textBlack,
             ),
           ),
           Text(

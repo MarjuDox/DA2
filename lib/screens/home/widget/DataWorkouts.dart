@@ -1,5 +1,6 @@
 
 import 'package:diabetes/core/const/color_constants.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 
 class DataWorkouts extends StatelessWidget {
@@ -27,7 +28,7 @@ class DataWorkouts extends StatelessWidget {
         color: ColorConstants.white,
         boxShadow: [
           BoxShadow(
-            color: ColorConstants.textBlack.withOpacity(0.12),
+            color: context.colorScheme.shadow.withOpacity(0.12),
             blurRadius: 5.0,
             spreadRadius: 1.1,
           ),
@@ -45,7 +46,6 @@ class DataWorkouts extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
-                  color: ColorConstants.textBlack,
                 ),
               ),
             ],
@@ -57,7 +57,6 @@ class DataWorkouts extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w700,
-                  color: ColorConstants.textBlack,
                 ),
               ),
               const SizedBox(width: 10),

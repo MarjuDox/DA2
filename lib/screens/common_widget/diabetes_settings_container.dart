@@ -1,4 +1,3 @@
-import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +22,7 @@ class SettingsContainer extends StatelessWidget {
           color: context.colorScheme.background,
           boxShadow: [
             BoxShadow(
-                color: ColorConstants.textBlack.withOpacity(0.12),
+                color: context.colorScheme.shadow.withOpacity(0.12),
                 blurRadius: 5.0,
                 spreadRadius: 1.1)
           ],

@@ -22,12 +22,12 @@ class DiabetesButton extends StatelessWidget {
         color: isEnabled
             ? context.colorScheme.primary
             : context.colorScheme.surfaceVariant,
-        borderRadius: BorderRadius.circular(100),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(100),
+          borderRadius: BorderRadius.circular(12),
           onTap: isEnabled ? onTap : null,
           child: Center(
             child: Text(
@@ -36,7 +36,7 @@ class DiabetesButton extends StatelessWidget {
                 color: isEnabled
                     ? context.colorScheme.onPrimary
                     : context.colorScheme.onSurfaceVariant,
-                fontSize: 18,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
             ),
