@@ -1,5 +1,6 @@
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/path_constants.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 
 class DiabetesTextField extends StatefulWidget {
@@ -91,15 +92,15 @@ class _DiabetesTextFieldState extends State<DiabetesTextField> {
     );
   }
 
-  Color _getUserNameColor(){
-    if (focusNode.hasFocus){
-      return ColorConstants.primaryColor;
+  Color _getUserNameColor() {
+    if (focusNode.hasFocus) {
+      return context.colorScheme.primary;
     } else if (stateIsError) {
-      return ColorConstants.errorColor;
-    } else if (widget.controller.text.isNotEmpty){
-      return ColorConstants.textBlack;
+      return context.colorScheme.error;
+    } else if (widget.controller.text.isNotEmpty) {
+      return context.colorScheme.onSurface;
     }
-    return ColorConstants.grey;
+    return context.colorScheme.onSurfaceVariant;
   }
 
   Widget _createTextFieldStack() {
@@ -133,22 +134,24 @@ class _DiabetesTextFieldState extends State<DiabetesTextField> {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide(
-            color: stateIsError ? ColorConstants.errorColor : ColorConstants.textFieldBorder.withOpacity(0.4),
+            color: stateIsError
+                ? context.colorScheme.error
+                : context.colorScheme.onSurfaceVariant.withOpacity(0.3),
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-            color: ColorConstants.primaryColor,
+          borderSide: BorderSide(
+            color: context.colorScheme.primary,
           ),
         ),
         hintText: widget.placeholder,
-        hintStyle: const TextStyle(
-          color: ColorConstants.grey,
+        hintStyle: TextStyle(
+          color: context.colorScheme.outlineVariant,
           fontSize: 16,
         ),
         filled: true,
-        fillColor: ColorConstants.textFieldBackground,
+        fillColor: context.colorScheme.background,
       ),
       onChanged: (text) {
         setState(() {});
@@ -157,7 +160,7 @@ class _DiabetesTextFieldState extends State<DiabetesTextField> {
     );
   }
 
-   Widget _createShowEye() {
+  Widget _createShowEye() {
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -168,22 +171,23 @@ class _DiabetesTextFieldState extends State<DiabetesTextField> {
         image: const AssetImage(
           PathConstants.eye,
         ),
-        color: widget.controller.text.isNotEmpty ? ColorConstants.primaryColor : ColorConstants.grey,
+        color: widget.controller.text.isNotEmpty
+            ? context.colorScheme.primary
+            : context.colorScheme.onSurfaceVariant.withOpacity(0.4),
       ),
     );
   }
 
-    Widget _createError() {
+  Widget _createError() {
     return Container(
       padding: const EdgeInsets.only(top: 2),
       child: Text(
         widget.errorText,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 14,
-          color: ColorConstants.errorColor,
+          color: context.colorScheme.error,
         ),
       ),
     );
   }
-
 }

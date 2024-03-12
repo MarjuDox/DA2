@@ -1,6 +1,7 @@
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/data_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/screens/reminder/bloc/reminder_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,9 +40,9 @@ class ReminderContent extends StatelessWidget {
       ),
     );
   }
-  
+
   Widget _createSelectTime() {
-    return Text(
+    return const Text(
       TextConstants.selectTime,
       style: TextStyle(
         fontSize: 18,
@@ -52,7 +53,7 @@ class ReminderContent extends StatelessWidget {
 
   Widget _createTimePicker(BuildContext context) {
     final bloc = BlocProvider.of<ReminderBloc>(context);
-    return Container(
+    return SizedBox(
       height: 250,
       child: CupertinoDatePicker(
         mode: CupertinoDatePickerMode.time,
@@ -64,11 +65,11 @@ class ReminderContent extends StatelessWidget {
   }
 
   Widget _createRepeating() {
-    return Text(TextConstants.repeating,
+    return const Text(TextConstants.repeating,
         style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600));
-}
+  }
 
-Widget _createDayRepeating(BuildContext context) {
+  Widget _createDayRepeating(BuildContext context) {
     final bloc = BlocProvider.of<ReminderBloc>(context);
     return BlocBuilder<ReminderBloc, ReminderState>(
       buildWhen: (_, currState) => currState is RepeatDaySelectedState,
@@ -99,7 +100,8 @@ class RepeatingDay extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
 
-  const RepeatingDay({super.key, 
+  const RepeatingDay({
+    super.key,
     required this.title,
     required this.isSelected,
     required this.onTap,
@@ -115,8 +117,9 @@ class RepeatingDay extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
         decoration: BoxDecoration(
           color: isSelected
-              ? ColorConstants.primaryColor
-              : ColorConstants.grey.withOpacity(0.18),
+              ? context.colorScheme.primary
+              : context.colorScheme.surfaceVariant,
+          // : ColorConstants.grey.withOpacity(0.18),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(
@@ -124,7 +127,9 @@ class RepeatingDay extends StatelessWidget {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            color: isSelected ? ColorConstants.white : ColorConstants.grey,
+            color: isSelected
+                ? context.colorScheme.onPrimary
+                : context.colorScheme.onSurfaceVariant,
           ),
         ),
       ),

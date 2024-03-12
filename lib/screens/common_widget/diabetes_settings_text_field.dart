@@ -1,5 +1,5 @@
-import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/path_constants.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 
 class SettingsTextField extends StatefulWidget {
@@ -38,7 +38,7 @@ class _SettingsTextFieldState extends State<SettingsTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,10 +66,11 @@ class _SettingsTextFieldState extends State<SettingsTextField> {
       focusNode: focusNode,
       controller: widget.controller,
       obscureText: stateObscureText,
-      style: TextStyle(fontWeight: FontWeight.w600),
+      style: const TextStyle(fontWeight: FontWeight.w600),
       decoration: InputDecoration(
         hintText: widget.placeHolder,
-        hintStyle: TextStyle(color: ColorConstants.grey, fontSize: 16),
+        hintStyle:
+            TextStyle(color: context.colorScheme.outlineVariant, fontSize: 16),
         border: InputBorder.none,
         focusedBorder: InputBorder.none,
         enabledBorder: InputBorder.none,
@@ -87,12 +88,12 @@ class _SettingsTextFieldState extends State<SettingsTextField> {
         });
       },
       child: Image(
-        image: AssetImage(
+        image: const AssetImage(
           PathConstants.eye,
         ),
         color: widget.controller.text.isNotEmpty
-            ? ColorConstants.primaryColor
-            : ColorConstants.grey,
+            ? context.colorScheme.primary
+            : context.colorScheme.onSurfaceVariant.withOpacity(0.4),
       ),
     );
   }

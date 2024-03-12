@@ -1,8 +1,10 @@
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/global_constants.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/core/service/notification_service.dart';
 import 'package:diabetes/firebase_options.dart';
 import 'package:diabetes/model/user_model.dart';
+import 'package:diabetes/screens/sign_in/page/sign_in_page.dart';
 import 'package:flutter/services.dart';
 // ignore: depend_on_referenced_packages
 import 'package:timezone/data/latest.dart' as tz;
@@ -56,13 +58,6 @@ class _MyAppState extends State {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user == null) {
-        print('User is currently signed out!');
-      } else {
-        print('User is signed in!');
-      }
-    });
     final currUser = FirebaseAuth.instance.currentUser;
     final isLoggedIn = currUser != null;
     if (isLoggedIn) {
@@ -71,13 +66,8 @@ class _MyAppState extends State {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Diabetes',
-      theme: ThemeData(
-        textTheme: const TextTheme(
-            bodyLarge: TextStyle(color: ColorConstants.textColor)),
-        fontFamily: 'NotoSansKR',
-        scaffoldBackgroundColor: Colors.white,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      darkTheme: getTheme(Brightness.dark),
+      theme: getTheme(Brightness.light),
       home: isLoggedIn ? const TabBarPage() : const OnboardingPage(),
     );
   }
@@ -91,6 +81,23 @@ class _MyAppState extends State {
           content: Text("Payload : $payload"),
         );
       },
+    );
+  }
+
+  ThemeData getTheme(Brightness brightness) {
+    return ThemeData(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: Colors.blue,
+        brightness: brightness,
+      ),
+      textTheme: const TextTheme(
+        titleLarge: TextStyle(
+          fontSize: 18,
+        ),
+      ),
+      appBarTheme: const AppBarTheme(),
+      fontFamily: 'NotoSansKR',
+      visualDensity: VisualDensity.adaptivePlatformDensity,
     );
   }
 }

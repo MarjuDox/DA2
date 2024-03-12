@@ -1,4 +1,3 @@
-import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
 import 'package:diabetes/screens/common_widget/diabetes_button.dart';
 import 'package:diabetes/screens/reminder/bloc/reminder_bloc.dart';
@@ -19,26 +18,13 @@ class ReminderPage extends StatelessWidget {
           return Scaffold(
             body: _buildContext(context),
             appBar: AppBar(
-              centerTitle: false,
               titleSpacing: 0,
-              title: Text(
-                TextConstants.reminder,
-                style: TextStyle(color: Colors.black, fontSize: 18),
-              ),
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios_new,
-                  color: ColorConstants.primaryColor,
-                ),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
+              title: const Text(TextConstants.reminder),
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
             floatingActionButton: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: DiabetesButton(
                 title: TextConstants.save,
                 onTap: () {
@@ -53,7 +39,8 @@ class ReminderPage extends StatelessWidget {
     );
   }
 
-  BlocConsumer<ReminderBloc, ReminderState> _buildContext(BuildContext context) {
+  BlocConsumer<ReminderBloc, ReminderState> _buildContext(
+      BuildContext context) {
     return BlocConsumer<ReminderBloc, ReminderState>(
       buildWhen: (_, currState) => currState is ReminderInitial,
       builder: (context, state) {

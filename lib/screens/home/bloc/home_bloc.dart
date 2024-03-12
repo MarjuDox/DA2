@@ -28,7 +28,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       String? photoURL = AuthService.auth.currentUser?.photoURL;
       yield ReloadImageState(photoURL: photoURL);
     } else if (event is ReloadDisplayNameEvent) {
-      final displayName = await UserStorageService.readSecureData('name');
+      final displayName = AuthService.auth.currentUser?.displayName;
       yield ReloadDisplayNameState(displayName: displayName);
     }
   }

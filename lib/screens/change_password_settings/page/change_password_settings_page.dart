@@ -1,5 +1,6 @@
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/core/service/validation_service.dart';
 import 'package:diabetes/screens/change_password_settings/bloc/change_password_settings_bloc.dart';
 import 'package:diabetes/screens/common_widget/diabetes_button.dart';
@@ -31,40 +32,44 @@ class _ChangePasswordSettingsState extends State {
     userName = user?.displayName ?? "No Username";
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
-        body: _buildContext(context),
-        appBar: AppBar(
-            title: const Text(TextConstants.changePassword, style: TextStyle(color: Colors.black, fontSize: 18)),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            iconTheme: const IconThemeData(
-              color: ColorConstants.primaryColor,
-            )));
+    return Scaffold(
+      body: _buildContext(context),
+      appBar: AppBar(
+        title: const Text(TextConstants.changePassword),
+      ),
+    );
   }
 
   BlocProvider<ChangePasswordSettingsBloc> _buildContext(BuildContext context) {
     return BlocProvider<ChangePasswordSettingsBloc>(
       create: (context) => ChangePasswordSettingsBloc(),
-      child: BlocConsumer<ChangePasswordSettingsBloc,ChangePasswordSettingsState>(
+      child:
+          BlocConsumer<ChangePasswordSettingsBloc, ChangePasswordSettingsState>(
         buildWhen: (_, currState) =>
-            currState is ChangePasswordSettingsInitial || currState is ChangePasswordError || currState is ChangePasswordProgress || currState is ChangePasswordSuccess,
+            currState is ChangePasswordSettingsInitial ||
+            currState is ChangePasswordError ||
+            currState is ChangePasswordProgress ||
+            currState is ChangePasswordSuccess,
         builder: (context, state) {
-          if (state is ChangePasswordProgress) return Stack(children: [_editAccountContent(context), const DiabetesLoading()]);
+          if (state is ChangePasswordProgress) {
+            return Stack(children: [
+              _editAccountContent(context),
+              const DiabetesLoading()
+            ]);
+          }
           if (state is ChangePasswordError) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(state.error)));
             });
           }
           if (state is ChangePasswordSuccess) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(state.message)));
             });
           }
           return _editAccountContent(context);
@@ -85,9 +90,11 @@ class _ChangePasswordSettingsState extends State {
           padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
           child: SizedBox(
             height: height - 140 - MediaQuery.of(context).padding.bottom,
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               const SizedBox(height: 15),
-              const Text(TextConstants.newPassword, style: TextStyle(fontWeight: FontWeight.w600)),
+              const Text(TextConstants.newPassword,
+                  style: TextStyle(fontWeight: FontWeight.w600)),
               SettingsContainer(
                 child: SettingsTextField(
                   controller: _newPassController,
@@ -95,9 +102,12 @@ class _ChangePasswordSettingsState extends State {
                   placeHolder: TextConstants.passwordPlaceholder,
                 ),
               ),
-              if (isNewPassInvalid) const Text(TextConstants.passwordErrorText, style: TextStyle(color: ColorConstants.errorColor)),
+              if (isNewPassInvalid)
+                const Text(TextConstants.passwordErrorText,
+                    style: TextStyle(color: ColorConstants.errorColor)),
               const SizedBox(height: 10),
-              const Text(TextConstants.confirmPassword, style: TextStyle(fontWeight: FontWeight.w600)),
+              const Text(TextConstants.confirmPassword,
+                  style: TextStyle(fontWeight: FontWeight.w600)),
               SettingsContainer(
                 child: SettingsTextField(
                   controller: _confirmPassController,
@@ -105,7 +115,9 @@ class _ChangePasswordSettingsState extends State {
                   placeHolder: TextConstants.confirmPasswordPlaceholder,
                 ),
               ),
-              if (isConfirmPassInvalid) const Text(TextConstants.confirmPasswordErrorText, style: TextStyle(color: ColorConstants.errorColor)),
+              if (isConfirmPassInvalid)
+                const Text(TextConstants.confirmPasswordErrorText,
+                    style: TextStyle(color: ColorConstants.errorColor)),
               const Spacer(),
               DiabetesButton(
                 title: TextConstants.save,
@@ -113,11 +125,14 @@ class _ChangePasswordSettingsState extends State {
                 onTap: () {
                   FocusScope.of(context).unfocus();
                   setState(() {
-                    isNewPassInvalid = !ValidationService.password(_newPassController.text);
-                    isConfirmPassInvalid = _newPassController.text != _confirmPassController.text;
+                    isNewPassInvalid =
+                        !ValidationService.password(_newPassController.text);
+                    isConfirmPassInvalid =
+                        _newPassController.text != _confirmPassController.text;
                   });
                   if (!(isNewPassInvalid || isConfirmPassInvalid)) {
-                    _bloc.add(ChangePasswordSettings(newPass: _newPassController.text));
+                    _bloc.add(ChangePasswordSettings(
+                        newPass: _newPassController.text));
                   }
                 },
               ),
