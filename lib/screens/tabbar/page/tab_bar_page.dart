@@ -10,6 +10,7 @@ import 'package:diabetes/screens/workouts/page/workout_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class TabBarPage extends StatefulWidget {
   const TabBarPage({Key? key}) : super(key: key);
@@ -54,42 +55,25 @@ class _TabBarPageState extends State<TabBarPage> {
 
   Widget _createdBottomTabBar(BuildContext context) {
     final bloc = BlocProvider.of<TabBarBloc>(context);
-    return BottomNavigationBar(
-      currentIndex: bloc.currentIndex,
-      unselectedIconTheme: IconThemeData(color: Colors.grey[400]!),
-      fixedColor: ColorConstants.primaryColor,
-      items: [
-        BottomNavigationBarItem(
-          icon: Image(
-            image: const AssetImage(PathConstants.home),
-            color: bloc.currentIndex == 0 ? ColorConstants.primaryColor : null,
-          ),
-          label: TextConstants.homeIcon,
-        ),
-        const BottomNavigationBarItem(
-          icon: Icon(
-            Icons.medical_services_outlined,
-          ),
-          label: TextConstants.pillIcon,
-        ),
-        BottomNavigationBarItem(
-          icon: Image(
-            image: const AssetImage(PathConstants.workouts),
-            color: bloc.currentIndex == 2 ? ColorConstants.primaryColor : null,
-          ),
-          label: TextConstants.workoutsIcon,
-        ),
-        BottomNavigationBarItem(
-          icon: Image(
-            image: const AssetImage(PathConstants.settings),
-            color: bloc.currentIndex == 3 ? ColorConstants.primaryColor : null,
-          ),
-          label: TextConstants.settingsIcon,
-        ),
-      ],
-      onTap: (index) {
+    return NavigationBar(
+      selectedIndex: bloc.currentIndex,
+      onDestinationSelected: (index) {
         bloc.add(TabBarItemTappedEvent(index: index));
       },
+      labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+      destinations: [
+        NavigationDestination(
+            selectedIcon: Icon(MdiIcons.homeVariant),
+            icon: Icon(MdiIcons.homeVariantOutline),
+            label: 'Home'),
+        NavigationDestination(icon: Icon(MdiIcons.pillMultiple), label: 'Pill'),
+        NavigationDestination(
+            icon: Icon(MdiIcons.weightLifter), label: 'Workout'),
+        NavigationDestination(
+            selectedIcon: Icon(MdiIcons.account),
+            icon: Icon(MdiIcons.accountOutline),
+            label: 'Pill'),
+      ],
     );
   }
 

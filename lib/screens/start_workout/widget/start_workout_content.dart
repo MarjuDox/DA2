@@ -1,13 +1,15 @@
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/path_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/core/service/data_service.dart';
 import 'package:diabetes/model/exercise_model.dart';
 import 'package:diabetes/model/workout_model.dart';
 import 'package:diabetes/screens/common_widget/diabetes_button.dart';
 import 'package:diabetes/screens/start_workout/bloc/start_workout_bloc.dart';
 import 'package:diabetes/screens/start_workout/widget/start_workout_video.dart';
-import 'package:diabetes/screens/workout_details/bloc/workout_details_bloc.dart'  as workout_bloc;
+import 'package:diabetes/screens/workout_details/bloc/workout_details_bloc.dart'
+    as workout_bloc;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,7 +18,8 @@ class StartWorkoutContent extends StatelessWidget {
   final ExerciseModel exercise;
   final ExerciseModel? nextExercise;
 
-  StartWorkoutContent({
+  const StartWorkoutContent({
+    super.key,
     required this.workout,
     required this.exercise,
     required this.nextExercise,
@@ -59,17 +62,17 @@ class StartWorkoutContent extends StatelessWidget {
     );
   }
 
-   Widget _createBackButton(BuildContext context) {
+  Widget _createBackButton(BuildContext context) {
     final bloc = BlocProvider.of<StartWorkoutBloc>(context);
     return Padding(
       padding: const EdgeInsets.only(left: 10, top: 8),
       child: GestureDetector(
         child: BlocBuilder<StartWorkoutBloc, StartWorkoutState>(
           builder: (context, state) {
-            return Row(
+            return const Row(
               children: [
                 Image(image: AssetImage(PathConstants.back)),
-                const SizedBox(width: 17),
+                SizedBox(width: 17),
                 Text(
                   TextConstants.back,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
@@ -106,12 +109,12 @@ class StartWorkoutContent extends StatelessWidget {
 
   Widget _createTitle() {
     return Text(exercise.title ?? "",
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold));
+        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold));
   }
 
   Widget _createDescription() {
     return Text(exercise.description ?? "",
-        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500));
+        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500));
   }
 
   Widget _createSteps() {
@@ -135,7 +138,7 @@ class StartWorkoutContent extends StatelessWidget {
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       TextConstants.nextExercise,
                       style: TextStyle(
                         color: ColorConstants.grey,
@@ -146,14 +149,13 @@ class StartWorkoutContent extends StatelessWidget {
                     const SizedBox(width: 5),
                     Text(
                       nextExercise?.title ?? "",
-                      style: TextStyle(
-                        color: ColorConstants.textBlack,
+                      style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(width: 6.5),
-                    Icon(Icons.access_time, size: 20),
+                    const Icon(Icons.access_time, size: 20),
                     const SizedBox(width: 6.5),
                     Text(
                         '${nextExercise!.minutes! > 10 ? nextExercise!.minutes : '0${nextExercise!.minutes}'}:00')
@@ -168,7 +170,7 @@ class StartWorkoutContent extends StatelessWidget {
                     // ),
                   ],
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
           const SizedBox(height: 18),
           _createButton(context),
         ],
@@ -176,7 +178,7 @@ class StartWorkoutContent extends StatelessWidget {
     );
   }
 
-   Widget _createButton(BuildContext context) {
+  Widget _createButton(BuildContext context) {
     final bloc = BlocProvider.of<workout_bloc.WorkoutDetailsBloc>(context);
     return DiabetesButton(
       title: nextExercise != null ? TextConstants.next : TextConstants.finished,
@@ -218,7 +220,7 @@ class Step extends StatelessWidget {
   final String description;
 
   const Step({super.key, required this.number, required this.description});
-  
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -228,7 +230,7 @@ class Step extends StatelessWidget {
           width: 25,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: ColorConstants.primaryColor.withOpacity(0.12),
+            color: context.colorScheme.primary.withOpacity(0.12),
           ),
           child: Center(
             child: Text(
@@ -236,7 +238,7 @@ class Step extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
-                color: ColorConstants.primaryColor,
+                color: context.colorScheme.primary,
               ),
             ),
           ),

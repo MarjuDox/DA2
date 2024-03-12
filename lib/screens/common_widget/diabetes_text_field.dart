@@ -1,4 +1,4 @@
-import 'package:diabetes/core/const/color_constants.dart';
+
 import 'package:diabetes/core/const/path_constants.dart';
 import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:flutter/material.dart';
@@ -127,7 +127,6 @@ class _DiabetesTextFieldState extends State<DiabetesTextField> {
       textInputAction: widget.textInputAction,
       keyboardType: widget.keyboardType,
       style: const TextStyle(
-        color: ColorConstants.textBlack,
         fontSize: 16,
       ),
       decoration: InputDecoration(

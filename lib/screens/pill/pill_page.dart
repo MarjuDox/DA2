@@ -93,7 +93,7 @@ class AddScheduleSheet extends StatelessWidget {
           const Text(
             "Add Schedule",
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),

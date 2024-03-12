@@ -1,5 +1,6 @@
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/core/service/validation_service.dart';
 import 'package:diabetes/screens/common_widget/diabetes_button.dart';
 import 'package:diabetes/screens/common_widget/diabetes_loading.dart';
@@ -46,7 +47,7 @@ class SignUpContent extends StatelessWidget {
     );
   }
 
-    Widget _createMainData(BuildContext context) {
+  Widget _createMainData(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
@@ -75,7 +76,6 @@ class SignUpContent extends StatelessWidget {
     return const Text(
       TextConstants.signUp,
       style: TextStyle(
-        color: ColorConstants.textBlack,
         fontSize: 24,
         fontWeight: FontWeight.bold,
       ),
@@ -95,7 +95,9 @@ class SignUpContent extends StatelessWidget {
               controller: bloc.userNameController,
               textInputAction: TextInputAction.next,
               errorText: TextConstants.usernameErrorText,
-              isError: state is ShowErrorState ? !ValidationService.username(bloc.userNameController.text) : false,
+              isError: state is ShowErrorState
+                  ? !ValidationService.username(bloc.userNameController.text)
+                  : false,
               onTextChanged: () {
                 bloc.add(OnTextChangedEvent());
               },
@@ -108,7 +110,9 @@ class SignUpContent extends StatelessWidget {
               keyboardType: TextInputType.emailAddress,
               controller: bloc.emailController,
               errorText: TextConstants.emailErrorText,
-              isError: state is ShowErrorState ? !ValidationService.email(bloc.emailController.text) : false,
+              isError: state is ShowErrorState
+                  ? !ValidationService.email(bloc.emailController.text)
+                  : false,
               onTextChanged: () {
                 bloc.add(OnTextChangedEvent());
               },
@@ -118,7 +122,9 @@ class SignUpContent extends StatelessWidget {
               title: TextConstants.password,
               placeholder: TextConstants.passwordPlaceholder,
               obscureText: true,
-              isError: state is ShowErrorState ? !ValidationService.password(bloc.passwordController.text) : false,
+              isError: state is ShowErrorState
+                  ? !ValidationService.password(bloc.passwordController.text)
+                  : false,
               textInputAction: TextInputAction.next,
               controller: bloc.passwordController,
               errorText: TextConstants.passwordErrorText,
@@ -131,7 +137,11 @@ class SignUpContent extends StatelessWidget {
               title: TextConstants.confirmPassword,
               placeholder: TextConstants.confirmPasswordPlaceholder,
               obscureText: true,
-              isError: state is ShowErrorState ? !ValidationService.confirmPassword(bloc.passwordController.text, bloc.confirmPasswordController.text) : false,
+              isError: state is ShowErrorState
+                  ? !ValidationService.confirmPassword(
+                      bloc.passwordController.text,
+                      bloc.confirmPasswordController.text)
+                  : false,
               controller: bloc.confirmPasswordController,
               errorText: TextConstants.confirmPasswordErrorText,
               onTextChanged: () {
@@ -149,11 +159,14 @@ class SignUpContent extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: BlocBuilder<SignUpPageBloc, SignUpPageState>(
-        buildWhen: (_, currState) => currState is SignUpButtonEnableChangedState,
+        buildWhen: (_, currState) =>
+            currState is SignUpButtonEnableChangedState,
         builder: (context, state) {
           return DiabetesButton(
             title: TextConstants.signUp,
-            isEnabled: state is SignUpButtonEnableChangedState ? state.isEnabled : false,
+            isEnabled: state is SignUpButtonEnableChangedState
+                ? state.isEnabled
+                : false,
             onTap: () {
               FocusScope.of(context).unfocus();
               bloc.add(SignUpTappedEvent());
@@ -170,14 +183,13 @@ class SignUpContent extends StatelessWidget {
       text: TextSpan(
         text: TextConstants.alreadyHaveAccount,
         style: const TextStyle(
-          color: ColorConstants.textBlack,
           fontSize: 18,
         ),
         children: [
           TextSpan(
             text: " ${TextConstants.signIn}",
-            style: const TextStyle(
-              color: ColorConstants.primaryColor,
+            style: TextStyle(
+              color: context.colorScheme.primary,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),

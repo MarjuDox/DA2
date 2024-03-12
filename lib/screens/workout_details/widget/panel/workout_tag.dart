@@ -1,4 +1,5 @@
 import 'package:diabetes/core/const/color_constants.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 
 class WorkoutTag extends StatelessWidget {
@@ -13,13 +14,13 @@ class WorkoutTag extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 17, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: ColorConstants.primaryColor.withOpacity(0.12),
+        color: context.colorScheme.primary.withOpacity(0.12),
       ),
       child: Row(
         children: [
           Image.asset(icon, height: 17, width: 17, fit: BoxFit.fill),
           const SizedBox(width: 7),
-          Text(content, style: TextStyle(color: ColorConstants.primaryColor, fontSize: 14, fontWeight: FontWeight.w500)),
+          Text(content, style: TextStyle(color: context.colorScheme.primary, fontSize: 14, fontWeight: FontWeight.w500)),
         ],
       ),
     );
