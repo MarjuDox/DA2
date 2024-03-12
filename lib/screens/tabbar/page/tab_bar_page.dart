@@ -69,10 +69,11 @@ class _TabBarPageState extends State<TabBarPage> {
         NavigationDestination(icon: Icon(MdiIcons.pillMultiple), label: 'Pill'),
         NavigationDestination(
             icon: Icon(MdiIcons.weightLifter), label: 'Workout'),
+        NavigationDestination(icon: Icon(MdiIcons.magnify), label: 'Search'),
         NavigationDestination(
-            selectedIcon: Icon(MdiIcons.account),
-            icon: Icon(MdiIcons.accountOutline),
-            label: 'Pill'),
+            selectedIcon: Icon(MdiIcons.cog),
+            icon: Icon(MdiIcons.cogOutline),
+            label: 'Setting'),
       ],
     );
   }
