@@ -50,6 +50,7 @@ class TextConstants {
   static const String homeIcon = "Home";
   static const String pillIcon = "Pill";
   static const String workoutsIcon = "Workouts";
+  static const String searchIcon = "Search";
   static const String settingsIcon = "Settings";
 
   // Home screen

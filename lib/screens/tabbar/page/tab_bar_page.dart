@@ -82,6 +82,7 @@ class _TabBarPageState extends State<TabBarPage> {
       const HomePage(),
       const PillPage(),
       const WorkoutsPage(),
+      const SettingsPage(),
       const SettingsPage()
     ];
     return children[index];

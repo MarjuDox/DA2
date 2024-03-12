@@ -12,6 +12,7 @@ class PathConstants{
   static const String home = 'assets/icons/home/home_icon.png';
   static const String workouts = 'assets/icons/home/workouts_icon.png';
   static const String settings = 'assets/icons/home/settings_icon.png';
+  static const String search = 'assets/icons/home/search_icon.png';
 
   // Home
   static const String light ='assets/icons/home/light.png';

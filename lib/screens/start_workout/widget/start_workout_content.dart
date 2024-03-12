@@ -219,7 +219,7 @@ class Step extends StatelessWidget {
   final String number;
   final String description;
 
-  const Step({super.key, required this.number, required this.description});
+  Step({required this.number, required this.description});
 
   @override
   Widget build(BuildContext context) {

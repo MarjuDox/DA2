@@ -3,7 +3,7 @@ part of 'start_workout_bloc.dart';
 @immutable
 abstract class StartWorkoutState {}
 
-final class StartWorkoutInitial extends StartWorkoutState {}
+class StartWorkoutInitial extends StartWorkoutState {}
 
 class BackTappedState extends StartWorkoutState {}
 
