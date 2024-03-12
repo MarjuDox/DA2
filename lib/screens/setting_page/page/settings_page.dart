@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/path_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/core/service/auth_service.dart';
 import 'package:diabetes/screens/common_widget/diabetes_settings_container.dart';
 import 'package:diabetes/screens/edit_account/page/edit_account_page.dart';
@@ -77,22 +78,28 @@ class _SettingsPageState extends State {
                       ),
               ),
               TextButton(
-                  onPressed: () async {
-                    await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const EditAccountScreen()));
-                    setState(() {
-                      photoUrl = user?.photoURL;
-                      displayName = user?.displayName;
-                    });
-                  },
-                  style: TextButton.styleFrom(
-                      shape: const CircleBorder(),
-                      backgroundColor:
-                          ColorConstants.primaryColor.withOpacity(0.16)),
-                  child: const Icon(Icons.edit,
-                      color: ColorConstants.primaryColor)),
+                onPressed: () async {
+                  await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const EditAccountScreen()));
+                  setState(() {
+                    photoUrl = user?.photoURL;
+                    displayName = user?.displayName;
+                  });
+                },
+                style: TextButton.styleFrom(
+                  shape: const CircleBorder(),
+                  backgroundColor:
+                      context.colorScheme.secondaryContainer.withOpacity(
+                    0.4,
+                  ),
+                ),
+                child: const Icon(
+                  Icons.edit,
+                  // color: ColorConstants.primaryColor,
+                ),
+              ),
             ]),
             const SizedBox(height: 15),
             Text(

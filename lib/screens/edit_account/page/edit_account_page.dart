@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/path_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/core/service/validation_service.dart';
 import 'package:diabetes/screens/change_password_settings/page/change_password_settings_page.dart';
 import 'package:diabetes/screens/common_widget/diabetes_button.dart';
@@ -49,16 +50,9 @@ class _EditAccountScreenState extends State {
     return Scaffold(
       body: _buildContext(context),
       appBar: AppBar(
-        title: const Text(TextConstants.editAccount,
-            style: TextStyle(color: Colors.black, fontSize: 18)),
-        backgroundColor: Colors.transparent,
+        title: const Text(TextConstants.editAccount),
+        // backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new),
-            onPressed: () => Navigator.of(context).pop()),
-        iconTheme: const IconThemeData(
-          color: ColorConstants.primaryColor,
-        ),
       ),
     );
   }
@@ -105,7 +99,7 @@ class _EditAccountScreenState extends State {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(child: _getImageWidget()),
-                const SizedBox(height: 15),
+                const SizedBox(height: 4),
                 Center(
                   child: TextButton(
                     onPressed: () {
@@ -116,7 +110,6 @@ class _EditAccountScreenState extends State {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: ColorConstants.primaryColor,
                       ),
                     ),
                   ),
@@ -132,8 +125,8 @@ class _EditAccountScreenState extends State {
                   placeHolder: TextConstants.fullNamePlaceholder,
                 )),
                 if (isNameInvalid)
-                  const Text(TextConstants.nameShouldContain2Char,
-                      style: TextStyle(color: ColorConstants.errorColor)),
+                  Text(TextConstants.nameShouldContain2Char,
+                      style: TextStyle(color: context.colorScheme.error)),
                 const Text(TextConstants.email,
                     style: TextStyle(fontWeight: FontWeight.w600)),
                 SettingsContainer(
@@ -142,8 +135,8 @@ class _EditAccountScreenState extends State {
                   placeHolder: TextConstants.emailPlaceholder,
                 )),
                 if (isEmailInvalid)
-                  const Text(TextConstants.emailErrorText,
-                      style: TextStyle(color: ColorConstants.errorColor)),
+                  Text(TextConstants.emailErrorText,
+                      style: TextStyle(color: context.colorScheme.error)),
                 const SizedBox(height: 15),
                 InkWell(
                   onTap: () {
@@ -153,21 +146,21 @@ class _EditAccountScreenState extends State {
                             builder: (context) =>
                                 const ChangePasswordScreen()));
                   },
-                  child: const Row(
+                  child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
                         TextConstants.changePassword,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          color: ColorConstants.primaryColor,
+                          color: context.colorScheme.primary,
                           fontSize: 18,
                         ),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Icon(
-                        Icons.arrow_forward_ios,
-                        color: ColorConstants.primaryColor,
+                        Icons.arrow_forward_ios_rounded,
+                        color: context.colorScheme.primary,
                       )
                     ],
                   ),

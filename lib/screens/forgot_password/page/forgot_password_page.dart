@@ -12,16 +12,8 @@ class ForgotPasswordPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(TextConstants.passwordReset, style: TextStyle(color: Colors.black, fontSize: 18)),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_new),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          iconTheme: IconThemeData(
-            color: ColorConstants.primaryColor,
-          )),
+        title: const Text(TextConstants.passwordReset),
+      ),
       body: _buildContext(context),
     );
   }
@@ -32,9 +24,11 @@ class ForgotPasswordPage extends StatelessWidget {
       child: BlocConsumer<ForgotPasswordBloc, ForgotPasswordState>(
         buildWhen: (_, currState) => currState is ForgotPasswordInitial,
         builder: (context, state) {
-          return ForgotPasswordContent();
+          return const ForgotPasswordContent();
         },
-        listenWhen: (_, currState) => currState is ForgotPasswordError || currState is ForgotPasswordSuccess,
+        listenWhen: (_, currState) =>
+            currState is ForgotPasswordError ||
+            currState is ForgotPasswordSuccess,
         listener: (context, state) {
           if (state is ForgotPasswordSuccess) {
             forgotPasswordSuccessfullySended(context);
@@ -50,8 +44,10 @@ class ForgotPasswordPage extends StatelessWidget {
   }
 
   Future<void> forgotPasswordSuccessfullySended(BuildContext context) async {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(TextConstants.resetPasswordLinkWasSent), duration: Duration(seconds: 2)));
-    await Future.delayed(Duration(seconds: 2));
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(TextConstants.resetPasswordLinkWasSent),
+        duration: Duration(seconds: 2)));
+    await Future.delayed(const Duration(seconds: 2));
     Navigator.pop(context);
   }
 }

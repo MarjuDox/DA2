@@ -1,5 +1,6 @@
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/path_constants.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/model/exercise_model.dart';
 import 'package:diabetes/model/workout_model.dart';
 import 'package:diabetes/screens/workout_details/bloc/workout_details_bloc.dart';
@@ -14,6 +15,7 @@ class ExerciseCell extends StatelessWidget {
   final int index;
 
   const ExerciseCell({
+    super.key,
     required this.currentExercise,
     required this.workout,
     required this.nextExercise,
@@ -89,7 +91,7 @@ class ExerciseCell extends StatelessWidget {
       children: [
         Text(
           currentExercise.title ?? "",
-          style: TextStyle(
+          style: const TextStyle(
             color: ColorConstants.textColor,
             fontSize: 16,
             fontWeight: FontWeight.w700,
@@ -97,29 +99,30 @@ class ExerciseCell extends StatelessWidget {
         ),
         Text(
           minutesStr,
-          style: TextStyle(
-            color: ColorConstants.textBlack,
+          style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w400,
           ),
         ),
         const SizedBox(height: 11),
-        Padding(
-          padding: const EdgeInsets.only(right: 20),
-          child: LinearPercentIndicator(
-            percent: currentExercise.progress ?? 0,
-            progressColor: ColorConstants.primaryColor,
-            backgroundColor: ColorConstants.primaryColor.withOpacity(0.12),
-            lineHeight: 6,
-            padding: EdgeInsets.zero,
-          ),
-        ),
+        Builder(builder: (context) {
+          return Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: LinearPercentIndicator(
+              percent: currentExercise.progress ?? 0,
+              progressColor: context.colorScheme.primary,
+              backgroundColor: context.colorScheme.secondary,
+              lineHeight: 6,
+              padding: EdgeInsets.zero,
+            ),
+          );
+        }),
       ],
     );
   }
 
   Widget _createRightArrow() {
-    return RotatedBox(
+    return const RotatedBox(
       quarterTurns: 2,
       child: Image(
         image: AssetImage(PathConstants.back),

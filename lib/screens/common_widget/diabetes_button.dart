@@ -1,4 +1,5 @@
 import 'package:diabetes/core/const/color_constants.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 
 class DiabetesButton extends StatelessWidget {
@@ -19,8 +20,8 @@ class DiabetesButton extends StatelessWidget {
       height: 55,
       decoration: BoxDecoration(
         color: isEnabled
-            ? ColorConstants.primaryColor
-            : ColorConstants.disabledColor,
+            ? context.colorScheme.primary
+            : context.colorScheme.surfaceVariant,
         borderRadius: BorderRadius.circular(100),
       ),
       child: Material(
@@ -31,8 +32,10 @@ class DiabetesButton extends StatelessWidget {
           child: Center(
             child: Text(
               title,
-              style: const TextStyle(
-                color: ColorConstants.white,
+              style: TextStyle(
+                color: isEnabled
+                    ? context.colorScheme.onPrimary
+                    : context.colorScheme.onSurfaceVariant,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),

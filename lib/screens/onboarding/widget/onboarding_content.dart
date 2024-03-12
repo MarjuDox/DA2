@@ -53,6 +53,7 @@ class OnboardingContent extends StatelessWidget {
                       dotHeight: 6,
                       dotWidth: 6,
                       expansionFactor: 8,
+                      activeDotColor: Theme.of(context).colorScheme.primary,
                       dotColor:
                           Theme.of(context).colorScheme.secondaryContainer,
                     ),
