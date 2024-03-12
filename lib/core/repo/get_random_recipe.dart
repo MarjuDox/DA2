@@ -8,7 +8,7 @@ import 'package:diabetes/model/food/recipe.dart';
 import 'package:diabetes/model/food/similar_list.dart';
 import 'package:dio/dio.dart';
 
-const RANDOM_RACIPE_PATH = '/random?number=1';
+const RANDOM_RECIPE_PATH = '/random?number=1';
 
 class GetRandomRecipe {
   // ignore: non_constant_identifier_names
@@ -17,11 +17,10 @@ class GetRandomRecipe {
   final dio = Dio();
 
   Future<List<dynamic>> getRecipe() async {
-    var infoUrl =
-        BASE_URL + RANDOM_RACIPE_PATH + '&apiKey=' + key;
+    var infoUrl = BASE_URL + RANDOM_RECIPE_PATH + '&apiKey=' + key;
     var id = '';
 
-    Recipe racipeInfo;
+    Recipe recipeInfo;
     SimilarList similarList;
     EquipmentsList equipmentList;
     Nutrient nutrients;
@@ -29,7 +28,7 @@ class GetRandomRecipe {
     final res = await dio.get(infoUrl);
 
     if (res.statusCode == 200) {
-      racipeInfo = Recipe.fromJson(res.data['recipes'][0]);
+      recipeInfo = Recipe.fromJson(res.data['recipes'][0]);
       id = res.data['recipes'][0]['id'].toString();
     } else if (res.statusCode == 401) {
       throw Failure(code: 401, message: res.data['message']);
@@ -37,15 +36,9 @@ class GetRandomRecipe {
       throw Failure(code: res.statusCode!, message: res.statusMessage!);
     }
 
-    var similarUrl =
-        BASE_URL + id + SIMILAR_PATH + '&apiKey=' + key;
-    var equipmentUrl = BASE_URL +
-        id +
-        EQUIPMENTS_PATH +
-        '&apiKey=' +
-        key;
-    var nutritionUrl =
-        BASE_URL + id + NUTRITION_PATH + '&apiKey=' + key;
+    var similarUrl = BASE_URL + id + SIMILAR_PATH + '&apiKey=' + key;
+    var equipmentUrl = BASE_URL + id + EQUIPMENTS_PATH + '&apiKey=' + key;
+    var nutritionUrl = BASE_URL + id + NUTRITION_PATH + '&apiKey=' + key;
 
     final response = await Future.wait([
       dio.get(similarUrl),
@@ -79,7 +72,7 @@ class GetRandomRecipe {
     }
 
     return [
-      racipeInfo,
+      recipeInfo,
       similarList,
       equipmentList,
       nutrients,

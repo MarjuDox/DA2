@@ -1,6 +1,8 @@
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/path_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
+import 'package:diabetes/screens/food/search/cubit/search_page_cubit.dart';
+import 'package:diabetes/screens/food/search/page/search_page.dart';
 import 'package:diabetes/screens/home/page/home_page.dart';
 import 'package:diabetes/screens/pill/pill_page.dart';
 import 'package:diabetes/screens/setting_page/page/settings_page.dart';
@@ -105,7 +107,10 @@ class _TabBarPageState extends State<TabBarPage> {
       const HomePage(),
       const PillPage(),
       const WorkoutsPage(),
-      const SettingsPage(),
+      BlocProvider(
+      create: (context) => SearchPageCubit(),
+      child: const SearchPage(),
+    ), // Search Page
       const SettingsPage()
     ];
     return children[index];

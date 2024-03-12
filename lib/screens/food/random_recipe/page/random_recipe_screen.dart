@@ -1,23 +1,22 @@
 import 'package:diabetes/screens/common_widget/diabetes_loading.dart';
+import 'package:diabetes/screens/food/random_recipe/bloc/random_recipe_bloc.dart';
 import 'package:diabetes/screens/food/random_recipe/widget/recipe_info_success_widget.dart';
-import 'package:diabetes/screens/food/recipe_infor/bloc/recipe_infor_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RecipeInfo extends StatefulWidget {
-  final String id;
-  const RecipeInfo({Key? key, required this.id}) : super(key: key);
+class RandomRecipe extends StatefulWidget {
+  const RandomRecipe({Key? key}) : super(key: key);
 
   @override
-  State<RecipeInfo> createState() => _RecipeInfoState();
+  State<RandomRecipe> createState() => _RandomRecipeState();
 }
 
-class _RecipeInfoState extends State<RecipeInfo> {
-  late final RecipeInfoBloc bloc;
+class _RandomRecipeState extends State<RandomRecipe> {
+  late final RandomRecipeBloc bloc;
   @override
   void initState() {
-    bloc = BlocProvider.of<RecipeInfoBloc>(context);
-    bloc.add(LoadRecipeInfo(widget.id));
+    bloc = BlocProvider.of<RandomRecipeBloc>(context);
+    bloc.add(LoadRandomRecipe());
     super.initState();
   }
 
@@ -27,18 +26,18 @@ class _RecipeInfoState extends State<RecipeInfo> {
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: BlocBuilder<RecipeInfoBloc, RecipeInfoState>(
+        body: BlocBuilder<RandomRecipeBloc, RandomRecipeState>(
           builder: (context, state) {
-            if (state is RecipeInfoLoadState) {
+            if (state is RandomRecipeLoadState) {
               return const Center(child: DiabetesLoading());
-            } else if (state is RecipeInfoSuccesState) {
+            } else if (state is RandomRecipeSuccesState) {
               return RecipeInfoWidget(
                 equipment: state.equipment,
                 info: state.recipe,
                 nutrient: state.nutrient,
                 similarlist: state.similar,
               );
-            } else if (state is RecipeInfoErrorState) {
+            } else if (state is RandomRecipeErrorState) {
               return Center(
                 child: Container(
                   child: Text("Error"),

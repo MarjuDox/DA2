@@ -10,13 +10,15 @@ dependencies:
   flutter:
     sdk: flutter
   #--------------------\
-  cached_network_image: ^3.1.0
-  dio: ^4.0.0
-  dio_log: ^2.0.0
+  cached_network_image: ^3.3.1
+  dio: ^4.0.6
+  dio_log: ^2.0.4
   equatable: ^2.0.3
   firebase_dynamic_links: ^5.4.17
+  flutter_html: 3.0.0-beta.2
   path_provider: ^2.0.5
   share: ^2.0.4
+  hive_flutter: ^1.1.0
   #bloc  
   flutter_bloc: ^7.0.1
 
