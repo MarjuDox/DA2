@@ -46,7 +46,7 @@ class IngredientsWidget extends StatelessWidget {
                               ),
                               child: CachedNetworkImage(
                                 imageUrl:
-                                    "https://spoonacular.com/cdn/ingredients_500x500/${ingredient.image}",
+                                    "http://spoonacular.com/cdn/ingredients_500x500/${ingredient.image}",
                               ),
                             ),
                           ),
@@ -137,7 +137,7 @@ class IngredientsWidget extends StatelessWidget {
                           image: DecorationImage(
                               fit: BoxFit.contain,
                               image: CachedNetworkImageProvider(
-                                  "https://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}")),
+                                  "http://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}")),
                         )),
                     Container(
                       width: 100,

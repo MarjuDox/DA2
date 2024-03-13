@@ -100,7 +100,7 @@ class _SearchResultresulttate extends State<SearchResultItem> {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => BlocProvider(
+            builder: (context) => BlocProvider<RecipeInfoBloc>(
               create: (context) => RecipeInfoBloc(),
               child: RecipeInfo(
                 id: widget.result.id,

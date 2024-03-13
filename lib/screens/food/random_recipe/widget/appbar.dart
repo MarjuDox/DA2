@@ -137,7 +137,7 @@ class AppBarWidget extends StatefulWidget {
 
 class _AppBarWidgetState extends State<AppBarWidget> {
   Future<Uri> data() async {
-    final parameters = DynamicLinkParameters(
+    final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: 'https://newapp2222.page.link/',
       link: Uri.parse(
           'https://ansh-rathod-blog.netlify.app/?id=${widget.info.id}'),

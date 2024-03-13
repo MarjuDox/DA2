@@ -40,7 +40,7 @@ class EquipmentsListView extends StatelessWidget {
                       image: DecorationImage(
                           fit: BoxFit.contain,
                           image: CachedNetworkImageProvider(
-                              "https://spoonacular.com/cdn/equipment_100x100/${equipment.image}")),
+                              "http://spoonacular.com/cdn/equipment_100x100/${equipment.image}")),
                     ),
                   ),
                   Container(

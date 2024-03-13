@@ -6,7 +6,7 @@ import 'package:diabetes/model/food/failure.dart';
 import 'package:diabetes/model/food/nutrients.dart';
 import 'package:diabetes/model/food/recipe.dart';
 import 'package:diabetes/model/food/similar_list.dart';
-import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 part 'recipe_infor_event.dart';
 part 'recipe_infor_state.dart';
