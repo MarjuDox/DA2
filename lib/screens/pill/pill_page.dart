@@ -1,6 +1,7 @@
 import 'package:diabetes/core/common_widget/dropdown_menu_x.dart';
 import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/core/extension/datetime_extension.dart';
+import 'package:diabetes/core/extension/timeofday_extension.dart';
 import 'package:diabetes/model/pill_schedule/pill_schedule_model.dart';
 import 'package:diabetes/screens/common_widget/diabetes_button.dart';
 import 'package:diabetes/screens/pill/pill_viewmodel.dart';
@@ -8,6 +9,7 @@ import 'package:diabetes/screens/pill/widget/pill_schedule_card.dart';
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -62,6 +64,7 @@ class PillScheduleSection extends StatelessWidget {
                 onTap: () {
                   showModalBottomSheet(
                       context: context,
+                      isScrollControlled: true,
                       builder: (context) => const AddScheduleSheet());
                 },
                 child: Container(
@@ -173,6 +176,109 @@ class AddScheduleSheet extends StatelessWidget {
                           ),
                         ),
                       ],
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Text(
+                      'Time:',
+                      style: TextStyle(
+                          fontSize: 12,
+                          color:
+                              context.colorScheme.secondary.withOpacity(0.6)),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    AnimatedSize(
+                      alignment: Alignment.topCenter,
+                      duration: const Duration(milliseconds: 200),
+                      child: Consumer(builder: (context, ref, child) {
+                        var times = ref.watch(timesProvider);
+                        return Wrap(
+                          runSpacing: 10,
+                          spacing: 8,
+                          children: [
+                            ...times.map((time) {
+                              return InkWell(
+                                onTap: () {
+                                  ref
+                                      .read(timesProvider.notifier)
+                                      .removeTime(time);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: context.colorScheme.outlineVariant
+                                        .withOpacity(0.2),
+                                    // color: context.colorScheme.primaryContainer,
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 8),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        time.formattedTime,
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                            color: context.colorScheme
+                                                .onPrimaryContainer),
+                                      ),
+                                      const SizedBox(
+                                        width: 4,
+                                      ),
+                                      Icon(
+                                        Icons.close_rounded,
+                                        size: 16,
+                                        color: context
+                                            .colorScheme.onPrimaryContainer
+                                            .withOpacity(0.3),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }),
+                            Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                customBorder: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                onTap: () async {
+                                  final timeSelected = await showTimePicker(
+                                      context: context,
+                                      initialTime: TimeOfDay.now());
+                                  if (timeSelected != null) {
+                                    ref
+                                        .read(timesProvider.notifier)
+                                        .addTime(timeSelected);
+                                  }
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: context
+                                            .colorScheme.outlineVariant
+                                            .withOpacity(0.6)),
+                                    // color: context.colorScheme.surfaceVariant,
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 8),
+                                  child: Icon(
+                                    Icons.add_rounded,
+                                    size: 23,
+                                    color: context.colorScheme.secondary,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        );
+                      }),
                     ),
                     const SizedBox(
                       height: 22,

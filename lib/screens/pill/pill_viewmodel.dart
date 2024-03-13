@@ -76,3 +76,31 @@ class PillScheduleNotifier extends AutoDisposeAsyncNotifier<List<PillModel>> {
     ];
   }
 }
+
+final timesProvider =
+    AutoDisposeNotifierProvider<TimeListNotifier, List<TimeOfDay>>(
+        TimeListNotifier.new);
+
+class TimeListNotifier extends AutoDisposeNotifier<List<TimeOfDay>> {
+  @override
+  List<TimeOfDay> build() {
+    return [];
+  }
+
+  void removeTime(TimeOfDay time) {
+    if (state.contains(time) == false) {
+      return;
+    }
+    var newState = state.where((element) => element != time).toList();
+    state = newState;
+  }
+
+  void addTime(TimeOfDay time) {
+    if (state.contains(time)) {
+      return;
+    }
+    var newState = [...state, time];
+    newState.sort((a, b) => a.hour * 60 + a.minute - b.hour * 60 - b.minute);
+    state = newState;
+  }
+}
