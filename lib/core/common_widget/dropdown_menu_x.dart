@@ -1,4 +1,5 @@
 import 'package:diabetes/core/extension/context_extension.dart';
+import 'package:figma_squircle/figma_squircle.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 
@@ -68,8 +69,19 @@ class _DropDownMenuXState<T> extends State<DropDownMenuX<T>> {
         textStyle: TextStyle(
           color: context.colorScheme.onSecondaryContainer,
         ),
-        menuStyle: const MenuStyle(
+        menuStyle: MenuStyle(
+          surfaceTintColor:
+              MaterialStatePropertyAll(context.colorScheme.surface),
+          // backgroundColor:
+          //     MaterialStatePropertyAll(context.colorScheme.surface),
           alignment: Alignment.centerLeft,
+          shape: const MaterialStatePropertyAll(
+            SmoothRectangleBorder(
+              borderRadius: SmoothBorderRadius.all(
+                SmoothRadius(cornerRadius: 18, cornerSmoothing: 1),
+              ),
+            ),
+          ),
         ),
         inputDecorationTheme: InputDecorationTheme(
           labelStyle:
