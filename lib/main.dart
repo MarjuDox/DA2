@@ -8,6 +8,8 @@ import 'package:diabetes/screens/sign_in/page/sign_in_page.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // ignore: depend_on_referenced_packages
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:diabetes/screens/onboarding/page/onboarding_page.dart';
@@ -26,7 +28,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -89,14 +91,30 @@ class _MyAppState extends State {
   ThemeData getTheme(Brightness brightness) {
     return ThemeData(
       colorScheme: ColorScheme.fromSeed(
-        seedColor: Colors.blue,
-        brightness: brightness,
-      ),
+          seedColor: Colors.blue,
+          brightness: brightness,
+          tertiary: const Color(0xff7AC9CD),
+          primary: const Color.fromARGB(255, 76, 144, 222)),
       textTheme: const TextTheme(
         titleLarge: TextStyle(
           fontSize: 18,
         ),
       ),
+      filledButtonTheme: const FilledButtonThemeData(
+          style: ButtonStyle(
+        padding: MaterialStatePropertyAll(
+          EdgeInsets.all(18),
+        ),
+        shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+        )),
+        textStyle: MaterialStatePropertyAll(
+          TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      )),
       appBarTheme: const AppBarTheme(),
       fontFamily: 'NotoSansKR',
       visualDensity: VisualDensity.adaptivePlatformDensity,

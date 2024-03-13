@@ -65,7 +65,11 @@ dependencies:
   # IOS Icons
   cupertino_icons: ^1.0.2
   flutter_riverpod: ^2.5.1
-  material_design_icons_flutter: ^7.0.7296
+  fluentui_system_icons: ^1.1.231
+  figma_squircle: ^0.5.3
+  intl: ^0.19.0
+  flutter_fadein: ^2.0.0
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:
