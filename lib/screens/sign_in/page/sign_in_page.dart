@@ -11,9 +11,7 @@ class SignInPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _buildContext(context),
-    );
+    return _buildContext(context);
   }
 
   BlocProvider<SignInPageBloc> _buildContext(BuildContext context) {

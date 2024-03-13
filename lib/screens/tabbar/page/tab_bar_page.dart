@@ -1,6 +1,3 @@
-import 'package:diabetes/core/const/color_constants.dart';
-import 'package:diabetes/core/const/path_constants.dart';
-import 'package:diabetes/core/const/text_constants.dart';
 import 'package:diabetes/screens/food/search/cubit/search_page_cubit.dart';
 import 'package:diabetes/screens/food/search/page/search_page.dart';
 import 'package:diabetes/screens/home/page/home_page.dart';
@@ -10,9 +7,9 @@ import 'package:diabetes/screens/sign_in/page/sign_in_page.dart';
 import 'package:diabetes/screens/tabbar/bloc/tab_bar_bloc.dart';
 import 'package:diabetes/screens/workouts/page/workout_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class TabBarPage extends StatefulWidget {
   const TabBarPage({Key? key}) : super(key: key);
@@ -63,18 +60,26 @@ class _TabBarPageState extends State<TabBarPage> {
         bloc.add(TabBarItemTappedEvent(index: index));
       },
       labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-      destinations: [
+      destinations: const [
         NavigationDestination(
-            selectedIcon: Icon(MdiIcons.homeVariant),
-            icon: Icon(MdiIcons.homeVariantOutline),
+            selectedIcon: Icon(FluentIcons.home_24_filled),
+            icon: Icon(FluentIcons.home_24_regular),
             label: 'Home'),
-        NavigationDestination(icon: Icon(MdiIcons.pillMultiple), label: 'Pill'),
         NavigationDestination(
-            icon: Icon(MdiIcons.weightLifter), label: 'Workout'),
-        NavigationDestination(icon: Icon(MdiIcons.magnify), label: 'Search'),
+            selectedIcon: Icon(FluentIcons.pill_24_filled),
+            icon: Icon(FluentIcons.pill_24_regular),
+            label: 'Pill'),
         NavigationDestination(
-            selectedIcon: Icon(MdiIcons.cog),
-            icon: Icon(MdiIcons.cogOutline),
+            selectedIcon: Icon(FluentIcons.accessibility_20_filled),
+            icon: Icon(FluentIcons.accessibility_24_regular),
+            label: 'Workout'),
+        NavigationDestination(
+            selectedIcon: Icon(FluentIcons.search_24_filled),
+            icon: Icon(FluentIcons.search_24_regular),
+            label: 'Search'),
+        NavigationDestination(
+            selectedIcon: Icon(FluentIcons.settings_24_filled),
+            icon: Icon(FluentIcons.settings_24_regular),
             label: 'Setting'),
       ],
     );
@@ -86,9 +91,9 @@ class _TabBarPageState extends State<TabBarPage> {
       const PillPage(),
       const WorkoutsPage(),
       BlocProvider(
-      create: (context) => SearchPageCubit(),
-      child: const SearchPage(),
-    ), // Search Page
+        create: (context) => SearchPageCubit(),
+        child: const SearchPage(),
+      ), // Search Page
       const SettingsPage()
     ];
     return children[index];

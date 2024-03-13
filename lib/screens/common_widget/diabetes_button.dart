@@ -15,33 +15,17 @@ class DiabetesButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 55,
-      decoration: BoxDecoration(
-        color: isEnabled
-            ? context.colorScheme.primary
-            : context.colorScheme.surfaceVariant,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: isEnabled ? onTap : null,
-          child: Center(
+    return FilledButton(
+      onPressed: isEnabled ? onTap : null,
+      child: Row(
+        children: [
+          Expanded(
             child: Text(
               title,
-              style: TextStyle(
-                color: isEnabled
-                    ? context.colorScheme.onPrimary
-                    : context.colorScheme.onSurfaceVariant,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+              textAlign: TextAlign.center,
             ),
           ),
-        ),
+        ],
       ),
     );
   }

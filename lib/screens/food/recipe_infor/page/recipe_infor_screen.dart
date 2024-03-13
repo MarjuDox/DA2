@@ -24,7 +24,8 @@ class _RecipeInfoState extends State<RecipeInfo> {
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+      data: MediaQuery.of(context)
+          .copyWith(textScaler: const TextScaler.linear(1.0)),
       child: Scaffold(
         backgroundColor: Colors.white,
         body: BlocBuilder<RecipeInfoBloc, RecipeInfoState>(
@@ -32,22 +33,24 @@ class _RecipeInfoState extends State<RecipeInfo> {
             if (state is RecipeInfoLoadState) {
               return const Center(child: DiabetesLoading());
             } else if (state is RecipeInfoSuccesState) {
-              return RecipeInfoWidget(
-                equipment: state.equipment,
-                info: state.recipe,
-                nutrient: state.nutrient,
-                similarlist: state.similar,
-              );
+              // return RecipeInfoWidget(
+              //   equipment: state.equipment,
+              //   info: state.recipe,
+              //   nutrient: state.nutrient,
+              //   similarlist: state.similar,
+              // );
+              //TODO: vi remove
+              return const SizedBox();
             } else if (state is RecipeInfoErrorState) {
               return Center(
                 child: Container(
-                  child: Text("Error"),
+                  child: const Text("Error"),
                 ),
               );
             } else {
               return Center(
                 child: Container(
-                  child: Text("Noting happingng"),
+                  child: const Text("Noting happingng"),
                 ),
               );
             }

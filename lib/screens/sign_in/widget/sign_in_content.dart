@@ -15,11 +15,8 @@ class SignInContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: double.infinity,
-      width: double.infinity,
-      color: ColorConstants.white,
-      child: Stack(
+    return Scaffold(
+      body: Stack(
         children: [
           _createMainData(context),
           BlocBuilder<SignInPageBloc, SignInPageState>(
@@ -42,28 +39,35 @@ class SignInContent extends StatelessWidget {
   }
 
   Widget _createMainData(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     return SafeArea(
-      child: SingleChildScrollView(
-        child: SizedBox(
-          height: height - 30 - MediaQuery.of(context).padding.bottom,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 20),
-              _createHeader(),
-              const SizedBox(height: 50),
-              _createForm(context),
-              const SizedBox(height: 20),
-              _createForgotPasswordButton(context),
-              const SizedBox(height: 40),
-              _createSignInButton(context),
-              const Spacer(),
-              _createDoNotHaveAccountText(context),
-              const SizedBox(height: 30),
-            ],
+      child: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 20),
+                  _createHeader(),
+                  const SizedBox(height: 50),
+                  _createForm(context),
+                  const SizedBox(height: 20),
+                  _createForgotPasswordButton(context),
+                  const SizedBox(height: 40),
+                  _createDoNotHaveAccountText(context),
+                  const SizedBox(height: 30),
+                ],
+              ),
+            ),
           ),
-        ),
+          const SizedBox(
+            height: 16,
+          ),
+          _createSignInButton(context),
+          const SizedBox(
+            height: 16,
+          )
+        ],
       ),
     );
   }

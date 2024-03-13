@@ -14,7 +14,8 @@ class StartWorkoutVideo extends StatefulWidget {
   final Function(int) onPlayTapped;
   final Function(int) onPauseTapped;
 
-  StartWorkoutVideo({
+  const StartWorkoutVideo({
+    super.key,
     required this.exercise,
     required this.onPlayTapped,
     required this.onPauseTapped,
@@ -39,14 +40,13 @@ class _StartWorkoutVideoState extends State<StartWorkoutVideo> {
     _controller.initialize();
 
     _chewieController = ChewieController(
-        videoPlayerController: _controller,
-        looping: true,
-        autoPlay: false,
-        deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
-        aspectRatio: 15 / 10,
-        placeholder: Center(child: CupertinoActivityIndicator()),
-        materialProgressColors:
-            ChewieProgressColors(playedColor: context.colorScheme.primary));
+      videoPlayerController: _controller,
+      looping: true,
+      autoPlay: false,
+      deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
+      aspectRatio: 15 / 10,
+      placeholder: const Center(child: CupertinoActivityIndicator()),
+    );
     super.initState();
   }
 
