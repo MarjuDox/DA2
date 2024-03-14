@@ -68,7 +68,7 @@ class _TabBarPageState extends State<TabBarPage> {
         NavigationDestination(
             selectedIcon: Icon(FluentIcons.pill_24_filled),
             icon: Icon(FluentIcons.pill_24_regular),
-            label: 'Pill'),
+            label: 'Schedule'),
         NavigationDestination(
             selectedIcon: Icon(FluentIcons.accessibility_20_filled),
             icon: Icon(FluentIcons.accessibility_24_regular),

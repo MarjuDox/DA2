@@ -30,7 +30,7 @@ class DayChip extends StatelessWidget {
         ],
         color: isSelected
             ? context.colorScheme.primary
-            : context.colorScheme.secondaryContainer,
+            : context.colorScheme.secondaryContainer.withOpacity(0.6),
         shape: RoundedRectangleBorder(
           side: BorderSide(
             color: isToday ? context.colorScheme.primary : Colors.transparent,
