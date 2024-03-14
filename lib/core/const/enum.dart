@@ -113,7 +113,7 @@ enum MedicineUnit {
       case MedicineUnit.pill:
         return [0.5, 1, 1.5, 2];
       case MedicineUnit.capsule:
-        return [1, 2];
+        return [1, 2, 3, 4];
       case MedicineUnit.ml:
         return [50, 100, 150, 200, 250, 300, 350];
     }
