@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:diabetes/core/service/user_service.dart';
+import 'package:diabetes/model/pill_schedule/pill_schedule_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
