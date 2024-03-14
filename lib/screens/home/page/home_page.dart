@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
       create: (BuildContext context) => HomeBloc(),
       child: BlocConsumer<HomeBloc, HomeState>(
         buildWhen: (_, currState) =>
-            currState is HomeInitial || currState is WorkoutsGotState,
+            currState is HomeInitial || currState is WorkoutsGotState || currState is ReloadDisplayNameState,
         builder: (context, state) {
           final bloc = BlocProvider.of<HomeBloc>(context);
           if (state is HomeInitial) {

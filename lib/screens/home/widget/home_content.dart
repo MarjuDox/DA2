@@ -88,8 +88,8 @@ class HomeContent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               BlocBuilder<HomeBloc, HomeState>(
-                buildWhen: (previousState, currState) =>
-                    previousState != currState,
+                buildWhen: (_, currState) =>
+                    currState is ReloadDisplayNameState,
                 builder: (context, state) {
                   final displayName = state is ReloadDisplayNameState
                       ? state.displayName
