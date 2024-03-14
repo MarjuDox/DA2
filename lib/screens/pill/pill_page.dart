@@ -1,4 +1,3 @@
-import 'package:diabetes/core/const/enum.dart';
 import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/core/extension/datetime_extension.dart';
 import 'package:diabetes/core/service/firebase_database_service.dart';
@@ -43,7 +42,7 @@ class PillScheduleSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: 22),
+        const SizedBox(height: 16),
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: Text('Days in week', style: TextStyle(fontSize: 24)),
