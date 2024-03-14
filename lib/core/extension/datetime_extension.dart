@@ -6,4 +6,8 @@ extension DateTimeX on DateTime? {
     var format = DateFormat.MMMd();
     return format.format(this!);
   }
+
+  DateTime get dateOnly {
+    return DateTime(this!.year, this!.month, this!.day);
+  }
 }

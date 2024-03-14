@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:diabetes/core/const/enum.dart';
+import 'package:diabetes/core/extension/datetime_extension.dart';
+import 'package:diabetes/core/service/firebase_database_service.dart';
 import 'package:diabetes/model/pill_schedule/pill_schedule_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -53,27 +56,32 @@ final pillScheduleProvider =
 class PillScheduleNotifier extends AutoDisposeAsyncNotifier<List<PillModel>> {
   @override
   FutureOr<List<PillModel>> build() async {
-    await Future.delayed(const Duration(seconds: 1));
-    return [
-      PillModel(
-          medicineName: 'Metformin',
-          time: TimeOfDay.now(),
-          dose: 1,
-          unit: MedicineUnit.pill,
-          note: PillUseNote.afterEat),
-      PillModel(
-          medicineName: 'Metformin',
-          time: TimeOfDay.now(),
-          dose: 350,
-          unit: MedicineUnit.ml,
-          note: PillUseNote.afterEat),
-      PillModel(
-          medicineName: 'Metformin',
-          time: TimeOfDay.now(),
-          dose: 2,
-          unit: MedicineUnit.capsule,
-          note: PillUseNote.afterEat),
-    ];
+    try {
+      final schedules = await FirebaseDatabaseService.getUserSchedule();
+      List<PillModel> result = [];
+      for (var schedule
+          in schedules.where((element) => element.havePillToday)) {
+        for (var time in schedule.times) {
+          result.add(PillModel(
+            schedule: schedule,
+            note: schedule.note,
+            unit: schedule.unit,
+            isTaken:
+                schedule.takenPill[DateTime.now().dateOnly]?.contains(time) ??
+                    false,
+            time: time,
+            dose: schedule.dose,
+            medicineName: schedule.medicineName,
+          ));
+        }
+      }
+      result.sort((a, b) =>
+          a.time.hour * 60 + a.time.minute - b.time.hour * 60 - b.time.minute);
+      return result;
+    } catch (e) {
+      log(e.toString(), error: e);
+      rethrow;
+    }
   }
 }
 
