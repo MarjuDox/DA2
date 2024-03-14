@@ -146,6 +146,7 @@ class PillModel {
   final double dose;
   final PillUseNote note;
   final bool isTaken;
+  final bool isExpired;
   final PillScheduleModel schedule;
 
   PillModel({
@@ -156,6 +157,7 @@ class PillModel {
     required this.note,
     required this.schedule,
     this.isTaken = false,
+    this.isExpired = false,
   });
 
   PillModel copyWith({

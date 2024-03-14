@@ -67,6 +67,7 @@ class PillScheduleNotifier extends AutoDisposeAsyncNotifier<List<PillModel>> {
           unit: schedule.unit,
           isTaken: schedule.takenPill[date.dateOnly]?.contains(time) ?? false,
           time: time,
+          isExpired: date.isBefore(DateTime.now().dateOnly),
           dose: schedule.dose,
           medicineName: schedule.medicineName,
         ));

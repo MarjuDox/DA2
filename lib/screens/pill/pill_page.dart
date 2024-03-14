@@ -157,9 +157,14 @@ class PillScheduleSection extends StatelessWidget {
                         return PillScheduleCard(
                           item: currentPill,
                           onCheck: () {
+                            final currentDate =
+                                ref.read(currentDateSelectedProvider);
+                            if (currentDate != DateTime.now().dateOnly) {
+                              return;
+                            }
                             var newPillTaken = currentPill.schedule.takenPill;
                             final currentTaken =
-                                newPillTaken[DateTime.now().dateOnly] ?? [];
+                                newPillTaken[currentDate.dateOnly] ?? [];
                             if (currentTaken.contains(currentPill.time)) {
                               currentTaken.remove(currentPill.time);
                             } else {

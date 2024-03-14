@@ -91,10 +91,11 @@ class _MyAppState extends State {
   ThemeData getTheme(Brightness brightness) {
     return ThemeData(
       colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
-          brightness: brightness,
-          tertiary: const Color(0xff7AC9CD),
-          primary: const Color.fromARGB(255, 76, 144, 222)),
+        seedColor: Colors.blue,
+        brightness: brightness,
+        tertiary: const Color(0xff7AC9CD),
+        primary: const Color.fromARGB(255, 76, 144, 222),
+      ),
       textTheme: const TextTheme(
         titleLarge: TextStyle(
           fontSize: 18,

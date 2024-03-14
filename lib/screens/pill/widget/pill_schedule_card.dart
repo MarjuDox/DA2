@@ -10,6 +10,18 @@ class PillScheduleCard extends StatelessWidget {
   final PillModel item;
   final VoidCallback? onCheck;
 
+  IconData get icon {
+    if (item.isTaken) {
+      return Icons.check_rounded;
+    } else {
+      if (item.isExpired) {
+        return Icons.close_rounded;
+      } else {
+        return Icons.check_rounded;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -86,10 +98,14 @@ class PillScheduleCard extends StatelessWidget {
                 ),
               ),
               child: Icon(
-                Icons.check_rounded,
-                color: item.isTaken
-                    ? context.colorScheme.primary
-                    : Colors.transparent,
+                icon,
+                color: item.isExpired
+                    ? item.isTaken
+                        ? context.colorScheme.primary.withOpacity(0.5)
+                        : context.colorScheme.error.withOpacity(0.5)
+                    : item.isTaken
+                        ? context.colorScheme.primary
+                        : Colors.transparent,
               ),
             ),
           ),
