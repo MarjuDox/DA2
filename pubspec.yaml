@@ -72,6 +72,7 @@ dependencies:
   shimmer: ^3.0.0
   cloud_firestore: ^4.15.8
   uuid: ^4.3.3
+  jiffy: ^6.2.2
 
 dev_dependencies:
   flutter_test:

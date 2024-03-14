@@ -9,8 +9,10 @@ class TextFieldX extends StatelessWidget {
     this.labelText,
     this.hintText,
     this.onChanged,
+    this.autofocus = false,
   });
   final TextEditingController controller;
+  final bool autofocus;
   final String? hintText;
   final String? labelText;
   final String? errorText;
@@ -27,6 +29,7 @@ class TextFieldX extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
+      autofocus: autofocus,
       onChanged: onChanged,
       decoration: InputDecoration(
         labelStyle: MaterialStateTextStyle.resolveWith(

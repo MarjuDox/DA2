@@ -1,20 +1,15 @@
 import 'package:diabetes/core/common_widget/dropdown_menu_x.dart';
 import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/core/extension/datetime_extension.dart';
-import 'package:diabetes/core/extension/timeofday_extension.dart';
 import 'package:diabetes/core/service/firebase_database_service.dart';
 import 'package:diabetes/model/pill_schedule/pill_schedule_model.dart';
-import 'package:diabetes/screens/common_widget/chip_button.dart';
-import 'package:diabetes/screens/common_widget/diabetes_button.dart';
 import 'package:diabetes/screens/pill/add_schedule_sheet.dart';
 import 'package:diabetes/screens/pill/pill_viewmodel.dart';
+import 'package:diabetes/screens/pill/widget/day_chip.dart';
 import 'package:diabetes/screens/pill/widget/pill_schedule_card.dart';
 import 'package:diabetes/screens/sign_in/page/sign_in_page.dart';
-import 'package:figma_squircle/figma_squircle.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -44,6 +39,38 @@ class PillScheduleSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Builder(builder: (context) {
+          final weekDays = getWeekDays();
+          return SingleChildScrollView(
+            reverse: weekDays.indexOf(DateTime.now().dateOnly) > 3,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+            scrollDirection: Axis.horizontal,
+            child: Consumer(builder: (context, ref, child) {
+              final days = ref.watch(scheduleWeekProvider);
+              final currentSelectedDay = ref.watch(currentDateSelectedProvider);
+              return Row(children: [
+                ...days
+                    .map((day) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: InkWell(
+                            customBorder: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100)),
+                            onTap: () {
+                              ref
+                                  .read(currentDateSelectedProvider.notifier)
+                                  .changeDate(day);
+                            },
+                            child: DayChip(
+                              dateTime: day,
+                              isSelected: currentSelectedDay == day,
+                            ),
+                          ),
+                        ))
+                    .toList()
+              ]);
+            }),
+          );
+        }),
         Padding(
           padding: const EdgeInsets.all(16),
           child: Row(

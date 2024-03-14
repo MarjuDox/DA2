@@ -54,6 +54,7 @@ class _AddScheduleSheetState extends State<AddScheduleSheet> {
                     Consumer(builder: (context, ref, child) {
                       final errorText = ref.watch(medicineNameErrorProvider);
                       return TextFieldX(
+                        autofocus: true,
                         labelText: 'Medicine name',
                         controller: controller,
                         onChanged: (value) {

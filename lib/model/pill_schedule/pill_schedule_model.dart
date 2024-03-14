@@ -19,22 +19,21 @@ class PillScheduleModel {
   final MedicineUnit unit;
   final Map<DateTime, List<TimeOfDay>> takenPill;
 
-  bool get isActive {
-    if (DateTime.now().isAfter(endDate)) {
+  bool isActiveAt(DateTime dateTime) {
+    if (dateTime.isAfter(endDate)) {
       return false;
     }
-    if (DateTime.now().isBefore(startDate)) {
+    if (dateTime.isBefore(startDate)) {
       return false;
     }
     return true;
   }
 
-  bool get havePillToday {
-    if (!isActive) {
+  bool havePillAt(DateTime dateTime) {
+    if (!isActiveAt(dateTime)) {
       return false;
     }
-    final toDay = DateTime.now();
-    return daysInWeek.contains(DayInWeek.fromDateTime(toDay));
+    return daysInWeek.contains(DayInWeek.fromDateTime(dateTime));
   }
 
   PillScheduleModel({
