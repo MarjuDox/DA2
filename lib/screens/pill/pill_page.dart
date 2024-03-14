@@ -2,6 +2,9 @@ import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/core/extension/datetime_extension.dart';
 import 'package:diabetes/core/service/firebase_database_service.dart';
 import 'package:diabetes/model/pill_schedule/pill_schedule_model.dart';
+import 'package:diabetes/screens/common_widget/card_x.dart';
+import 'package:diabetes/screens/common_widget/shimmerx.dart';
+import 'package:diabetes/screens/common_widget/text_shimmerable.dart';
 import 'package:diabetes/screens/pill/add_schedule_sheet.dart';
 import 'package:diabetes/screens/pill/pill_viewmodel.dart';
 import 'package:diabetes/screens/pill/widget/day_chip.dart';
@@ -37,37 +40,47 @@ class PillScheduleSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        const SizedBox(height: 16),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: Text('Days in week', style: TextStyle(fontSize: 24)),
+        ),
         Builder(builder: (context) {
           final weekDays = getWeekDays();
-          return SingleChildScrollView(
-            reverse: weekDays.indexOf(DateTime.now().dateOnly) > 3,
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-            scrollDirection: Axis.horizontal,
-            child: Consumer(builder: (context, ref, child) {
-              final days = ref.watch(scheduleWeekProvider);
-              final currentSelectedDay = ref.watch(currentDateSelectedProvider);
-              return Row(children: [
-                ...days
-                    .map((day) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
-                          child: InkWell(
-                            customBorder: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(100)),
-                            onTap: () {
-                              ref
-                                  .read(currentDateSelectedProvider.notifier)
-                                  .changeDate(day);
-                            },
-                            child: DayChip(
-                              dateTime: day,
-                              isSelected: currentSelectedDay == day,
+          return FadeIn(
+            duration: const Duration(milliseconds: 500),
+            child: SingleChildScrollView(
+              reverse: weekDays.indexOf(DateTime.now().dateOnly) > 3,
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+              scrollDirection: Axis.horizontal,
+              child: Consumer(builder: (context, ref, child) {
+                final days = ref.watch(scheduleWeekProvider);
+                final currentSelectedDay =
+                    ref.watch(currentDateSelectedProvider);
+                return Row(children: [
+                  ...days
+                      .map((day) => Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                            child: InkWell(
+                              customBorder: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(100)),
+                              onTap: () {
+                                ref
+                                    .read(currentDateSelectedProvider.notifier)
+                                    .changeDate(day);
+                              },
+                              child: DayChip(
+                                dateTime: day,
+                                isSelected: currentSelectedDay == day,
+                              ),
                             ),
-                          ),
-                        ))
-                    .toList()
-              ]);
-            }),
+                          ))
+                      .toList()
+                ]);
+              }),
+            ),
           );
         }),
         Padding(
@@ -81,10 +94,32 @@ class PillScheduleSection extends StatelessWidget {
                     'My prescription',
                     style: TextStyle(fontSize: 20),
                   ),
-                  Text(
-                    'Today you take 3 pills',
-                    style: TextStyle(color: context.colorScheme.secondary),
-                  )
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Consumer(builder: (context, ref, child) {
+                    final pilListAsync = ref.watch(pillScheduleProvider);
+                    return pilListAsync.maybeWhen(
+                      data: (data) {
+                        return FadeIn(
+                          child: Text(
+                            'Today you take ${data.length} pill(s)',
+                            style:
+                                TextStyle(color: context.colorScheme.secondary),
+                          ),
+                        );
+                      },
+                      orElse: () {
+                        return const ShimmerX(
+                          child: TextShimmerable(
+                            child: Text(
+                              'Today you take 3 pill(s)',
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  })
                 ],
               ),
               const Spacer(),
@@ -154,32 +189,35 @@ class PillScheduleSection extends StatelessWidget {
                       itemCount: pillList.length,
                       itemBuilder: (context, index) {
                         final currentPill = pillList[index];
-                        return PillScheduleCard(
-                          item: currentPill,
-                          onCheck: () {
-                            final currentDate =
-                                ref.read(currentDateSelectedProvider);
-                            if (currentDate != DateTime.now().dateOnly) {
-                              return;
-                            }
-                            var newPillTaken = currentPill.schedule.takenPill;
-                            final currentTaken =
-                                newPillTaken[currentDate.dateOnly] ?? [];
-                            if (currentTaken.contains(currentPill.time)) {
-                              currentTaken.remove(currentPill.time);
-                            } else {
-                              currentTaken.add(currentPill.time);
-                            }
-                            final newSchedule = currentPill.schedule.copyWith(
-                              takenPill: {
-                                DateTime.now().dateOnly: currentTaken,
-                              },
-                            );
-                            FirebaseDatabaseService.addUserSchedule(newSchedule)
-                                .then((value) {
-                              ref.invalidate(pillScheduleProvider);
-                            });
-                          },
+                        return CardX(
+                          child: PillScheduleCardContent(
+                            item: currentPill,
+                            onCheck: () {
+                              final currentDate =
+                                  ref.read(currentDateSelectedProvider);
+                              if (currentDate != DateTime.now().dateOnly) {
+                                return;
+                              }
+                              var newPillTaken = currentPill.schedule.takenPill;
+                              final currentTaken =
+                                  newPillTaken[currentDate.dateOnly] ?? [];
+                              if (currentTaken.contains(currentPill.time)) {
+                                currentTaken.remove(currentPill.time);
+                              } else {
+                                currentTaken.add(currentPill.time);
+                              }
+                              final newSchedule = currentPill.schedule.copyWith(
+                                takenPill: {
+                                  DateTime.now().dateOnly: currentTaken,
+                                },
+                              );
+                              FirebaseDatabaseService.addUserSchedule(
+                                      newSchedule)
+                                  .then((value) {
+                                ref.invalidate(pillScheduleProvider);
+                              });
+                            },
+                          ),
                         );
                       },
                     ),
@@ -187,8 +225,19 @@ class PillScheduleSection extends StatelessWidget {
                 );
               },
               orElse: () {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return ListView.separated(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 12,
+                  ),
+                  itemCount: 5,
+                  itemBuilder: (context, index) => CardX(
+                    child: ShimmerX(
+                      child: PillScheduleCardContent(
+                        item: PillModel.blank(),
+                      ),
+                    ),
+                  ),
                 );
               },
             );

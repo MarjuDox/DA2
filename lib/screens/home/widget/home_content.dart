@@ -9,8 +9,10 @@ import 'package:diabetes/screens/edit_account/page/edit_account_page.dart';
 import 'package:diabetes/screens/home/bloc/home_bloc.dart';
 import 'package:diabetes/screens/home/widget/home_exercises_card.dart';
 import 'package:diabetes/screens/home/widget/home_statistics.dart';
+import 'package:diabetes/screens/pill/pill_page.dart';
 import 'package:diabetes/screens/tabbar/bloc/tab_bar_bloc.dart';
 import 'package:diabetes/screens/workout_details/page/workout_details_page.dart';
+import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,16 +26,42 @@ class HomeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: ColorConstants.homeBackgroundColor,
-      height: double.infinity,
-      width: double.infinity,
-      child: _createHomeBody(context),
-    );
+    return _createHomeBody(context);
   }
 
   Widget _createHomeBody(BuildContext context) {
     final bloc = BlocProvider.of<HomeBloc>(context);
+    return ColoredBox(
+      color: context.colorScheme.primary,
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SizedBox(
+              height: 16,
+            ),
+            _createProfileData(context),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.only(top: 6),
+                margin: const EdgeInsets.only(top: 20),
+                decoration: ShapeDecoration(
+                  color: context.colorScheme.background,
+                  shape: const SmoothRectangleBorder(
+                    borderRadius: SmoothBorderRadius.vertical(
+                      top: SmoothRadius(cornerRadius: 30, cornerSmoothing: 0.7),
+                    ),
+                  ),
+                ),
+                child: ColoredBox(
+                    color: context.colorScheme.surfaceVariant.withOpacity(0.1),
+                    child: const PillScheduleSection()),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
     return SafeArea(
       child: ListView(
         padding: const EdgeInsets.symmetric(vertical: 20),
@@ -68,20 +96,20 @@ class HomeContent extends StatelessWidget {
                       : '[name]';
                   return Text(
                     'Hi, $displayName',
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.w500,
+                        color: context.colorScheme.onPrimary),
                   );
                 },
               ),
               const SizedBox(height: 2),
-              const Text(
+              Text(
                 TextConstants.checkActivity,
                 style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                    color: context.colorScheme.onPrimary),
               ),
             ],
           ),
@@ -234,48 +262,46 @@ class HomeContent extends StatelessWidget {
   }
 
   Widget _createProgress(HomeBloc bloc) {
-    return Builder(
-      builder: (context) {
-        return Container(
-          width: double.infinity,
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: ColorConstants.white,
-            boxShadow: [
-              BoxShadow(
-                color: context.colorScheme.shadow.withOpacity(0.12),
-                blurRadius: 5.0,
-                spreadRadius: 1.1,
+    return Builder(builder: (context) {
+      return Container(
+        width: double.infinity,
+        margin: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: ColorConstants.white,
+          boxShadow: [
+            BoxShadow(
+              color: context.colorScheme.shadow.withOpacity(0.12),
+              blurRadius: 5.0,
+              spreadRadius: 1.1,
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            const Image(image: AssetImage(PathConstants.progress)),
+            const SizedBox(width: 20),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(TextConstants.keepProgress,
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 3),
+                  Text(
+                    '${TextConstants.profileSuccessful} ${bloc.getProgressPercentage()}% of workouts.',
+                    style: const TextStyle(fontSize: 16),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                  ),
+                ],
               ),
-            ],
-          ),
-          child: Row(
-            children: [
-              const Image(image: AssetImage(PathConstants.progress)),
-              const SizedBox(width: 20),
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(TextConstants.keepProgress,
-                        style:
-                            TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 3),
-                    Text(
-                      '${TextConstants.profileSuccessful} ${bloc.getProgressPercentage()}% of workouts.',
-                      style: const TextStyle(fontSize: 16),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      }
-    );
+            ),
+          ],
+        ),
+      );
+    });
   }
 }

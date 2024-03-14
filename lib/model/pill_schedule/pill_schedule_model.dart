@@ -137,6 +137,19 @@ class PillScheduleModel {
       takenPill: takenPill ?? this.takenPill,
     );
   }
+
+  factory PillScheduleModel.blank() => PillScheduleModel(
+        uid: '',
+        userId: '',
+        medicineName: 'Medicine name',
+        times: [],
+        startDate: DateTime.now(),
+        note: PillUseNote.beforeEat,
+        endDate: DateTime.now(),
+        daysInWeek: DayInWeek.values,
+        dose: 1,
+        unit: MedicineUnit.pill,
+      );
 }
 
 class PillModel {
@@ -179,4 +192,12 @@ class PillModel {
       isTaken: isTaken ?? this.isTaken,
     );
   }
+
+  factory PillModel.blank() => PillModel(
+      medicineName: 'Medicine name',
+      time: const TimeOfDay(hour: 10, minute: 10),
+      unit: MedicineUnit.capsule,
+      dose: 1,
+      note: PillUseNote.beforeEat,
+      schedule: PillScheduleModel.blank());
 }
