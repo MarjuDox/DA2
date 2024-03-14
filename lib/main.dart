@@ -28,6 +28,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  var dir = await getApplicationDocumentsDirectory();
+  await Hive.initFlutter(dir.path);
+  await Hive.openBox('Favorite');
   runApp(const ProviderScope(child: MyApp()));
 }
 

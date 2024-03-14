@@ -33,14 +33,13 @@ class _RecipeInfoState extends State<RecipeInfo> {
             if (state is RecipeInfoLoadState) {
               return const Center(child: DiabetesLoading());
             } else if (state is RecipeInfoSuccesState) {
-              // return RecipeInfoWidget(
-              //   equipment: state.equipment,
-              //   info: state.recipe,
-              //   nutrient: state.nutrient,
-              //   similarlist: state.similar,
-              // );
-              //TODO: vi remove
-              return const SizedBox();
+              return RecipeInfoWidget(
+                equipment: state.equipment,
+                info: state.recipe,
+                nutrient: state.nutrient,
+                similarlist: state.similar,
+              );
+              //return const SizedBox();
             } else if (state is RecipeInfoErrorState) {
               return Center(
                 child: Container(

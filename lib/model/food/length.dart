@@ -1,5 +1,5 @@
 class Length {
-  int? number;
+  num? number;
   String? unit;
 
   Length({this.number, this.unit});

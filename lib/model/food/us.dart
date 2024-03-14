@@ -1,5 +1,5 @@
 class Us {
-  double? amount;
+  num? amount;
   String? unitShort;
   String? unitLong;
 

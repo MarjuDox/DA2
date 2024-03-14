@@ -10,21 +10,21 @@ class Recipe {
   bool? cheap;
   bool? veryPopular;
   bool? sustainable;
-  int? weightWatcherSmartPoints;
+  num? weightWatcherSmartPoints;
   String? gaps;
   bool? lowFodmap;
-  int? aggregateLikes;
-  double? spoonacularScore;
-  double? healthScore;
+  num? aggregateLikes;
+  num? spoonacularScore;
+  num? healthScore;
   String? creditsText;
   String? license;
   String? sourceName;
-  double? pricePerServing;
+  num? pricePerServing;
   List<ExtendedIngredient>? extendedIngredients;
-  int? id;
+  num? id;
   String? title;
-  int? readyInMinutes;
-  int? servings;
+  num? readyInMinutes;
+  num? servings;
   String? sourceUrl;
   String? image;
   String? imageType;
@@ -85,12 +85,12 @@ class Recipe {
         cheap: json['cheap'] as bool?,
         veryPopular: json['veryPopular'] as bool?,
         sustainable: json['sustainable'] as bool?,
-        weightWatcherSmartPoints: json['weightWatcherSmartPoints'] as int?,
+        weightWatcherSmartPoints: json['weightWatcherSmartPoints'] as num?,
         gaps: json['gaps'] as String?,
         lowFodmap: json['lowFodmap'] as bool?,
-        aggregateLikes: json['aggregateLikes'] as int?,
-        spoonacularScore: json['spoonacularScore'] as double?,
-        healthScore: json['healthScore'] as double?,
+        aggregateLikes: json['aggregateLikes'] as num?,
+        spoonacularScore: json['spoonacularScore'] as num?,
+        healthScore: json['healthScore'] as num?,
         creditsText: json['creditsText'] as String?,
         license: json['license'] as String?,
         sourceName: json['sourceName'] as String?,
@@ -98,10 +98,10 @@ class Recipe {
         extendedIngredients: (json['extendedIngredients'] as List<dynamic>?)
             ?.map((e) => ExtendedIngredient.fromJson(e))
             .toList(),
-        id: json['id'] as int?,
+        id: json['id'] as num?,
         title: json['title'] as String?,
-        readyInMinutes: json['readyInMinutes'] as int?,
-        servings: json['servings'] as int?,
+        readyInMinutes: json['readyInMinutes'] as num?,
+        servings: json['servings'] as num?,
         sourceUrl: json['sourceUrl'] as String?,
         image: json['image'] as String?,
         imageType: json['imageType'] as String?,

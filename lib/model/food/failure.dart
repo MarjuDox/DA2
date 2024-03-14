@@ -1,5 +1,5 @@
 class Failure {
-  final int code;
+  final num code;
   final String message;
   Failure({
     required this.code,

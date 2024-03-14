@@ -12,7 +12,7 @@ class SearchAutoComplete {
       id: json['id'].toString(),
       name: json['title'],
       image:
-          "https://spoonacular.com/recipeImages/${json['id']}-556x370.${json['imageType']}",
+          "http://spoonacular.com/recipeImages/${json['id']}-556x370.${json['imageType']}",
     );
   }
 }

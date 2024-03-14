@@ -1,5 +1,5 @@
 class Metric {
-  double? amount;
+  num? amount;
   String? unitShort;
   String? unitLong;
 

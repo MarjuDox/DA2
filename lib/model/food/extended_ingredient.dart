@@ -10,7 +10,7 @@ class ExtendedIngredient {
   String? original;
   String? originalString;
   String? originalName;
-  double? amount;
+  num? amount;
   String? unit;
   List<dynamic>? meta;
   List<dynamic>? metaInformation;

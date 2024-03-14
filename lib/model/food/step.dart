@@ -4,7 +4,7 @@ import 'ingredient.dart';
 import 'length.dart';
 
 class Step {
-  int? number;
+  num? number;
   String? step;
   List<Ingredient>? ingredients;
   List<Equipment>? equipment;

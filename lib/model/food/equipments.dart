@@ -1,5 +1,5 @@
 class Equipment {
-  int? id;
+  num? id;
   String? name;
   String? localizedName;
   String? image;
