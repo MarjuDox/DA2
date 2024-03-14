@@ -4,6 +4,7 @@ class ExerciseModel {
   String? id;
   String? title;
   int? minutes;
+  int? seconds;
   double? progress;
   String? video;
   String? description;
@@ -13,6 +14,7 @@ class ExerciseModel {
     required this.id,
     required this.title,
     required this.minutes,
+    required this.seconds,
     required this.progress,
     required this.video,
     required this.description,
@@ -23,6 +25,7 @@ class ExerciseModel {
     id = json['id'];
     title = json['title'];
     minutes = json['minutes'];
+    seconds = json['seconds'];
     progress = json['progress'];
     video = json['video'];
     description = json['description'];
@@ -34,6 +37,7 @@ class ExerciseModel {
     data['id'] = this.id;
     data['title'] = this.title;
     data['minutes'] = this.minutes;
+    data['seconds'] = this.seconds;
     data['progress'] = this.progress;
     data['video'] = this.video;
     data['description'] = this.description;

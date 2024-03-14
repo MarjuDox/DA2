@@ -94,7 +94,12 @@ flutter:
     - assets/icons/social_networks/
     - assets/icons/workouts/
     # Video
-    - assets/videos/workouts/
+    - assets/videos/workouts/Calisthenics/
+    - assets/videos/workouts/Cardio/
+    - assets/videos/workouts/Pilates/
+    - assets/videos/workouts/Strengthtraining/
+    - assets/videos/workouts/Yoga1/
+    - assets/videos/workouts/Yoga2/
 
 fonts:
 - family: NotoSans
