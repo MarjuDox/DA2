@@ -6,9 +6,10 @@ class PillScheduleModel {
   final String medicineName;
   final List<TimeOfDay> times;
   final DateTime startDate;
+  final PillUseNote note;
   final DateTime endDate;
   final List<DayInWeek> daysInWeek;
-  final int dose;
+  final double dose;
   final MedicineUnit unit;
 
   PillScheduleModel({
@@ -19,6 +20,7 @@ class PillScheduleModel {
     required this.daysInWeek,
     required this.dose,
     required this.unit,
+    required this.note,
   });
 }
 
@@ -26,8 +28,8 @@ class PillModel {
   final String medicineName;
   final TimeOfDay time;
   final MedicineUnit unit;
-  final int dose;
-  final String? note;
+  final double dose;
+    final PillUseNote note;
   final bool isTaken;
 
   PillModel({
@@ -35,7 +37,7 @@ class PillModel {
     required this.time,
     required this.unit,
     required this.dose,
-    this.note,
+    required this.note,
     this.isTaken = false,
   });
 
@@ -43,8 +45,8 @@ class PillModel {
     String? medicineName,
     TimeOfDay? time,
     MedicineUnit? unit,
-    int? dose,
-    String? note,
+    double? dose,
+    PillUseNote? note,
     bool? isTaken,
   }) {
     return PillModel(

@@ -56,23 +56,23 @@ class PillScheduleNotifier extends AutoDisposeAsyncNotifier<List<PillModel>> {
     await Future.delayed(const Duration(seconds: 1));
     return [
       PillModel(
-        medicineName: 'Metformin',
-        time: TimeOfDay.now(),
-        dose: 1,
-        unit: MedicineUnit.pill,
-      ),
+          medicineName: 'Metformin',
+          time: TimeOfDay.now(),
+          dose: 1,
+          unit: MedicineUnit.pill,
+          note: PillUseNote.afterEat),
       PillModel(
-        medicineName: 'Metformin',
-        time: TimeOfDay.now(),
-        dose: 350,
-        unit: MedicineUnit.ml,
-      ),
+          medicineName: 'Metformin',
+          time: TimeOfDay.now(),
+          dose: 350,
+          unit: MedicineUnit.ml,
+          note: PillUseNote.afterEat),
       PillModel(
-        medicineName: 'Metformin',
-        time: TimeOfDay.now(),
-        dose: 2,
-        unit: MedicineUnit.capsule,
-      ),
+          medicineName: 'Metformin',
+          time: TimeOfDay.now(),
+          dose: 2,
+          unit: MedicineUnit.capsule,
+          note: PillUseNote.afterEat),
     ];
   }
 }

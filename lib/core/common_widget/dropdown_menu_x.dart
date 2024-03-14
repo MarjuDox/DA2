@@ -14,6 +14,7 @@ class DropDownMenuX<T> extends StatefulWidget {
     this.initValue,
     this.enable = true,
     this.onSelected,
+    this.errorText,
   });
 
   final List<T> items;
@@ -24,6 +25,7 @@ class DropDownMenuX<T> extends StatefulWidget {
   final String? value;
   final T? initValue;
   final ValueChanged<T?>? onSelected;
+  final String? errorText;
 
   @override
   State<DropDownMenuX<T>> createState() => _DropDownMenuXState<T>();
@@ -61,6 +63,7 @@ class _DropDownMenuXState<T> extends State<DropDownMenuX<T>> {
   @override
   Widget build(BuildContext context) {
     return DropdownMenu<T>(
+        errorText: widget.errorText,
         onSelected: widget.onSelected,
         enabled: widget.enable,
         controller: controller,
