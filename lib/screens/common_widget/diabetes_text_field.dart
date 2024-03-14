@@ -1,4 +1,3 @@
-
 import 'package:diabetes/core/const/path_constants.dart';
 import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +8,14 @@ class DiabetesTextField extends StatefulWidget {
   final String errorText;
   final bool obscureText;
   final bool isError;
+  final bool autoFocus;
   final TextEditingController controller;
   final VoidCallback onTextChanged;
   final TextInputAction textInputAction;
   final TextInputType? keyboardType;
 
   const DiabetesTextField({
+    this.autoFocus = false,
     required this.title,
     required this.placeholder,
     this.obscureText = false,
@@ -121,6 +122,7 @@ class _DiabetesTextFieldState extends State<DiabetesTextField> {
 
   Widget _createTextField() {
     return TextField(
+      autofocus: widget.autoFocus,
       focusNode: focusNode,
       controller: widget.controller,
       obscureText: stateObscureText,

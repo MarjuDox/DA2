@@ -49,21 +49,26 @@ class SignUpContent extends StatelessWidget {
 
   Widget _createMainData(BuildContext context) {
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            _createTitle(),
-            // const SizedBox(height: 50),
-            _createForm(context),
-            const SizedBox(height: 40),
-            _createSignUpButton(context),
-            // Spacer(),
-            const SizedBox(height: 40),
-            _createHaveAccountText(context),
-            const SizedBox(height: 30),
-          ],
-        ),
+      child: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  _createTitle(),
+                  _createForm(context),
+                  const SizedBox(height: 40),
+                  _createHaveAccountText(context),
+                  const SizedBox(height: 30),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          _createSignUpButton(context),
+          const SizedBox(height: 16),
+        ],
       ),
     );
   }
@@ -90,6 +95,7 @@ class SignUpContent extends StatelessWidget {
         return Column(
           children: [
             DiabetesTextField(
+              autoFocus: true,
               title: TextConstants.username,
               placeholder: TextConstants.userNamePlaceholder,
               controller: bloc.userNameController,
@@ -182,15 +188,13 @@ class SignUpContent extends StatelessWidget {
     return RichText(
       text: TextSpan(
         text: TextConstants.alreadyHaveAccount,
-        style: const TextStyle(
-          fontSize: 18,
-        ),
+        style: TextStyle(fontSize: 16, color: context.colorScheme.secondary),
         children: [
           TextSpan(
             text: " ${TextConstants.signIn}",
             style: TextStyle(
               color: context.colorScheme.primary,
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
             recognizer: TapGestureRecognizer()

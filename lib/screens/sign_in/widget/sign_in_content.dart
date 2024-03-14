@@ -1,4 +1,3 @@
-import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
 import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/core/service/validation_service.dart';
@@ -97,6 +96,7 @@ class SignInContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             DiabetesTextField(
+              autoFocus: true,
               title: TextConstants.email,
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.emailAddress,
@@ -180,15 +180,13 @@ class SignInContent extends StatelessWidget {
       child: RichText(
         text: TextSpan(
           text: TextConstants.doNotHaveAnAccount,
-          style: const TextStyle(
-            fontSize: 18,
-          ),
+          style: TextStyle(fontSize: 16, color: context.colorScheme.secondary),
           children: [
             TextSpan(
               text: " ${TextConstants.signUp}",
               style: TextStyle(
                 color: context.colorScheme.primary,
-                fontSize: 18,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
               recognizer: TapGestureRecognizer()
