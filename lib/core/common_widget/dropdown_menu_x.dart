@@ -43,7 +43,8 @@ class _DropDownMenuXState<T> extends State<DropDownMenuX<T>> {
       initValue = widget.initValue;
     }
     if (initValue != null) {
-      controller.text = widget.getLabel?.call(initValue as T) ?? '';
+      controller.text =
+          widget.getLabel?.call(initValue as T) ?? initValue.toString();
     }
     super.didUpdateWidget(oldWidget);
   }

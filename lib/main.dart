@@ -1,10 +1,7 @@
-import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/global_constants.dart';
-import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/core/service/notification_service.dart';
 import 'package:diabetes/firebase_options.dart';
 import 'package:diabetes/model/user_model.dart';
-import 'package:diabetes/screens/sign_in/page/sign_in_page.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // ignore: depend_on_referenced_packages

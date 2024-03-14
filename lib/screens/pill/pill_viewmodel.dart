@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:diabetes/core/const/enum.dart';
 import 'package:diabetes/model/pill_schedule/pill_schedule_model.dart';
-import 'package:diabetes/screens/pill/pill_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -84,7 +84,11 @@ final timesProvider =
 class TimeListNotifier extends AutoDisposeNotifier<List<TimeOfDay>> {
   @override
   List<TimeOfDay> build() {
-    return [];
+    return [
+      const TimeOfDay(hour: 8, minute: 0),
+      const TimeOfDay(hour: 13, minute: 0),
+      const TimeOfDay(hour: 18, minute: 0),
+    ];
   }
 
   void removeTime(TimeOfDay time) {
@@ -102,5 +106,55 @@ class TimeListNotifier extends AutoDisposeNotifier<List<TimeOfDay>> {
     var newState = [...state, time];
     newState.sort((a, b) => a.hour * 60 + a.minute - b.hour * 60 - b.minute);
     state = newState;
+  }
+
+  void changeTime(TimeOfDay from, TimeOfDay to) {
+    removeTime(from);
+    addTime(to);
+  }
+}
+
+final doseProvider =
+    AutoDisposeNotifierProvider<DoseNotifier, double>(DoseNotifier.new);
+
+class DoseNotifier extends AutoDisposeNotifier<double> {
+  @override
+  double build() {
+    final currentUnit = ref.watch(medicineUnitProvider);
+    return currentUnit.dose.firstOrNull ?? 1;
+  }
+
+  void onChange(double newValue) {
+    state = newValue;
+  }
+}
+
+final medicineUnitProvider =
+    AutoDisposeNotifierProvider<MedicineUnitNotifier, MedicineUnit>(
+        MedicineUnitNotifier.new);
+
+class MedicineUnitNotifier extends AutoDisposeNotifier<MedicineUnit> {
+  @override
+  MedicineUnit build() {
+    return MedicineUnit.capsule;
+  }
+
+  void onChange(MedicineUnit newValue) {
+    state = newValue;
+  }
+}
+
+final medicineUseProvider =
+    AutoDisposeNotifierProvider<MedicineUseNotifier, PillUseNote>(
+        MedicineUseNotifier.new);
+
+class MedicineUseNotifier extends AutoDisposeNotifier<PillUseNote> {
+  @override
+  PillUseNote build() {
+    return PillUseNote.none;
+  }
+
+  void onChange(PillUseNote newValue) {
+    state = newValue;
   }
 }
