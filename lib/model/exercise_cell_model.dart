@@ -85,7 +85,7 @@ class ExerciseCell extends StatelessWidget {
   }
 
   Widget _createExerciseTextInfo() {
-    final minutesStr = "${currentExercise.minutes} minutes";
+    final minutesStr = "${currentExercise.minutes}': ${currentExercise.seconds}″ ";
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

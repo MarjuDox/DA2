@@ -3,9 +3,11 @@ import 'package:diabetes/core/const/path_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
 import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/screens/home/bloc/home_bloc.dart';
-import 'package:diabetes/screens/home/widget/Dataworkouts.dart';
+import 'package:diabetes/screens/home/widget/DataWorkouts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+
 
 class HomeStatistics extends StatelessWidget {
   const HomeStatistics({Key? key}) : super(key: key);
@@ -93,15 +95,15 @@ class HomeStatistics extends StatelessWidget {
         DataWorkouts(
           icon: PathConstants.inProgress,
           title: TextConstants.inProgress,
-          count: bloc.getInProgressWorkouts() ?? 0,
+          count: '${bloc.getInProgressWorkouts()}' ?? '0',
           text: TextConstants.workouts,
         ),
         const SizedBox(height: 20),
         DataWorkouts(
           icon: PathConstants.timeSent,
           title: TextConstants.timeSent,
-          count: bloc.getTimeSent() ?? 0,
-          text: TextConstants.minutes,
+          count: bloc.getTimeSent() ?? '0',
+          text: "",
         ),
       ],
     );

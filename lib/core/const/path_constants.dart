@@ -33,7 +33,7 @@ class PathConstants{
  // Start workout -> Calisthenics
   static const String lunges = 'assets/videos/workouts/Calisthenics/lunges.mp4';
   static const String plank = 'assets/videos/workouts/Calisthenics/plank.mp4';
-  static const String pushups = 'assets/videos/workouts/Calisthenics/pushups.mp4';
+  static const String pushUps = 'assets/videos/workouts/Calisthenics/pushups.mp4';
   static const String triceDips = 'assets/videos/workouts/Calisthenics/tricepdips.mp4';
 
   // Start workout -> Cardio
@@ -53,7 +53,7 @@ class PathConstants{
   // Start workout -> Strength training
   static const String deadLifts = 'assets/videos/workouts/Strengthtraining/deadlifts.mp4';
   static const String pullUps= 'assets/videos/workouts/Strengthtraining/pullups.mp4';
-  static const String pushUps = 'assets/videos/workouts/Strengthtraining/pushups.mp4';
+  static const String pushUps1 = 'assets/videos/workouts/Strengthtraining/pushups.mp4';
   static const String squats = 'assets/videos/workouts/Strengthtraining/squats.mp4';
 
   // Start workout -> Yoga 1
@@ -65,10 +65,10 @@ class PathConstants{
 
   // Start workout -> Yoga 2
   static const String boatPose = 'assets/videos/workouts/Yoga2/boatpose.mp4';
-  static const String oneLeftStandLeftLeg = 'assets/videos/workouts/Yoga2/onelegstandleftleg.mp4';
-  static const String oneLeftStandRightLeg = 'assets/videos/workouts/Yoga2/onelegstandrightleg.mp4';
+  static const String oneLegStandLeftLeg = 'assets/videos/workouts/Yoga2/onelegstandleftleg.mp4';
+  static const String oneLegStandRightLeg = 'assets/videos/workouts/Yoga2/onelegstandrightleg.mp4';
   static const String warriorStretchLeftSide = 'assets/videos/workouts/Yoga2/warriorstretchleftside.mp4';
-  static const String warriorStretchRightSide = 'assets/videos/workouts/Yoga2/warriorstretchrightside.mp4';
+  static const String warriorStretchRightSide2 = 'assets/videos/workouts/Yoga2/warriorstretchrightside.mp4';
 
   // Workout Details
   static const String yogaWorkout = 'assets/images/workouts/yoga_workout.png';

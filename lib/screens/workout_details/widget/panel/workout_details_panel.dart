@@ -6,6 +6,7 @@ import 'package:diabetes/screens/workout_details/widget/panel/exercises_list.dar
 import 'package:diabetes/screens/workout_details/widget/panel/workout_tag.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:math';
 
 class WorkoutDetailsPanel extends StatelessWidget {
   final WorkoutModel workout;
@@ -63,7 +64,7 @@ class WorkoutDetailsPanel extends StatelessWidget {
         children: [
           WorkoutTag(
             icon: PathConstants.timeTracker,
-            content: "${_getExerciseTime()}:00",
+            content: "${_getTimeExercise()}",
           ),
           const SizedBox(width: 15),
           WorkoutTag(
@@ -76,12 +77,31 @@ class WorkoutDetailsPanel extends StatelessWidget {
     );
   }
 
-  int _getExerciseTime() {
-    int time = 0;
+  int _getExerciseMinutes() {
+    int minutes = 0;
     final List<int?> exerciseList = workout.exerciseDataList!.map((e) => e.minutes).toList();
     exerciseList.forEach((e) {
-      time += e!;
+      minutes += e!;
     });
+    return minutes;
+  }
+
+  int _getExerciseSeconds() {
+    int second = 0;
+    final List<int?> exerciseList = workout.exerciseDataList!.map((e) => e.seconds).toList();
+    exerciseList.forEach((e) {
+      second += e!;
+    });
+    return second;
+  }
+
+  String _getTimeExercise(){
+    String time = '';
+    int m = _getExerciseMinutes();
+    int s = _getExerciseSeconds();
+    int t = s % 60;
+    m = m + (s ~/ 60);
+    time = '$m : $t';
     return time;
   }
 

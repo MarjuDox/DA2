@@ -69,8 +69,7 @@ class WorkoutCard extends StatelessWidget {
                               maxLines: 2),
                           const SizedBox(height: 3),
                           Text(
-                              '${_getWorkoutMinutes()}' " " +
-                                  TextConstants.minutes,
+                              '${_getWorkoutMinutes()}',
                               style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
@@ -115,13 +114,20 @@ class WorkoutCard extends StatelessWidget {
     );
   }
 
-  int _getWorkoutMinutes() {
+  String _getWorkoutMinutes() {
     var minutes = 0;
+    var seconds = 0;
     final minutesList =
         workout.exerciseDataList!.map((e) => e.minutes).toList();
+    final secondsList =
+        workout.exerciseDataList!.map((e) => e.seconds).toList();
     for (var e in minutesList) {
       minutes += e!;
     }
-    return minutes;
+    for (var e in secondsList) {
+      seconds += e!;
+    }
+
+    return "${minutes + (seconds ~/60)}':${seconds % 60}″ ";
   }
 }

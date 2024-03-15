@@ -15,7 +15,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   List<WorkoutModel> workouts = <WorkoutModel>[];
   List<ExerciseModel> exercises = <ExerciseModel>[];
-  int timeSent = 0;
+  int minutes = 0;
+  int seconds = 0;
 
   @override
   Stream<HomeState> mapEventToState(
@@ -56,14 +57,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     return completedWorkouts.length;
   }
 
-  int? getTimeSent() {
+  String? getTimeSent() {
     for (final WorkoutModel workout in workouts) {
       exercises.addAll(workout.exerciseDataList!);
     }
     final exercise = exercises.where((e) => e.progress == 1).toList();
     for (var e in exercise) {
-      timeSent += e.minutes!;
+      minutes += e.minutes!;
     }
-    return timeSent;
+     for (var e in exercise) {
+      seconds += e.seconds!;
+    }
+    return "${(minutes + (seconds ~/60)) > 10 ? (minutes + (seconds ~/60)) : '0${(minutes + (seconds ~/60))}'} : ${(seconds % 60) > 10 ? (seconds % 60) : '0${(seconds % 60)}'}";
   }
 }

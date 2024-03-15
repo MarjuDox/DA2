@@ -65,7 +65,7 @@ class TextConstants {
   static const String inProgress = "In progress";
   static const String workouts = "Workouts";
 
-  static const String timeSent = "Time sent";
+  static const String timeSent = "Time Spent";
   static const String minutes = "Minutes";
 
   static const String discoverWorkouts = "Discover new workouts";
@@ -351,7 +351,7 @@ class TextConstants {
       "Use the strength from your left leg to pull your body back to a standing position. Relax and repeat the movement on the other side if desired.";
         
     // Start Workout screen -> Warrior Stretch Right Side
-    static const String warriorStretchRightSideDescription2 = "The Warrior Stretch on the right side is a powerful yoga posture that stretches the legs, hips, and torso while building strength and stability.";
+    static const String warriorStretchRightSide2Description = "The Warrior Stretch on the right side is a powerful yoga posture that stretches the legs, hips, and torso while building strength and stability.";
     static const String warriorStretchRightSide2Step1 =
       "Mountain Pose, Stand straight with feet together, back straight, and breathe evenly.";
     static const String warriorStretchRightSide2Step2 =
@@ -428,7 +428,7 @@ class TextConstants {
 
     // Start Workout screen -> Scissor Kick
     static const String scissorKickDescription = "The Scissor Kick is a dynamic core exercise that targets the abdominal muscles, particularly the lower abdominals, while also engaging the hip flexors and promoting stability.";
-    static const String scissorKickSideStep1 =
+    static const String scissorKickStep1 =
       "Lie face up.";
     static const String scissorKickStep2 =
       "Extend your right leg up so that it is perpendicular to the floor. Bring your hands behind your right leg, pulling it in toward your face, and curl your head up. Lift your left leg of the floor a few inches.";
@@ -449,9 +449,9 @@ class TextConstants {
       "Keep your lower back on the floor and your core engaged throughout.";
 
   //Workout screen -> Calisthenics card
-  static const String fullBodyTitle = "Calisthenics";
-  static const String fullBodyExercises = "4";
-  static const String fullBodyMinutes = "3:46";
+  static const String calisthenicsTitle = "Calisthenics";
+  static const String  calisthenicsExercises = "4";
+  static const String  calisthenicsMinutes = "3:46";
 
   // Text title 
     // Workout Details screen -> card 1
@@ -516,9 +516,9 @@ class TextConstants {
       "Press down with your hands to straighten your arms and raise your hips and body back up.";
 
   //Workout screen -> Strength Training card
-  static const String stretchingTitle = " Strength Training";
-  static const String stretchingExercises = "4";
-  static const String stretchingMinutes = "6:59";
+  static const String strengthTrainingTitle = " Strength";
+  static const String strengthTrainingExercises = "4";
+  static const String strengthTrainingMinutes = "6:59";
 
   // Text title Pilates Card
     // Workout Details screen -> card 1

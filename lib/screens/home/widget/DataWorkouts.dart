@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class DataWorkouts extends StatelessWidget {
   final String icon;
   final String title;
-  final int count;
+  final String count;
   final String text;
 
   DataWorkouts({
@@ -53,7 +53,7 @@ class DataWorkouts extends StatelessWidget {
           Row(
             children: [
               Text(
-                count.toString(),
+                count,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w700,

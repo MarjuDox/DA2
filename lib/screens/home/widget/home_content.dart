@@ -40,6 +40,8 @@ class HomeContent extends StatelessWidget {
               height: 16,
             ),
             _createProfileData(context),
+            const SizedBox(height: 35),
+            _showStartWorkout(context, bloc),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.only(top: 6),
@@ -226,7 +228,7 @@ class HomeContent extends StatelessWidget {
               const SizedBox(width: 20),
               WorkoutCard(
                 color: ColorConstants.cardioColor,
-                workout: DataConstants.homeWorkouts[0],
+                workout: DataConstants.workouts[0],
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (_) => WorkoutDetailsPage(
