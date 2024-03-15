@@ -1,101 +1,89 @@
 import 'package:diabetes/core/extension/context_extension.dart';
-import 'package:diabetes/core/extension/timeofday_extension.dart';
+import 'package:diabetes/core/extension/datetime_extension.dart';
 import 'package:diabetes/model/pill_schedule/pill_schedule_model.dart';
 import 'package:diabetes/screens/common_widget/text_shimmerable.dart';
+import 'package:diabetes/screens/pill/widget/time_chip.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class PillScheduleCardContent extends StatelessWidget {
-  const PillScheduleCardContent({super.key, required this.item, this.onCheck});
+  const PillScheduleCardContent({super.key, required this.item});
 
-  final PillModel item;
-  final VoidCallback? onCheck;
+  final PillScheduleModel item;
 
-  IconData get icon {
-    if (item.isTaken) {
-      return Icons.check_rounded;
-    } else {
-      if (item.isExpired) {
-        return Icons.close_rounded;
-      } else {
-        return Icons.check_rounded;
-      }
-    }
+  bool get isActive {
+    return item.isActiveAt(DateTime.now().dateOnly);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(
-          item.unit.icon,
-          size: 40,
-          color: context.colorScheme.primary,
-        ),
-        const SizedBox(width: 16),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+    final primaryColor = context.colorScheme.primary;
+    return Opacity(
+      opacity: isActive ? 1 : 0.5,
+      child: Row(
+        children: [
+          Column(
+            children: [
+              Icon(
+                item.unit.icon,
+                size: 40,
+                color: primaryColor,
+              ),
+              Text(
+                item.isExpired
+                    ? 'Done'
+                    : isActive
+                        ? 'Active'
+                        : 'Inactive',
+                style: TextStyle(
+                  color: primaryColor,
+                ),
+              )
+            ],
+          ),
+          const SizedBox(width: 18),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextShimmerable(
-                  child: Text(
-                    item.time.formattedTime,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextShimmerable(
+                        child: Text(
+                          item.medicineName,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                TextShimmerable(
-                  child: Text(
-                    item.medicineName,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
+                    const SizedBox(
+                      width: 8,
                     ),
-                  ),
+                    TextShimmerable(
+                      child: Text(
+                        "${item.dose * item.times.length} ${item.unit.name} / day",
+                        style: TextStyle(
+                            fontSize: 14, color: context.colorScheme.secondary),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Wrap(
+                  runSpacing: 10,
+                  spacing: 8,
+                  children: item.times.map<Widget>((time) {
+                    return TimeChip(time: time);
+                  }).toList(),
                 ),
               ],
             ),
-            const SizedBox(height: 4),
-            TextShimmerable(
-              child: Text(
-                "${item.dose} ${item.unit.name}",
-                style: TextStyle(
-                    fontSize: 14, color: context.colorScheme.secondary),
-              ),
-            ),
-          ],
-        ),
-        const Spacer(),
-        InkWell(
-          onTap: onCheck,
-          child: Container(
-            padding: const EdgeInsets.all(8),
-            decoration: ShapeDecoration(
-              shape: CircleBorder(
-                side: BorderSide(
-                  color: context.colorScheme.primary.withOpacity(0.2),
-                  width: 2,
-                ),
-              ),
-            ),
-            child: Icon(
-              icon,
-              color: item.isExpired
-                  ? item.isTaken
-                      ? context.colorScheme.primary.withOpacity(0.5)
-                      : context.colorScheme.error.withOpacity(0.5)
-                  : item.isTaken
-                      ? context.colorScheme.primary
-                      : Colors.transparent,
-            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

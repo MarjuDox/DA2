@@ -21,6 +21,10 @@ class DayInWeekSelectNotifier
     );
   }
 
+  void setValue(Map<DayInWeek, bool> value) {
+    state = value;
+  }
+
   void toggle(DayInWeek dayInWeek) {
     var newValues = Map<DayInWeek, bool>.from(state);
     var currentValue = newValues[dayInWeek] ?? false;
@@ -48,11 +52,11 @@ class ScheduleBeginNotifier extends AutoDisposeNotifier<DateTime?> {
   }
 }
 
-final pillScheduleProvider =
-    AutoDisposeAsyncNotifierProvider<PillScheduleNotifier, List<PillModel>>(
-        PillScheduleNotifier.new);
+final pillListProvider =
+    AutoDisposeAsyncNotifierProvider<PillListNotifier, List<PillModel>>(
+        PillListNotifier.new);
 
-class PillScheduleNotifier extends AutoDisposeAsyncNotifier<List<PillModel>> {
+class PillListNotifier extends AutoDisposeAsyncNotifier<List<PillModel>> {
   @override
   FutureOr<List<PillModel>> build() async {
     final date = ref.watch(currentDateSelectedProvider);
@@ -108,6 +112,10 @@ class TimeListNotifier extends AutoDisposeNotifier<List<TimeOfDay>> {
     var newState = [...state, time];
     newState.sort((a, b) => a.hour * 60 + a.minute - b.hour * 60 - b.minute);
     state = newState;
+  }
+
+  void setValue(List<TimeOfDay> value) {
+    state = value;
   }
 
   void changeTime(TimeOfDay from, TimeOfDay to) {
@@ -196,4 +204,17 @@ List<DateTime> getWeekDays() {
         .dateTime
         .dateOnly;
   });
+}
+
+final pillScheduleListProvider = AutoDisposeAsyncNotifierProvider<
+    PillScheduleListNotifier,
+    List<PillScheduleModel>>(PillScheduleListNotifier.new);
+
+class PillScheduleListNotifier
+    extends AutoDisposeAsyncNotifier<List<PillScheduleModel>> {
+  @override
+  FutureOr<List<PillScheduleModel>> build() async {
+    final schedules = await FirebaseDatabaseService.getUserSchedule();
+    return schedules;
+  }
 }
