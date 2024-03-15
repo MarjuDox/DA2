@@ -9,10 +9,9 @@ import 'package:diabetes/screens/edit_account/page/edit_account_page.dart';
 import 'package:diabetes/screens/home/bloc/home_bloc.dart';
 import 'package:diabetes/screens/home/widget/home_exercises_card.dart';
 import 'package:diabetes/screens/home/widget/home_statistics.dart';
-import 'package:diabetes/screens/pill/pill_page.dart';
+import 'package:diabetes/screens/home/widget/home_today_pill.dart';
 import 'package:diabetes/screens/tabbar/bloc/tab_bar_bloc.dart';
 import 'package:diabetes/screens/workout_details/page/workout_details_page.dart';
-import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -47,15 +46,15 @@ class HomeContent extends StatelessWidget {
                 margin: const EdgeInsets.only(top: 20),
                 decoration: ShapeDecoration(
                   color: context.colorScheme.background,
-                  shape: const SmoothRectangleBorder(
-                    borderRadius: SmoothBorderRadius.vertical(
-                      top: SmoothRadius(cornerRadius: 30, cornerSmoothing: 0.7),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(30),
                     ),
                   ),
                 ),
                 child: ColoredBox(
                     color: context.colorScheme.surfaceVariant.withOpacity(0.1),
-                    child: const PillScheduleSection()),
+                    child: const HomeTodayPill()),
               ),
             ),
           ],
@@ -91,9 +90,8 @@ class HomeContent extends StatelessWidget {
                 buildWhen: (_, currState) =>
                     currState is ReloadDisplayNameState,
                 builder: (context, state) {
-                  final displayName = state is ReloadDisplayNameState
-                      ? state.displayName
-                      : '[name]';
+                  final displayName =
+                      state is ReloadDisplayNameState ? state.displayName : '';
                   return Text(
                     'Hi, $displayName',
                     style: TextStyle(

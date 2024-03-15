@@ -88,7 +88,7 @@ class _TabBarPageState extends State<TabBarPage> {
   Widget _createBody(BuildContext context, int index) {
     final children = [
       const HomePage(),
-      const PillPage(),
+      const SchedulePage(),
       const WorkoutsPage(),
       BlocProvider(
         create: (context) => SearchPageCubit(),

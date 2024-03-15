@@ -12,9 +12,9 @@ class ShimmerX extends StatelessWidget {
     return Shimmer.fromColors(
       period: const Duration(milliseconds: 1500),
       highlightColor:
-          context.colorScheme.primary.withOpacity(isLight ? 0.5 : 0.1),
+          context.colorScheme.primary.withOpacity(isLight ? 0.2 : 0.1),
       baseColor: isLight
-          ? context.colorScheme.primary.withOpacity(0.3)
+          ? context.colorScheme.primary.withOpacity(0.1)
           : context.colorScheme.outlineVariant.withOpacity(0.2),
       child: child,
     );

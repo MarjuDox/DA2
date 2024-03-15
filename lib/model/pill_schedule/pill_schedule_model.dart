@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:diabetes/core/extension/datetime_extension.dart';
 import 'package:flutter/material.dart';
 
 import 'package:diabetes/core/const/enum.dart';
@@ -18,6 +19,10 @@ class PillScheduleModel {
   final double dose;
   final MedicineUnit unit;
   final Map<DateTime, List<TimeOfDay>> takenPill;
+
+  bool get isExpired {
+    return endDate.isBefore(DateTime.now().dateOnly);
+  }
 
   bool isActiveAt(DateTime dateTime) {
     if (dateTime.isAfter(endDate)) {
@@ -143,9 +148,9 @@ class PillScheduleModel {
         userId: '',
         medicineName: 'Medicine name',
         times: [],
-        startDate: DateTime.now(),
+        startDate: DateTime.now().dateOnly,
         note: PillUseNote.beforeEat,
-        endDate: DateTime.now(),
+        endDate: DateTime.now().dateOnly,
         daysInWeek: DayInWeek.values,
         dose: 1,
         unit: MedicineUnit.pill,
