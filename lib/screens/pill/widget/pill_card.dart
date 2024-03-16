@@ -63,7 +63,7 @@ class PillCardContent extends StatelessWidget {
             const SizedBox(height: 4),
             TextShimmerable(
               child: Text(
-                "${item.dose} ${item.unit.name}",
+                "${item.dose} ${item.unit.name} | ${item.note.label}",
                 style: TextStyle(
                     fontSize: 14, color: context.colorScheme.secondary),
               ),
