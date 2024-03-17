@@ -82,7 +82,7 @@ class MySliverAppBar extends SliverPersistentHeaderDelegate {
                         child: Row(
                           children: [
                             Text(
-                              "${info.spoonacularScore}",
+                              info.spoonacularScore!.roundToDouble().toStringAsFixed(2),
                             ),
                             const SizedBox(width: 10),
                             Icon(
@@ -138,11 +138,11 @@ class AppBarWidget extends StatefulWidget {
 class _AppBarWidgetState extends State<AppBarWidget> {
   Future<Uri> data() async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: 'https://newapp2222.page.link/',
+      uriPrefix: 'https://diabetes.page.link/',
       link: Uri.parse(
-          'https://ansh-rathod-blog.netlify.app/?id=${widget.info.id}'),
+          'https://diabetes.app/?id=${widget.info.id}'),
       androidParameters: AndroidParameters(
-        packageName: 'com.example.android',
+        packageName: 'com.example.diabetes',
         minimumVersion: 125,
       ),
       googleAnalyticsParameters: GoogleAnalyticsParameters(
@@ -201,11 +201,22 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           icon: const Icon(CupertinoIcons.share, color: Colors.black),
         )
       ],
-      title: Opacity(
-        opacity: (0 + widget.shrinkOffset / widget.expandedHeight),
+      // title: Opacity(
+      //   opacity: (0 + widget.shrinkOffset / widget.expandedHeight),
+      //   child: Text(
+      //     "Spoonacular",
+      //     style: Theme.of(context).textTheme.headline1,
+      //   ),
+      // ),
+      title: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8),
         child: Text(
-          "Spoonacular",
-          style: Theme.of(context).textTheme.headline1,
+          'Recipe Information',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
         ),
       ),
     );

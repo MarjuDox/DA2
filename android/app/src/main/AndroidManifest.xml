@@ -45,7 +45,7 @@
                  <!-- Accepts URIs that begin with YOUR_SCHEME://YOUR_HOST -->
                 <data
                     android:scheme="https"
-                    android:host="newapp2222.page.link" />
+                    android:host="diabetes.page.link" />
                 </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

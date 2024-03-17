@@ -35,8 +35,8 @@ class _SearchResultsState extends State<SearchResults> {
           iconTheme: const IconThemeData(color: Colors.black),
           backgroundColor: Colors.white,
           title: Text(
-            "Spoonacular",
-            style: Theme.of(context).textTheme.headline1,
+            "All your search result",
+            style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
         body: BlocBuilder<SearchResultsBloc, SearchResultsState>(
