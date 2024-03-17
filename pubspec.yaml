@@ -19,6 +19,12 @@ dependencies:
   path_provider: ^2.0.5
   share: ^2.0.4
   hive_flutter: ^1.1.0
+  #--------------------\
+  flutter_chat_ui: ^1.6.9
+  file_picker: ^5.3.2
+  open_filex: ^4.3.2
+  flutter_chat_types: ^3.6.1
+  http: ^0.13.6
   #bloc  
   flutter_bloc: ^7.0.1
 

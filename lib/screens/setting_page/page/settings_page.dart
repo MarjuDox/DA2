@@ -5,6 +5,7 @@ import 'package:diabetes/core/const/path_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
 import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/core/service/auth_service.dart';
+import 'package:diabetes/screens/chatbot/chatbot_page/chatbot_page.dart';
 import 'package:diabetes/screens/common_widget/diabetes_settings_container.dart';
 import 'package:diabetes/screens/edit_account/page/edit_account_page.dart';
 import 'package:diabetes/screens/reminder/page/reminder_page.dart';
@@ -114,6 +115,15 @@ class _SettingsPageState extends State {
                     MaterialPageRoute(builder: (_) => const ReminderPage()));
               },
               child: const Text(TextConstants.reminder,
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
+            ),
+            SettingsContainer(
+              withArrow: true,
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const ChatBotPage()));
+              },
+              child: const Text(TextConstants.chatBot,
                   style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
             ),
             if (!kIsWeb)
