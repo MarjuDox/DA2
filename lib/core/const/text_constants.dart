@@ -4,16 +4,19 @@ class TextConstants {
   static const String continueT ="Continue";
 
   // Onboarding
-  static const String onboarding1Title = "Workout anywhere";
-  static const String onboarding2Title = "Learn techniques";
-  static const String onboarding3Title = "Stay strong & healthy";
+  static const String onboarding1Title =
+      "Discover How to Manage Diabetes"; // Khám Phá Cách Quản Lý Đái Tháo Đường
+  static const String onboarding2Title =
+      "Track Your Personal Health"; // Theo Dõi Sức Khỏe Cá Nhân
+  static const String onboarding3Title =
+      "Connect with Your Doctor"; // Kết Nối Với Bác Sĩ Của Bạn
 
   static const String onboarding1Description =
-      "You can do your workout at home without any equipment, outside or at the gym.";
+      "Explore the tools and features within our app designed to help you monitor and manage your blood sugar levels, as well as access valuable information on diabetes treatment.";
   static const String onboarding2Description =
-      "Our workout programs are made by professionals.";
+      "Use our dashboard to monitor your progress, from blood sugar levels and necessary insulin amounts to adherence to your diet and exercise plan, helping you maintain the best possible health.";
   static const String onboarding3Description =
-      "We want you to fully enjoy the program and stay healthy and positive.";
+      "Easily share your health data with your doctor or healthcare professional to receive advice, adjust your treatment plan, and get quick feedback, helping you maintain the best control on your journey against Diabetes.";
 
   // Sign Up
   static const String signUp = "Sign up";
