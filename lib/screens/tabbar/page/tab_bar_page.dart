@@ -74,9 +74,9 @@ class _TabBarPageState extends State<TabBarPage> {
             icon: Icon(FluentIcons.accessibility_24_regular),
             label: 'Workout'),
         NavigationDestination(
-            selectedIcon: Icon(FluentIcons.search_24_filled),
-            icon: Icon(FluentIcons.search_24_regular),
-            label: 'Search'),
+            selectedIcon: Icon(FluentIcons.food_24_filled),
+            icon: Icon(FluentIcons.food_24_regular),
+            label: 'Food'),
         NavigationDestination(
             selectedIcon: Icon(FluentIcons.settings_24_filled),
             icon: Icon(FluentIcons.settings_24_regular),
