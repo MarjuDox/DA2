@@ -34,7 +34,7 @@ class DataConstants {
         minutes: TextConstants.yogaMinutes1,
         currentProgress: 0,
         progress: 5,
-        image: PathConstants.yoga,
+        image: PathConstants.yoga1,
         exerciseDataList: [
           ExerciseModel(
             id: 'downdogwalk',
@@ -123,7 +123,7 @@ class DataConstants {
         minutes: TextConstants.yogaMinutes2,
         currentProgress: 0,
         progress: 5,
-        image: PathConstants.yoga,
+        image: PathConstants.yoga2,
         exerciseDataList: [
           ExerciseModel(
             id: 'boatpose',
@@ -215,7 +215,7 @@ class DataConstants {
         minutes: TextConstants.strengthTrainingMinutes,
         currentProgress: 0,
         progress: 4,
-        image: PathConstants.yoga,
+        image: PathConstants.strengthtraining,
         exerciseDataList: [
           ExerciseModel(
             id: 'deadlifts',
@@ -284,7 +284,7 @@ class DataConstants {
         minutes: TextConstants.pilatesMinutes,
         currentProgress: 0,
         progress: 5,
-        image: PathConstants.yoga,
+        image: PathConstants.pilates,
         exerciseDataList: [
           ExerciseModel(
             id: 'crisscross',
@@ -369,7 +369,7 @@ class DataConstants {
         minutes: TextConstants.cardioMinutes,
         currentProgress: 0,
         progress: 5,
-        image: PathConstants.yoga,
+        image: PathConstants.cardio,
         exerciseDataList: [
           ExerciseModel(
             id: 'ankletapback',
@@ -457,7 +457,7 @@ class DataConstants {
         minutes: TextConstants.calisthenicsMinutes,
         currentProgress: 0,
         progress: 4,
-        image: PathConstants.yoga,
+        image: PathConstants.calisthenics,
         exerciseDataList: [
           ExerciseModel(
             id: 'lunges',
