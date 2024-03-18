@@ -32,7 +32,7 @@ class _PillPageState extends ConsumerState<SchedulePage> {
                 ),
               ),
               SizedBox(
-                height: 16,
+                height: 8,
               ),
               Expanded(
                 child: PillScheduleSection(),

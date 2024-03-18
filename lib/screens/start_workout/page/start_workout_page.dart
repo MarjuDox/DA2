@@ -8,16 +8,15 @@ class StartWorkoutPage extends StatelessWidget {
   final WorkoutModel workout;
   final int index;
 
-  StartWorkoutPage({
+  const StartWorkoutPage({
+    super.key,
     required this.workout,
     required this.index,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _buildContext(context),
-    );
+    return _buildContext(context);
   }
 
   BlocProvider<StartWorkoutBloc> _buildContext(BuildContext context) {

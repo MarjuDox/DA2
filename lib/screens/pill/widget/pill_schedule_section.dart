@@ -27,9 +27,7 @@ class PillScheduleSection extends ConsumerWidget {
               ref.invalidate(pillScheduleListProvider);
             },
             child: ListView.separated(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               separatorBuilder: (context, index) => const SizedBox(height: 12),
               itemCount: pillScheduleList.length,
               itemBuilder: (context, index) {
@@ -79,7 +77,7 @@ class PillScheduleSection extends ConsumerWidget {
       },
       orElse: () {
         return ListView.separated(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           separatorBuilder: (context, index) => const SizedBox(
             height: 12,
           ),

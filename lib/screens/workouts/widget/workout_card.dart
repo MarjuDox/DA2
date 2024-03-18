@@ -2,7 +2,9 @@ import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
 import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/model/workout_model.dart';
+import 'package:diabetes/screens/common_widget/card_x.dart';
 import 'package:diabetes/screens/workouts/bloc/workouts_bloc.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -18,98 +20,89 @@ class WorkoutCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<WorkoutsBloc>(context, listen: false);
-    return Container(
-      width: double.infinity,
-      height: 140,
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: ColorConstants.white,
-        boxShadow: [
-          BoxShadow(
-            color: context.colorScheme.shadow.withOpacity(0.12),
-            blurRadius: 5.0,
-            spreadRadius: 1.1,
-          )
-        ],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: BlocBuilder<WorkoutsBloc, WorkoutsState>(
-          buildWhen: (_, currState) => currState is CardTappedState,
-          builder: (context, state) {
-            return InkWell(
-              borderRadius: BorderRadius.circular(10),
-              onTap: () {
-                bloc.add(CardTappedEvent(workout: workout));
-              },
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
+    return CardX(
+      child: BlocBuilder<WorkoutsBloc, WorkoutsState>(
+        buildWhen: (_, currState) => currState is CardTappedState,
+        builder: (context, state) {
+          return InkWell(
+            splashColor: Colors.transparent,
+            borderRadius: BorderRadius.circular(10),
+            onTap: () {
+              bloc.add(CardTappedEvent(workout: workout));
+            },
+            child: Column(
+              children: [
+                Row(
                   children: [
                     Expanded(
+                      flex: 1,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Image.asset(
+                          workout.image ?? "",
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      flex: 3,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(workout.title ?? "",
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold)),
-                          const SizedBox(height: 3),
+                          Row(
+                            children: [
+                              Text(workout.title ?? "",
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold)),
+                              const Spacer(),
+                              Text(
+                                workout.isDone
+                                    ? 'Done'
+                                    : '${workout.currentProgress}/${workout.progress}',
+                                style: TextStyle(
+                                  color: workout.isDone
+                                      ? context.colorScheme.primary
+                                      : context.colorScheme.secondary,
+                                ),
+                              ),
+                            ],
+                          ),
                           Text(
                               '${workout.exerciseDataList!.length} ${TextConstants.exercisesUppercase}',
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: ColorConstants.grey),
+                                  fontWeight: FontWeight.w400,
+                                  color: context.colorScheme.secondary),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2),
-                          const SizedBox(height: 3),
-                          Text(
-                              '${_getWorkoutMinutes()}',
-                              style: const TextStyle(
+                          Text(_getWorkoutMinutes(),
+                              style: TextStyle(
                                   fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: ColorConstants.grey),
+                                  fontWeight: FontWeight.w400,
+                                  color: context.colorScheme.secondary),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2),
-                          const Spacer(),
-                          Text('${workout.currentProgress}/${workout.progress}',
-                              style: const TextStyle(fontSize: 10)),
-                          const SizedBox(height: 3),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(right: 30.0, left: 2),
-                            child: LinearPercentIndicator(
-                              percent:
-                                  workout.currentProgress! / workout.progress!,
-                              progressColor: context.colorScheme.primary,
-                              backgroundColor:
-                                  context.colorScheme.primary.withOpacity(0.12),
-                              lineHeight: 6,
-                              padding: EdgeInsets.zero,
-                            ),
-                          )
                         ],
-                      ),
-                    ),
-                    const SizedBox(width: 60),
-                    Expanded(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child:
-                            Image.asset(workout.image ?? "", fit: BoxFit.fill),
                       ),
                     ),
                   ],
                 ),
-              ),
-            );
-          },
-        ),
+                const SizedBox(height: 16),
+                LinearPercentIndicator(
+                  percent: workout.currentProgress! / workout.progress!,
+                  progressColor: context.colorScheme.primary,
+                  barRadius: const Radius.circular(100),
+                  backgroundColor:
+                      context.colorScheme.primary.withOpacity(0.12),
+                  lineHeight: 6,
+                  padding: EdgeInsets.zero,
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -128,6 +121,6 @@ class WorkoutCard extends StatelessWidget {
       seconds += e!;
     }
 
-    return "${minutes + (seconds ~/60)}':${seconds % 60}″ ";
+    return "${minutes + (seconds ~/ 60)}':${seconds % 60}″ ";
   }
 }

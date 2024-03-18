@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:chewie/chewie.dart';
-import 'package:diabetes/core/const/color_constants.dart';
-import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/model/exercise_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

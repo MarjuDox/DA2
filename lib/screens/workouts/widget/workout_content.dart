@@ -1,5 +1,4 @@
 import 'package:diabetes/core/common_widget/base_screen.dart';
-import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
 import 'package:diabetes/model/workout_model.dart';
 import 'package:diabetes/screens/workouts/bloc/workouts_bloc.dart';
@@ -35,10 +34,10 @@ class WorkoutContent extends StatelessWidget {
                           TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 8),
                   Expanded(
                     child: ListView(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                       children: bloc.workouts
                           .map((e) => _createWorkoutCard(e))
                           .toList(),

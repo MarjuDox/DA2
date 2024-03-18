@@ -4,14 +4,14 @@ import 'package:diabetes/model/workout_model.dart';
 import 'package:diabetes/screens/workout_details/bloc/workout_details_bloc.dart';
 import 'package:diabetes/screens/workout_details/widget/panel/exercises_list.dart';
 import 'package:diabetes/screens/workout_details/widget/panel/workout_tag.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'dart:math';
 
 class WorkoutDetailsPanel extends StatelessWidget {
   final WorkoutModel workout;
 
-  WorkoutDetailsPanel({required this.workout});
+  const WorkoutDetailsPanel({super.key, required this.workout});
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +29,9 @@ class WorkoutDetailsPanel extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _createHeader(),
-              const SizedBox(height: 20),
+              const SizedBox(height: 8),
               _createWorkoutData(context),
-              SizedBox(height: 20),
+              const SizedBox(height: 8),
               _createExerciseList(),
             ],
           ),
@@ -40,16 +40,16 @@ class WorkoutDetailsPanel extends StatelessWidget {
     );
   }
 
-   Widget _createRectangle() {
-    return Image(image: AssetImage(PathConstants.rectangle));
+  Widget _createRectangle() {
+    return const Image(image: AssetImage(PathConstants.rectangle));
   }
 
   Widget _createHeader() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Text(
-        workout.title! + "  " + TextConstants.workout,
-        style: TextStyle(
+        "${workout.title!}  ${TextConstants.workout}",
+        style: const TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.bold,
         ),
@@ -59,16 +59,16 @@ class WorkoutDetailsPanel extends StatelessWidget {
 
   Widget _createWorkoutData(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
           WorkoutTag(
-            icon: PathConstants.timeTracker,
-            content: "${_getTimeExercise()}",
+            icon: FluentIcons.clock_24_filled,
+            content: _getTimeExercise(),
           ),
           const SizedBox(width: 15),
           WorkoutTag(
-            icon: PathConstants.exerciseTracker,
+            icon: FluentIcons.accessibility_24_filled,
             content:
                 '${workout.exerciseDataList!.length} ${TextConstants.exercisesLowercase}',
           ),
@@ -79,23 +79,25 @@ class WorkoutDetailsPanel extends StatelessWidget {
 
   int _getExerciseMinutes() {
     int minutes = 0;
-    final List<int?> exerciseList = workout.exerciseDataList!.map((e) => e.minutes).toList();
-    exerciseList.forEach((e) {
+    final List<int?> exerciseList =
+        workout.exerciseDataList!.map((e) => e.minutes).toList();
+    for (var e in exerciseList) {
       minutes += e!;
-    });
+    }
     return minutes;
   }
 
   int _getExerciseSeconds() {
     int second = 0;
-    final List<int?> exerciseList = workout.exerciseDataList!.map((e) => e.seconds).toList();
-    exerciseList.forEach((e) {
+    final List<int?> exerciseList =
+        workout.exerciseDataList!.map((e) => e.seconds).toList();
+    for (var e in exerciseList) {
       second += e!;
-    });
+    }
     return second;
   }
 
-  String _getTimeExercise(){
+  String _getTimeExercise() {
     String time = '';
     int m = _getExerciseMinutes();
     int s = _getExerciseSeconds();
@@ -110,12 +112,9 @@ class WorkoutDetailsPanel extends StatelessWidget {
       buildWhen: (_, currState) => currState is ReloadWorkoutDetailsState,
       builder: (context, state) {
         return Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: ExercisesList(
-              exercises: workout.exerciseDataList ?? [],
-              workout: workout,
-            ),
+          child: ExercisesList(
+            exercises: workout.exerciseDataList ?? [],
+            workout: workout,
           ),
         );
       },

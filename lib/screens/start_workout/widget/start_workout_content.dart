@@ -1,3 +1,4 @@
+import 'package:diabetes/core/common_widget/base_screen.dart';
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/path_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
@@ -27,74 +28,43 @@ class StartWorkoutContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: double.infinity,
-      width: double.infinity,
-      color: ColorConstants.white,
-      child: SafeArea(
-        child: _createDetailedExercise(context),
-      ),
-    );
+    return _createDetailedExercise(context);
   }
 
   Widget _createDetailedExercise(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _createBackButton(context),
-          const SizedBox(height: 23),
-          _createVideo(context),
-          const SizedBox(height: 8),
-          Expanded(
-            child: ListView(children: [
-              _createTitle(),
-              const SizedBox(height: 9),
-              _createDescription(),
-              const SizedBox(height: 30),
-              _createSteps(),
-            ]),
-          ),
-          _createTimeTracker(context),
-        ],
-      ),
-    );
-  }
-
-  Widget _createBackButton(BuildContext context) {
-    final bloc = BlocProvider.of<StartWorkoutBloc>(context);
-    return Padding(
-      padding: const EdgeInsets.only(left: 10, top: 8),
-      child: GestureDetector(
-        child: BlocBuilder<StartWorkoutBloc, StartWorkoutState>(
-          builder: (context, state) {
-            return const Row(
+    return Scaffold(
+      appBar: AppBar(),
+      body: SafeArea(
+        child: BaseScreen(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image(image: AssetImage(PathConstants.back)),
-                SizedBox(width: 17),
-                Text(
-                  TextConstants.back,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                _createVideo(context),
+                const SizedBox(height: 8),
+                Expanded(
+                  child: ListView(children: [
+                    _createTitle(),
+                    const SizedBox(height: 9),
+                    _createDescription(),
+                    const SizedBox(height: 30),
+                    _createSteps(),
+                  ]),
                 ),
+                _createTimeTracker(context),
               ],
-            );
-          },
+            ),
+          ),
         ),
-        onTap: () {
-          bloc.add(BackTappedEvent());
-        },
       ),
     );
   }
 
   Widget _createVideo(BuildContext context) {
     final bloc = BlocProvider.of<StartWorkoutBloc>(context);
-    return Container(
-      height: 264,
-      width: double.infinity,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20), color: ColorConstants.white),
+    return AspectRatio(
+      aspectRatio: 3 / 2,
       child: StartWorkoutVideo(
         exercise: exercise,
         onPlayTapped: (time) async {
@@ -129,52 +99,50 @@ class StartWorkoutContent extends StatelessWidget {
   }
 
   Widget _createTimeTracker(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      color: ColorConstants.white,
-      child: Column(
-        children: [
-          nextExercise != null
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      TextConstants.nextExercise,
-                      style: TextStyle(
-                        color: ColorConstants.grey,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        nextExercise != null
+            ? Wrap(
+                alignment: WrapAlignment.start,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Text(
+                    TextConstants.nextExercise,
+                    style: TextStyle(
+                      color: context.colorScheme.secondary,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
                     ),
-                    const SizedBox(width: 5),
-                    Text(
-                      nextExercise?.title ?? "",
-                      style: const TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                      ),
+                  ),
+                  const SizedBox(width: 5),
+                  Text(
+                    nextExercise?.title ?? "",
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
                     ),
-                    const SizedBox(width: 6.5),
-                    const Icon(Icons.access_time, size: 20),
-                    const SizedBox(width: 6.5),
-                    Text(
-                        '${nextExercise!.minutes! > 10 ? nextExercise!.minutes : '0${nextExercise!.minutes}'} : ${nextExercise!.seconds! > 10 ? nextExercise!.seconds : '0${nextExercise!.seconds}'}')
-                    // BlocBuilder<StartWorkoutBloc, StartWorkoutState>(
-                    //   buildWhen: (_, currState) => currState is PlayTimerState || currState is PauseTimerState,
-                    //   builder: (context, state) {
-                    //     return StartWorkoutTimer(
-                    //       time: bloc.time,
-                    //       isPaused: !(state is PlayTimerState),
-                    //     );
-                    //   },
-                    // ),
-                  ],
-                )
-              : const SizedBox.shrink(),
-          const SizedBox(height: 18),
-          _createButton(context),
-        ],
-      ),
+                  ),
+                  const SizedBox(width: 6.5),
+                  const Icon(Icons.access_time, size: 20),
+                  const SizedBox(width: 6.5),
+                  Text(
+                      '${nextExercise!.minutes! > 10 ? nextExercise!.minutes : '0${nextExercise!.minutes}'} : ${nextExercise!.seconds! > 10 ? nextExercise!.seconds : '0${nextExercise!.seconds}'}'),
+                  // BlocBuilder<StartWorkoutBloc, StartWorkoutState>(
+                  //   buildWhen: (_, currState) => currState is PlayTimerState || currState is PauseTimerState,
+                  //   builder: (context, state) {
+                  //     return StartWorkoutTimer(
+                  //       time: bloc.time,
+                  //       isPaused: !(state is PlayTimerState),
+                  //     );
+                  //   },
+                  // ),
+                ],
+              )
+            : const SizedBox.shrink(),
+        const SizedBox(height: 10),
+        _createButton(context),
+      ],
     );
   }
 
@@ -219,7 +187,7 @@ class Step extends StatelessWidget {
   final String number;
   final String description;
 
-  Step({required this.number, required this.description});
+  const Step({super.key, required this.number, required this.description});
 
   @override
   Widget build(BuildContext context) {

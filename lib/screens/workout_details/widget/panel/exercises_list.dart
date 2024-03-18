@@ -7,12 +7,13 @@ class ExercisesList extends StatelessWidget {
   final WorkoutModel workout;
   final List<ExerciseModel> exercises;
 
-  const ExercisesList({required this.exercises, required this.workout});
+  const ExercisesList(
+      {super.key, required this.exercises, required this.workout});
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 80),
       itemCount: exercises.length,
       itemBuilder: (context, index) {
         return ExerciseCell(
@@ -24,10 +25,8 @@ class ExercisesList extends StatelessWidget {
         );
       },
       separatorBuilder: (context, index) {
-        return const SizedBox(height: 15);
+        return const SizedBox(height: 16);
       },
     );
   }
-
-  
 }
