@@ -3,7 +3,9 @@ import 'package:diabetes/core/service/notification/awesome_notification_impl.dar
 import 'package:diabetes/core/service/notification/notification_manager.dart';
 import 'package:diabetes/firebase_options.dart';
 import 'package:diabetes/model/user_model.dart';
+import 'package:diabetes/screens/app/app_cubit.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
@@ -31,7 +33,8 @@ void main() async {
   await Hive.initFlutter(dir.path);
   await Hive.openBox('Favorite');
 
-  GetIt.I.registerSingleton((AwesomeNotificationImpl(key: null)) as NotificationManager);
+  GetIt.I.registerSingleton(
+      (AwesomeNotificationImpl(key: null)) as NotificationManager);
   GetIt.I<NotificationManager>().init();
 
   runApp(const ProviderScope(child: MyApp()));
@@ -58,12 +61,16 @@ class _MyAppState extends State {
     if (isLoggedIn) {
       GlobalConstants.currentUser = UserModel.fromFirebase(currUser);
     }
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Diabetes',
-      darkTheme: getTheme(Brightness.dark),
-      theme: getTheme(Brightness.light),
-      home: isLoggedIn ? const TabBarPage() : const OnboardingPage(),
+    return BlocProvider(
+      lazy: false,
+      create: (context) => AppCubit(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Diabetes',
+        darkTheme: getTheme(Brightness.dark),
+        theme: getTheme(Brightness.light),
+        home: isLoggedIn ? const TabBarPage() : const OnboardingPage(),
+      ),
     );
   }
 

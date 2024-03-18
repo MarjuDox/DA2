@@ -34,7 +34,7 @@ dependencies:
   video_player: ^2.1.12
   chewie: ^1.7.5
   image_picker: ^1.0.7
-  awesome_notifications: ^0.8.3
+  awesome_notifications: ^0.8.`3`
   awesome_notifications_core: any
   awesome_notifications_fcm: any
   flutter_timezone: ^1.0.8

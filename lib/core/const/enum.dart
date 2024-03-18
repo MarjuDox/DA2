@@ -1,3 +1,4 @@
+import 'package:diabetes/core/service/notification/day_of_week_enum.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 
@@ -47,6 +48,25 @@ enum DayInWeek {
         return DayInWeek.sun;
     }
     throw Exception('Unknown DayInWeek: ${dateTime.weekday}');
+  }
+
+   DayOfWeekEnum toDayOfWeek() {
+    switch (this) {
+      case DayInWeek.mon:
+      return DayOfWeekEnum.monday;
+      case DayInWeek.tue:
+        return DayOfWeekEnum.tuesday;
+      case DayInWeek.wed:
+        return DayOfWeekEnum.wednesday;
+      case DayInWeek.thu:
+        return DayOfWeekEnum.thursday;
+      case DayInWeek.fri:
+        return DayOfWeekEnum.friday;
+      case DayInWeek.sat:
+        return DayOfWeekEnum.saturday;
+      case DayInWeek.sun:
+        return DayOfWeekEnum.sunday ;
+    }
   }
 
   String get toJson {

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 enum FNotificationChannelEnum {
   general,
+  prescription,
   reminder;
 
   String toKey() {
@@ -12,6 +13,8 @@ enum FNotificationChannelEnum {
         return 'REMINDER';
       case general:
         return 'GENERAL';
+      case prescription:
+        return 'PRESCRIPTION';
     }
   }
 }
@@ -33,9 +36,16 @@ class NotificationConstants {
       defaultColor: Colors.grey,
       ledColor: Colors.white,
     ),
+    NotificationChannel(
+      channelKey: FNotificationChannelEnum.prescription.toKey(),
+      channelName: 'Prescription',
+      channelDescription: 'Notification Prescription channel',
+      defaultColor: Colors.grey,
+      ledColor: Colors.white,
+    ),
   ];
-  // static final groupChannels = [
-  //   NotificationChannelGroup(
-  //       channelGroupKey: 'basic_channel_group', channelGroupName: 'Basic group')
-  // ];
+// static final groupChannels = [
+//   NotificationChannelGroup(
+//       channelGroupKey: 'basic_channel_group', channelGroupName: 'Basic group')
+// ];
 }
