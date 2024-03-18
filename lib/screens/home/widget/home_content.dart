@@ -41,7 +41,7 @@ class HomeContent extends StatelessWidget {
             ),
             _createProfileData(context),
             const SizedBox(height: 35),
-            _showStartWorkout(context, bloc),
+            // _showStartWorkout(context, bloc),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.only(top: 6),
