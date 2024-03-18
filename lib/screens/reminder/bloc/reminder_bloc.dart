@@ -1,123 +1,94 @@
 import 'dart:async';
+
 // ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
+import 'package:diabetes/core/service/notification/day_of_week_enum.dart';
+import 'package:diabetes/core/service/notification/notification_constants.dart';
+import 'package:diabetes/core/service/notification/notification_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 // ignore: depend_on_referenced_packages
-import 'package:timezone/timezone.dart' as tz;
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 part 'reminder_event.dart';
+
 part 'reminder_state.dart';
 
 class ReminderBloc extends Bloc<ReminderEvent, ReminderState> {
   ReminderBloc() : super(ReminderInitial());
-    
-    int? selectedRepeatDayIndex;
-    late DateTime reminderTime;
-    int? dayTime;
 
-    @override
-    Stream<ReminderState> mapEventToState(
-      ReminderEvent event,
-    ) async* {
-      if (event is RepeatDaySelectedEvent) {
-        selectedRepeatDayIndex = event.index;
-        dayTime = event.dayTime;
-        yield RepeatDaySelectedState(index: selectedRepeatDayIndex);
-      } else if (event is ReminderNotificationTimeEvent) {
-        reminderTime = event.dateTime;
-        yield ReminderNotificationState();
-      } else if (event is OnSaveTappedEvent) {
-        _scheduleAtParticularTimeAndDate(reminderTime, dayTime);
-        yield OnSaveTappedState();
-      }
+  int? selectedRepeatDayIndex;
+  late DateTime reminderTime;
+  int? dayTime;
+
+  @override
+  Stream<ReminderState> mapEventToState(
+    ReminderEvent event,
+  ) async* {
+    if (event is RepeatDaySelectedEvent) {
+      selectedRepeatDayIndex = event.index;
+      dayTime = event.dayTime;
+      yield RepeatDaySelectedState(index: selectedRepeatDayIndex);
+    } else if (event is ReminderNotificationTimeEvent) {
+      reminderTime = event.dateTime;
+      yield ReminderNotificationState();
+    } else if (event is OnSaveTappedEvent) {
+      _scheduleAtParticularTimeAndDate(reminderTime, dayTime);
+      yield OnSaveTappedState();
     }
-  
-  Future _scheduleAtParticularTimeAndDate(
-      DateTime dateTime, int? dayTime) async {
-    final flutterNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    final androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'your other channel id',
-        'your other channel name',
-        channelDescription: 'your other channel description');
-    // final iOSPlatformChannelSpecifics = IOSNotificationDetails();
-    NotificationDetails platformChannelSpecifics = NotificationDetails(
-        android: androidPlatformChannelSpecifics);
-        //iOS: iOSPlatformChannelSpecifics);
-
-    await flutterNotificationsPlugin.zonedSchedule(
-      0,
-      "Diabetes",
-      "Hey, it's time to start your exercises!",
-      _scheduleWeekly(dateTime, days: _createNotificationDayOfTheWeek(dayTime)),
-      platformChannelSpecifics,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-      androidAllowWhileIdle: true,
-      matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
-    );
   }
 
-  tz.TZDateTime _scheduleDaily(DateTime dateTime) {
-    final now = tz.TZDateTime.now(tz.local);
-    var timezoneOffset = DateTime.now().timeZoneOffset;
-    final scheduleDate = tz.TZDateTime.utc(now.year, now.month, now.day)
-        .add(Duration(hours: dateTime.hour, minutes: dateTime.minute))
-        .subtract(Duration(hours: timezoneOffset.inHours));
+  final _notificationManager = GetIt.I<NotificationManager>();
 
-    return scheduleDate.isBefore(now)
-        ? scheduleDate.add(Duration(days: 1))
-        : scheduleDate;
-  }
-
-  tz.TZDateTime _scheduleWeekly(DateTime dateTime, {required List<int>? days}) {
-    tz.TZDateTime scheduleDate = _scheduleDaily(dateTime);
-
-    for (final int day in days ?? []) {
-      scheduleDate = scheduleDate.add(Duration(days: day));
-    }
-
-    return scheduleDate;
-  }
-  
-  List<int> _createNotificationDayOfTheWeek(int? dayTime) {
+  List<DayOfWeekEnum> dateOptionToListDayOfWeek(int? optionDate) {
     switch (dayTime) {
       case 0:
         return [
-          DateTime.monday,
-          DateTime.tuesday,
-          DateTime.wednesday,
-          DateTime.thursday,
-          DateTime.friday,
-          DateTime.saturday,
-          DateTime.sunday
+          DayOfWeekEnum.monday,
+          DayOfWeekEnum.tuesday,
+          DayOfWeekEnum.wednesday,
+          DayOfWeekEnum.thursday,
+          DayOfWeekEnum.friday,
+          DayOfWeekEnum.saturday,
+          DayOfWeekEnum.sunday,
         ];
       case 1:
         return [
-          DateTime.monday,
-          DateTime.tuesday,
-          DateTime.wednesday,
-          DateTime.thursday,
-          DateTime.friday
+          DayOfWeekEnum.monday,
+          DayOfWeekEnum.tuesday,
+          DayOfWeekEnum.wednesday,
+          DayOfWeekEnum.thursday,
+          DayOfWeekEnum.friday,
         ];
       case 2:
-        return [DateTime.saturday, DateTime.sunday];
+        return [
+          DayOfWeekEnum.saturday,
+          DayOfWeekEnum.sunday,
+        ];
       case 3:
-        return [DateTime.monday];
+        return [DayOfWeekEnum.monday];
       case 4:
-        return [DateTime.tuesday];
+        return [DayOfWeekEnum.tuesday];
       case 5:
-        return [DateTime.wednesday];
+        return [DayOfWeekEnum.wednesday];
       case 6:
-        return [DateTime.thursday];
+        return [DayOfWeekEnum.thursday];
       case 7:
-        return [DateTime.friday];
+        return [DayOfWeekEnum.friday];
       case 8:
-        return [DateTime.saturday];
+        return [DayOfWeekEnum.saturday];
       case 9:
-        return [DateTime.sunday];
+        return [DayOfWeekEnum.sunday];
       default:
         return [];
     }
+  }
+
+  void _scheduleAtParticularTimeAndDate(DateTime dateTime, int? dateOption) {
+    _notificationManager.createSchedulednotification(1,
+        title: 'REMINDER-TITLE',
+        body: 'REMINDER-BODY',
+        channelKey: FNotificationChannelEnum.reminder.toKey(),
+        dayOfWeeks: dateOptionToListDayOfWeek(dateOption),
+        timeOfDay: TimeOfDay(hour: dateTime.hour, minute: dateTime.minute));
   }
 }

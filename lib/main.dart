@@ -1,20 +1,22 @@
 import 'package:diabetes/core/const/global_constants.dart';
-import 'package:diabetes/core/service/notification_service.dart';
+import 'package:diabetes/core/service/notification/awesome_notification_impl.dart';
+import 'package:diabetes/core/service/notification/notification_manager.dart';
 import 'package:diabetes/firebase_options.dart';
 import 'package:diabetes/model/user_model.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 // ignore: depend_on_referenced_packages
-import 'package:timezone/data/latest.dart' as tz;
+// import 'package:timezone/data/latest.dart' as tz;
 import 'package:diabetes/screens/onboarding/page/onboarding_page.dart';
 import 'package:diabetes/screens/tabbar/page/tab_bar_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +30,10 @@ void main() async {
   var dir = await getApplicationDocumentsDirectory();
   await Hive.initFlutter(dir.path);
   await Hive.openBox('Favorite');
+
+  GetIt.I.registerSingleton((AwesomeNotificationImpl(key: null)) as NotificationManager);
+  GetIt.I<NotificationManager>().init();
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -40,24 +46,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State {
-  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      NotificationService.flutterLocalNotificationsPlugin;
-
   @override
   initState() {
     super.initState();
-    const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('app_icon');
-    // final IOSInitializationSettings initializationSettingsIOS =
-    //     IOSInitializationSettings();
-    const InitializationSettings initializationSettings =
-        InitializationSettings(android: initializationSettingsAndroid);
-    //iOS: initializationSettingsIOS);
-
-    tz.initializeTimeZones();
-
-    flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onDidReceiveNotificationResponse: onDidReceiveNotificationResponse);
   }
 
   @override
@@ -76,17 +67,17 @@ class _MyAppState extends State {
     );
   }
 
-  Future onDidReceiveNotificationResponse(NotificationResponse? payload) async {
-    showDialog(
-      context: context,
-      builder: (_) {
-        return AlertDialog(
-          title: const Text("PayLoad"),
-          content: Text("Payload : $payload"),
-        );
-      },
-    );
-  }
+  // Future onDidReceiveNotificationResponse(NotificationResponse? payload) async {
+  //   showDialog(
+  //     context: context,
+  //     builder: (_) {
+  //       return AlertDialog(
+  //         title: const Text("PayLoad"),
+  //         content: Text("Payload : $payload"),
+  //       );
+  //     },
+  //   );
+  // }
 
   ThemeData getTheme(Brightness brightness) {
     return ThemeData(

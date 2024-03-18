@@ -1,15 +1,13 @@
+---
 name: diabetes
-description: "Du An 2"
-publish_to: 'none'
+description: Du An 2
+publish_to: none
 version: 0.1.0
-
 environment:
   sdk: '>=3.2.1 <4.0.0'
-
 dependencies:
   flutter:
     sdk: flutter
-  #--------------------\
   cached_network_image: ^3.3.1
   dio: ^4.0.5
   dio_log: ^2.0.4
@@ -19,56 +17,29 @@ dependencies:
   path_provider: ^2.0.5
   share: ^2.0.4
   hive_flutter: ^1.1.0
-  #--------------------\
   flutter_chat_ui: ^1.6.9
   file_picker: ^5.3.2
   open_filex: ^4.3.2
   flutter_chat_types: ^3.6.1
   http: ^0.13.6
-  #bloc  
   flutter_bloc: ^7.0.1
-
-  # Firebase
   firebase_auth: ^4.15.2
   firebase_core: ^2.26.0
   firebase_storage: ^11.6.7
-
-  #secure storage
   flutter_secure_storage: ^9.0.0
-  
-  # Slide up Panel
   sliding_up_panel: ^2.0.0+1
-  
-  # Timer
   custom_timer: ^0.0.6
-
-  # Page View dots indicator
   smooth_page_indicator: ^1.1.0
-
-  # Percent circle
   percent_indicator: ^4.0.2
-  
-  # Video player
   video_player: ^2.1.12
   chewie: ^1.7.5
-
-  # Image library
   image_picker: ^1.0.7
-
-  # Reminder notification
-  flutter_local_notifications: ^16.3.3
-
-  # Native timezone
-  #flutter_native_timezone: ^2.0.0
+  awesome_notifications: ^0.8.3
+  awesome_notifications_core: any
+  awesome_notifications_fcm: any
   flutter_timezone: ^1.0.8
-
-  # Permission handler
   permission_handler: ^11.3.0
-
-  # URL launcher
   url_launcher: ^6.0.9
-
-  # IOS Icons
   cupertino_icons: ^1.0.2
   flutter_riverpod: ^2.5.1
   fluentui_system_icons: ^1.1.231
@@ -78,39 +49,31 @@ dependencies:
   shimmer: ^3.0.0
   cloud_firestore: ^4.15.8
   uuid: ^4.3.3
-  # get Day in week
-  jiffy: ^6.2.2 
-
+  jiffy: ^6.2.2
+  get_it: ^7.6.7
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-
 flutter:
   uses-material-design: true
-  
-  # To add assets to your application, add an assets section, like this:
   assets:
-  # Image
-    - assets/images/onboarding/
-    - assets/images/auth/
-    - assets/images/exercises/
-    - assets/images/home/
-    # Icon
-    - assets/icons/home/
-    - assets/icons/social_networks/
-    - assets/icons/workouts/
-    # Video
-    - assets/videos/workouts/Calisthenics/
-    - assets/videos/workouts/Cardio/
-    - assets/videos/workouts/Pilates/
-    - assets/videos/workouts/Strengthtraining/
-    - assets/videos/workouts/Yoga1/
-    - assets/videos/workouts/Yoga2/
-
+  - assets/images/onboarding/
+  - assets/images/auth/
+  - assets/images/exercises/
+  - assets/images/home/
+  - assets/icons/home/
+  - assets/icons/social_networks/
+  - assets/icons/workouts/
+  - assets/videos/workouts/Calisthenics/
+  - assets/videos/workouts/Cardio/
+  - assets/videos/workouts/Pilates/
+  - assets/videos/workouts/Strengthtraining/
+  - assets/videos/workouts/Yoga1/
+  - assets/videos/workouts/Yoga2/
 fonts:
 - family: NotoSans
   fonts:
-    - asset: assets/fonts/NotoSans/static/NotoSans-Regular.ttf
-    - asset: assets/fonts/NotoSans/static/NotoSans-Bold.ttf
-      weight: 700
+  - asset: assets/fonts/NotoSans/static/NotoSans-Regular.ttf
+  - asset: assets/fonts/NotoSans/static/NotoSans-Bold.ttf
+    weight: 700
