@@ -7,7 +7,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 class MySliverAppBar extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
@@ -138,11 +138,11 @@ class AppBarWidget extends StatefulWidget {
 class _AppBarWidgetState extends State<AppBarWidget> {
   Future<Uri> data() async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: 'https://diabetes.page.link/',
+      uriPrefix: 'https://diabetesdemo.page.link/',
       link: Uri.parse(
-          'https://diabetes.app/?id=${widget.info.id}'),
+          'https://diabetesdemo.page.link/demo/?id=${widget.info.id}'),
       androidParameters: AndroidParameters(
-        packageName: 'com.example.diabetes',
+        packageName: 'com.da2.diabetes.diabetes',
         minimumVersion: 125,
       ),
       googleAnalyticsParameters: GoogleAnalyticsParameters(
