@@ -16,8 +16,8 @@ dependencies:
   equatable: ^2.0.3
   firebase_dynamic_links: ^5.4.17
   flutter_html: 3.0.0-beta.2
-  path_provider: ^2.0.5
-  share: ^2.0.4
+  path_provider: ^2.1.2
+  share_plus: ^7.2.2
   hive_flutter: ^1.1.0
   #--------------------\
   flutter_chat_ui: ^1.6.9
