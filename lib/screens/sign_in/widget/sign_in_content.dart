@@ -1,3 +1,4 @@
+import 'package:diabetes/core/common_widget/base_screen.dart';
 import 'package:diabetes/core/const/text_constants.dart';
 import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/core/service/validation_service.dart';
@@ -15,24 +16,27 @@ class SignInContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          _createMainData(context),
-          BlocBuilder<SignInPageBloc, SignInPageState>(
-            buildWhen: (_, currState) =>
-                currState is LoadingState ||
-                currState is ErrorState ||
-                currState is NextTabBarPageState,
-            builder: (context, state) {
-              if (state is LoadingState) {
-                return _createLoading();
-              } else if (state is ErrorState || state is NextTabBarPageState) {
+      body: BaseScreen(
+        child: Stack(
+          children: [
+            _createMainData(context),
+            BlocBuilder<SignInPageBloc, SignInPageState>(
+              buildWhen: (_, currState) =>
+                  currState is LoadingState ||
+                  currState is ErrorState ||
+                  currState is NextTabBarPageState,
+              builder: (context, state) {
+                if (state is LoadingState) {
+                  return _createLoading();
+                } else if (state is ErrorState ||
+                    state is NextTabBarPageState) {
+                  return const SizedBox();
+                }
                 return const SizedBox();
-              }
-              return const SizedBox();
-            },
-          ),
-        ],
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

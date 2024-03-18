@@ -1,6 +1,5 @@
 import 'dart:io';
-
-import 'package:diabetes/core/const/color_constants.dart';
+import 'package:diabetes/core/common_widget/base_screen.dart';
 import 'package:diabetes/core/const/path_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
 import 'package:diabetes/core/extension/context_extension.dart';
@@ -90,107 +89,109 @@ class _EditAccountScreenState extends State {
     EditAccountBloc bloc = BlocProvider.of<EditAccountBloc>(context);
     double height = MediaQuery.of(context).size.height;
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-          child: SizedBox(
-            height: height - 140 - MediaQuery.of(context).padding.bottom,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(child: _getImageWidget()),
-                const SizedBox(height: 4),
-                Center(
-                  child: TextButton(
-                    onPressed: () {
-                      bloc.add(UploadImage());
-                    },
-                    child: const Text(
-                      TextConstants.editPhoto,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+      child: BaseScreen(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+            child: SizedBox(
+              height: height - 140 - MediaQuery.of(context).padding.bottom,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(child: _getImageWidget()),
+                  const SizedBox(height: 4),
+                  Center(
+                    child: TextButton(
+                      onPressed: () {
+                        bloc.add(UploadImage());
+                      },
+                      child: const Text(
+                        TextConstants.editPhoto,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 15),
-                const Text(
-                  TextConstants.fullName,
-                  style: TextStyle(fontWeight: FontWeight.w600),
-                ),
-                SettingsContainer(
-                    child: SettingsTextField(
-                  controller: _nameController,
-                  placeHolder: TextConstants.fullNamePlaceholder,
-                )),
-                if (isNameInvalid)
-                  Text(TextConstants.nameShouldContain2Char,
-                      style: TextStyle(color: context.colorScheme.error)),
-                const Text(TextConstants.email,
-                    style: TextStyle(fontWeight: FontWeight.w600)),
-                SettingsContainer(
-                    child: SettingsTextField(
-                  controller: _emailController,
-                  placeHolder: TextConstants.emailPlaceholder,
-                )),
-                if (isEmailInvalid)
-                  Text(TextConstants.emailErrorText,
-                      style: TextStyle(color: context.colorScheme.error)),
-                const SizedBox(height: 15),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const ChangePasswordScreen()));
-                  },
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        TextConstants.changePassword,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: context.colorScheme.primary,
-                          fontSize: 18,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        color: context.colorScheme.primary,
-                      )
-                    ],
+                  const SizedBox(height: 15),
+                  const Text(
+                    TextConstants.fullName,
+                    style: TextStyle(fontWeight: FontWeight.w600),
                   ),
-                ),
-                const Spacer(),
-                DiabetesButton(
-                  title: TextConstants.save,
-                  isEnabled: true,
-                  onTap: () {
-                    FocusScope.of(context).unfocus();
-                    setState(() {
-                      isNameInvalid = !(_nameController.text.length > 1);
-                      isEmailInvalid =
-                          !ValidationService.email(_emailController.text);
-                    });
+                  SettingsContainer(
+                      child: SettingsTextField(
+                    controller: _nameController,
+                    placeHolder: TextConstants.fullNamePlaceholder,
+                  )),
+                  if (isNameInvalid)
+                    Text(TextConstants.nameShouldContain2Char,
+                        style: TextStyle(color: context.colorScheme.error)),
+                  const Text(TextConstants.email,
+                      style: TextStyle(fontWeight: FontWeight.w600)),
+                  SettingsContainer(
+                      child: SettingsTextField(
+                    controller: _emailController,
+                    placeHolder: TextConstants.emailPlaceholder,
+                  )),
+                  if (isEmailInvalid)
+                    Text(TextConstants.emailErrorText,
+                        style: TextStyle(color: context.colorScheme.error)),
+                  const SizedBox(height: 15),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const ChangePasswordScreen()));
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          TextConstants.changePassword,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: context.colorScheme.primary,
+                            fontSize: 18,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          color: context.colorScheme.primary,
+                        )
+                      ],
+                    ),
+                  ),
+                  const Spacer(),
+                  DiabetesButton(
+                    title: TextConstants.save,
+                    isEnabled: true,
+                    onTap: () {
+                      FocusScope.of(context).unfocus();
+                      setState(() {
+                        isNameInvalid = !(_nameController.text.length > 1);
+                        isEmailInvalid =
+                            !ValidationService.email(_emailController.text);
+                      });
 
-                    if (!(isNameInvalid || isEmailInvalid)) {
-                      if (userName != _nameController.text ||
-                          userEmail != _emailController.text) {
-                        bloc.add(ChangeUserData(
-                            displayName: _nameController.text,
-                            email: _emailController.text));
-                        userName = _nameController.text;
-                        userEmail = _emailController.text;
+                      if (!(isNameInvalid || isEmailInvalid)) {
+                        if (userName != _nameController.text ||
+                            userEmail != _emailController.text) {
+                          bloc.add(ChangeUserData(
+                              displayName: _nameController.text,
+                              email: _emailController.text));
+                          userName = _nameController.text;
+                          userEmail = _emailController.text;
+                        }
                       }
-                    }
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:diabetes/core/common_widget/base_screen.dart';
 import 'package:diabetes/core/const/text_constants.dart';
 import 'package:diabetes/screens/chatbot/chatbot_openAI_service/openAI_service.dart';
 import 'package:file_picker/file_picker.dart';
@@ -15,8 +16,6 @@ import 'package:mime/mime.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
-
-
 
 class ChatBotPage extends StatefulWidget {
   const ChatBotPage({super.key});
@@ -241,25 +240,24 @@ class _ChatPageState extends State<ChatBotPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(
-        title: const Text(TextConstants.chatBot),
-        backgroundColor:  Theme.of(context).primaryColor,
-        // backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      body: Chat(
-        isAttachmentUploading: isDataLoading,
-        l10n: const ChatL10nEn(
-          emptyChatPlaceholder: 'Ask me anything about Chatbots',
+        appBar: AppBar(
+          title: const Text(TextConstants.chatBot),
         ),
-        messages: _messages,
-        onAttachmentPressed: _handleAttachmentPressed,
-        onMessageTap: _handleMessageTap,
-        onPreviewDataFetched: _handlePreviewDataFetched,
-        onSendPressed: _handleSendPressed,
-        showUserAvatars: true,
-        showUserNames: true,
-        user: _user,
-      ),
-    );
+        body: BaseScreen(
+          child: Chat(
+            isAttachmentUploading: isDataLoading,
+            l10n: const ChatL10nEn(
+              emptyChatPlaceholder: 'Ask me anything about Chatbots',
+            ),
+            messages: _messages,
+            onAttachmentPressed: _handleAttachmentPressed,
+            onMessageTap: _handleMessageTap,
+            onPreviewDataFetched: _handlePreviewDataFetched,
+            onSendPressed: _handleSendPressed,
+            showUserAvatars: true,
+            showUserNames: true,
+            user: _user,
+          ),
+        ),
+      );
 }

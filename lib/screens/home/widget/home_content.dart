@@ -1,3 +1,4 @@
+import 'package:diabetes/core/common_widget/base_screen.dart';
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/data_constants.dart';
 import 'package:diabetes/core/const/path_constants.dart';
@@ -33,33 +34,36 @@ class HomeContent extends StatelessWidget {
     return ColoredBox(
       color: context.colorScheme.primary,
       child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(
-              height: 16,
-            ),
-            _createProfileData(context),
-            const SizedBox(height: 35),
-            // _showStartWorkout(context, bloc),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.only(top: 6),
-                margin: const EdgeInsets.only(top: 20),
-                decoration: ShapeDecoration(
-                  color: context.colorScheme.background,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(30),
+        child: BaseScreen(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(
+                height: 16,
+              ),
+              _createProfileData(context),
+              const SizedBox(height: 35),
+              // _showStartWorkout(context, bloc),
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.only(top: 6),
+                  margin: const EdgeInsets.only(top: 20),
+                  decoration: ShapeDecoration(
+                    color: context.colorScheme.background,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(30),
+                      ),
                     ),
                   ),
+                  child: ColoredBox(
+                      color:
+                          context.colorScheme.surfaceVariant.withOpacity(0.1),
+                      child: const HomeTodayPill()),
                 ),
-                child: ColoredBox(
-                    color: context.colorScheme.surfaceVariant.withOpacity(0.1),
-                    child: const HomeTodayPill()),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

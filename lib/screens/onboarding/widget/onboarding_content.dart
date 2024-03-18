@@ -1,3 +1,4 @@
+import 'package:diabetes/core/common_widget/base_screen.dart';
 import 'package:diabetes/core/const/data_constants.dart';
 import 'package:diabetes/screens/common_widget/diabetes_button.dart';
 import 'package:diabetes/screens/onboarding/bloc/onboarding_bloc.dart';
@@ -27,57 +28,59 @@ class OnboardingContent extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: PageView(
-                scrollDirection: Axis.horizontal,
-                controller: bloc.pageController,
-                children: DataConstants.onboardingTiles,
-                onPageChanged: (index) {
-                  bloc.add(PageSwipedEvent(index: index));
-                },
+        child: BaseScreen(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: PageView(
+                  scrollDirection: Axis.horizontal,
+                  controller: bloc.pageController,
+                  children: DataConstants.onboardingTiles,
+                  onPageChanged: (index) {
+                    bloc.add(PageSwipedEvent(index: index));
+                  },
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            BlocBuilder<OnboardingBloc, OnboardingState>(
-              buildWhen: (_, currState) => currState is PageChangedState,
-              builder: (context, state) {
-                return Center(
-                  child: SmoothPageIndicator(
-                    count: 3,
-                    effect: ExpandingDotsEffect(
-                      dotHeight: 6,
-                      dotWidth: 6,
-                      expansionFactor: 8,
-                      activeDotColor: Theme.of(context).colorScheme.primary,
-                      dotColor:
-                          Theme.of(context).colorScheme.secondaryContainer,
+              const SizedBox(
+                height: 16,
+              ),
+              BlocBuilder<OnboardingBloc, OnboardingState>(
+                buildWhen: (_, currState) => currState is PageChangedState,
+                builder: (context, state) {
+                  return Center(
+                    child: SmoothPageIndicator(
+                      count: 3,
+                      effect: ExpandingDotsEffect(
+                        dotHeight: 6,
+                        dotWidth: 6,
+                        expansionFactor: 8,
+                        activeDotColor: Theme.of(context).colorScheme.primary,
+                        dotColor:
+                            Theme.of(context).colorScheme.secondaryContainer,
+                      ),
+                      controller: bloc.pageController,
                     ),
-                    controller: bloc.pageController,
-                  ),
-                );
-              },
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: DiabetesButton(
-                onTap: () {
-                  bloc.add(PageChangedEvent());
+                  );
                 },
-                title: 'Continue',
               ),
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-          ],
+              const SizedBox(
+                height: 40,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: DiabetesButton(
+                  onTap: () {
+                    bloc.add(PageChangedEvent());
+                  },
+                  title: 'Continue',
+                ),
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+            ],
+          ),
         ),
       ),
     );

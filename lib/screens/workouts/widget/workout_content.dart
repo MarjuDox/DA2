@@ -1,3 +1,4 @@
+import 'package:diabetes/core/common_widget/base_screen.dart';
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
 import 'package:diabetes/model/workout_model.dart';
@@ -11,12 +12,7 @@ class WorkoutContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: ColorConstants.homeBackgroundColor,
-      height: double.infinity,
-      width: double.infinity,
-      child: _createHomeBody(context),
-    );
+    return _createHomeBody(context);
   }
 
   Widget _createHomeBody(BuildContext context) {
@@ -25,28 +21,31 @@ class WorkoutContent extends StatelessWidget {
       buildWhen: (_, currState) => currState is ReloadWorkoutsState,
       builder: (context, state) {
         return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 22),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Text(
-                    TextConstants.workouts,
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          child: BaseScreen(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 22),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Text(
+                      TextConstants.workouts,
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 16),
-                Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    children: bloc.workouts
-                        .map((e) => _createWorkoutCard(e))
-                        .toList(),
+                  const SizedBox(height: 16),
+                  Expanded(
+                    child: ListView(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      children: bloc.workouts
+                          .map((e) => _createWorkoutCard(e))
+                          .toList(),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

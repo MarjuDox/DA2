@@ -1,6 +1,5 @@
 import 'dart:io';
-
-import 'package:diabetes/core/const/color_constants.dart';
+import 'package:diabetes/core/common_widget/base_screen.dart';
 import 'package:diabetes/core/const/path_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
 import 'package:diabetes/core/extension/context_extension.dart';
@@ -57,142 +56,150 @@ class _SettingsPageState extends State {
     displayName = user?.displayName ?? "No Username";
     photoUrl = user?.photoURL;
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-          child: Column(children: [
-            Stack(alignment: Alignment.topRight, children: [
-              Center(
-                child: photoUrl?.isEmpty ?? true
-                    ? const CircleAvatar(
-                        backgroundImage: AssetImage(PathConstants.profile),
-                        radius: 60)
-                    : CircleAvatar(
-                        radius: 60,
-                        child: ClipOval(
-                            child: FadeInImage.assetNetwork(
-                          placeholder: PathConstants.profile,
-                          image: photoUrl!,
-                          fit: BoxFit.cover,
-                          width: 200,
-                          height: 120,
-                        )),
-                      ),
-              ),
-              TextButton(
-                onPressed: () async {
-                  await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const EditAccountScreen()));
-                  setState(() {
-                    photoUrl = user?.photoURL;
-                    displayName = user?.displayName;
-                  });
-                },
-                style: TextButton.styleFrom(
-                  shape: const CircleBorder(),
-                  backgroundColor:
-                      context.colorScheme.secondaryContainer.withOpacity(
-                    0.4,
+      child: BaseScreen(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+            child: Column(children: [
+              Stack(alignment: Alignment.topRight, children: [
+                Center(
+                  child: photoUrl?.isEmpty ?? true
+                      ? const CircleAvatar(
+                          backgroundImage: AssetImage(PathConstants.profile),
+                          radius: 60)
+                      : CircleAvatar(
+                          radius: 60,
+                          child: ClipOval(
+                              child: FadeInImage.assetNetwork(
+                            placeholder: PathConstants.profile,
+                            image: photoUrl!,
+                            fit: BoxFit.cover,
+                            width: 200,
+                            height: 120,
+                          )),
+                        ),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const EditAccountScreen()));
+                    setState(() {
+                      photoUrl = user?.photoURL;
+                      displayName = user?.displayName;
+                    });
+                  },
+                  style: TextButton.styleFrom(
+                    shape: const CircleBorder(),
+                    backgroundColor:
+                        context.colorScheme.secondaryContainer.withOpacity(
+                      0.4,
+                    ),
+                  ),
+                  child: const Icon(
+                    Icons.edit,
+                    // color: ColorConstants.primaryColor,
                   ),
                 ),
-                child: const Icon(
-                  Icons.edit,
-                  // color: ColorConstants.primaryColor,
-                ),
+              ]),
+              const SizedBox(height: 15),
+              Text(
+                displayName ?? 'No Username',
+                style:
+                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-            ]),
-            const SizedBox(height: 15),
-            Text(
-              displayName ?? 'No Username',
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 15),
-            SettingsContainer(
-              withArrow: true,
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => const ReminderPage()));
-              },
-              child: const Text(TextConstants.reminder,
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
-            ),
-            SettingsContainer(
-              withArrow: true,
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => const ChatBotPage()));
-              },
-              child: const Text(TextConstants.chatBot,
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
-            ),
-             SettingsContainer(
-              withArrow: true,
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => const FavoriteScreen()));
-              },
-              child: const Text(TextConstants.favoriteFood,
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
-            ),
-            if (!kIsWeb)
+              const SizedBox(height: 15),
               SettingsContainer(
-                child: Text(
-                    '${TextConstants.rateUsOn}${Platform.isIOS ? 'App store' : 'Play market'}',
-                    style: const TextStyle(
-                        fontSize: 17, fontWeight: FontWeight.w500)),
+                withArrow: true,
                 onTap: () {
-                  return launch(Platform.isIOS
-                      ? 'https://www.apple.com/app-store/'
-                      : 'https://play.google.com/store');
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const ReminderPage()));
                 },
-              ),
-            // SettingsContainer(
-            //     onTap: () => launch('https://perpet.io/'),
-            //     child: Text(TextConstants.terms,
-            //         style:
-            //             TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
-            SettingsContainer(
-                child: const Text(TextConstants.signOut,
+                child: const Text(TextConstants.reminder,
                     style:
                         TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
+              ),
+              SettingsContainer(
+                withArrow: true,
                 onTap: () {
-                  AuthService.signOut();
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (_) => const SignInPage()));
-                }),
-            const SizedBox(height: 15),
-            const Text(TextConstants.joinUs,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-            const SizedBox(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                    onPressed: () => launch('https://www.facebook.com/'),
-                    style: TextButton.styleFrom(
-                        shape: const CircleBorder(),
-                        backgroundColor: Colors.white,
-                        elevation: 1),
-                    child: Image.asset(PathConstants.facebook)),
-                TextButton(
-                    onPressed: () => launch('https://www.instagram.com/'),
-                    style: TextButton.styleFrom(
-                        shape: const CircleBorder(),
-                        backgroundColor: Colors.white,
-                        elevation: 1),
-                    child: Image.asset(PathConstants.instagram)),
-                TextButton(
-                    onPressed: () => launch('https://twitter.com'),
-                    style: TextButton.styleFrom(
-                        shape: const CircleBorder(),
-                        backgroundColor: Colors.white,
-                        elevation: 1),
-                    child: Image.asset(PathConstants.twitter)),
-              ],
-            )
-          ]),
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const ChatBotPage()));
+                },
+                child: const Text(TextConstants.chatBot,
+                    style:
+                        TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
+              ),
+              SettingsContainer(
+                withArrow: true,
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const FavoriteScreen()));
+                },
+                child: const Text(TextConstants.favoriteFood,
+                    style:
+                        TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
+              ),
+              if (!kIsWeb)
+                SettingsContainer(
+                  child: Text(
+                      '${TextConstants.rateUsOn}${Platform.isIOS ? 'App store' : 'Play market'}',
+                      style: const TextStyle(
+                          fontSize: 17, fontWeight: FontWeight.w500)),
+                  onTap: () {
+                    return launch(Platform.isIOS
+                        ? 'https://www.apple.com/app-store/'
+                        : 'https://play.google.com/store');
+                  },
+                ),
+              // SettingsContainer(
+              //     onTap: () => launch('https://perpet.io/'),
+              //     child: Text(TextConstants.terms,
+              //         style:
+              //             TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
+              SettingsContainer(
+                  child: const Text(TextConstants.signOut,
+                      style:
+                          TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
+                  onTap: () {
+                    AuthService.signOut();
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (_) => const SignInPage()));
+                  }),
+              const SizedBox(height: 15),
+              const Text(TextConstants.joinUs,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+              const SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                      onPressed: () => launch('https://www.facebook.com/'),
+                      style: TextButton.styleFrom(
+                          shape: const CircleBorder(),
+                          backgroundColor: Colors.white,
+                          elevation: 1),
+                      child: Image.asset(PathConstants.facebook)),
+                  TextButton(
+                      onPressed: () => launch('https://www.instagram.com/'),
+                      style: TextButton.styleFrom(
+                          shape: const CircleBorder(),
+                          backgroundColor: Colors.white,
+                          elevation: 1),
+                      child: Image.asset(PathConstants.instagram)),
+                  TextButton(
+                      onPressed: () => launch('https://twitter.com'),
+                      style: TextButton.styleFrom(
+                          shape: const CircleBorder(),
+                          backgroundColor: Colors.white,
+                          elevation: 1),
+                      child: Image.asset(PathConstants.twitter)),
+                ],
+              )
+            ]),
+          ),
         ),
       ),
     );
