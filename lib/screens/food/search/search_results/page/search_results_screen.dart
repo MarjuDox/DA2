@@ -1,10 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:diabetes/core/common_widget/base_screen.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/model/food/search_result.dart';
+import 'package:diabetes/screens/common_widget/card_x.dart';
 import 'package:diabetes/screens/common_widget/diabetes_loading.dart';
 import 'package:diabetes/screens/food/recipe_infor/bloc/recipe_infor_bloc.dart';
 import 'package:diabetes/screens/food/recipe_infor/page/recipe_infor_screen.dart';
 import 'package:diabetes/screens/food/search/search_results/bloc/search_results_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchResults extends StatefulWidget {
@@ -27,13 +31,13 @@ class _SearchResultsState extends State<SearchResults> {
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+      data: MediaQuery.of(context)
+          .copyWith(textScaler: const TextScaler.linear(1.0)),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: context.colorScheme.surfaceVariant.withOpacity(0.1),
         appBar: AppBar(
           elevation: 0,
           iconTheme: const IconThemeData(color: Colors.black),
-          backgroundColor: Colors.white,
           title: Text(
             "All your search result",
             style: Theme.of(context).textTheme.titleLarge,
@@ -44,35 +48,35 @@ class _SearchResultsState extends State<SearchResults> {
             if (state is SearchResultsLoading) {
               return const Center(child: DiabetesLoading());
             } else if (state is SearchResultsSuccess) {
-              return Container(
-                  child: SafeArea(
-                      child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: GridView(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 13 / 16,
+              return SafeArea(
+                  child: BaseScreen(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: GridView(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 10 / 11,
+                    ),
+                    physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics()),
+                    children: [
+                      ...state.results.map((result) {
+                        return SearchResultItem(
+                          result: result,
+                        );
+                      }).toList()
+                    ],
                   ),
-                  physics: const BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics()),
-                  children: [
-                    ...state.results.map((result) {
-                      return SearchResultItem(
-                        result: result,
-                      );
-                    }).toList()
-                  ],
                 ),
-              )));
+              ));
             } else if (state is SearchResultsError) {
               return const Center(
                 child: Text("Error"),
               );
             } else {
-              return Center(
-                child: Container(
-                  child: Text("Noting happingng"),
-                ),
+              return const Center(
+                child: Text("Noting happingng"),
               );
             }
           },
@@ -96,75 +100,42 @@ class SearchResultItem extends StatefulWidget {
 class _SearchResultresulttate extends State<SearchResultItem> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => BlocProvider(
-              create: (context) => RecipeInfoBloc(),
-              child: RecipeInfo(
-                id: widget.result.id,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: CardX(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => BlocProvider(
+                create: (context) => RecipeInfoBloc(),
+                child: RecipeInfo(
+                  id: widget.result.id,
+                ),
               ),
             ),
-          ),
-        );
-      },
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: const [
-              BoxShadow(
-                offset: Offset(-2, -2),
-                blurRadius: 12,
-                color: Color.fromRGBO(0, 0, 0, 0.05),
+          );
+        },
+        padding: EdgeInsets.zero,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AspectRatio(
+              aspectRatio: 3 / 2,
+              child: CachedNetworkImage(
+                imageUrl: widget.result.image,
+                fit: BoxFit.cover,
               ),
-              BoxShadow(
-                offset: Offset(2, 2),
-                blurRadius: 5,
-                color: Color.fromRGBO(0, 0, 0, 0.10),
-              )
-            ],
-            borderRadius: BorderRadius.circular(10),
-          ),
-          margin: const EdgeInsets.all(8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10)),
-                child: Container(
-                  height: 120,
-                  foregroundDecoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                    ),
-                  ),
-                  width: double.infinity,
-                  child: CachedNetworkImage(
-                    imageUrl: widget.result.image,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(9),
+              child: Text(
+                widget.result.name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                padding: const EdgeInsets.all(9),
-                child: Text(
-                  widget.result.name,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

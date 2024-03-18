@@ -30,8 +30,7 @@ class ExerciseCell extends StatelessWidget {
     return BlocBuilder<WorkoutDetailsBloc, WorkoutDetailsState>(
       buildWhen: (_, currState) => currState is WorkoutExerciseCellTappedState,
       builder: (context, state) {
-        return InkWell(
-          borderRadius: BorderRadius.circular(40),
+        return CardX(
           onTap: () {
             bloc.add(
               StartTappedEvent(
@@ -40,28 +39,26 @@ class ExerciseCell extends StatelessWidget {
               ),
             );
           },
-          child: CardX(
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: Image.asset(
-                      workout.image ?? "",
-                      fit: BoxFit.contain,
-                    ),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.asset(
+                    workout.image ?? "",
+                    fit: BoxFit.contain,
                   ),
                 ),
-                const SizedBox(width: 10),
-                Expanded(
-                  flex: 3,
-                  child: _createExerciseTextInfo(),
-                ),
-                const SizedBox(width: 10),
-                _createRightArrow(),
-              ],
-            ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                flex: 3,
+                child: _createExerciseTextInfo(),
+              ),
+              const SizedBox(width: 10),
+              _createRightArrow(),
+            ],
           ),
         );
       },

@@ -21,86 +21,80 @@ class WorkoutCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<WorkoutsBloc>(context, listen: false);
     return CardX(
+      onTap: () {
+        bloc.add(CardTappedEvent(workout: workout));
+      },
       child: BlocBuilder<WorkoutsBloc, WorkoutsState>(
         buildWhen: (_, currState) => currState is CardTappedState,
         builder: (context, state) {
-          return InkWell(
-            splashColor: Colors.transparent,
-            borderRadius: BorderRadius.circular(10),
-            onTap: () {
-              bloc.add(CardTappedEvent(workout: workout));
-            },
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Image.asset(
-                          workout.image ?? "",
-                          fit: BoxFit.contain,
-                        ),
+          return Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Image.asset(
+                        workout.image ?? "",
+                        fit: BoxFit.contain,
                       ),
                     ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      flex: 3,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(workout.title ?? "",
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold)),
-                              const Spacer(),
-                              Text(
-                                workout.isDone
-                                    ? 'Done'
-                                    : '${workout.currentProgress}/${workout.progress}',
-                                style: TextStyle(
-                                  color: workout.isDone
-                                      ? context.colorScheme.primary
-                                      : context.colorScheme.secondary,
-                                ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    flex: 3,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(workout.title ?? "",
+                                style: const TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold)),
+                            const Spacer(),
+                            Text(
+                              workout.isDone
+                                  ? 'Done'
+                                  : '${workout.currentProgress}/${workout.progress}',
+                              style: TextStyle(
+                                color: workout.isDone
+                                    ? context.colorScheme.primary
+                                    : context.colorScheme.secondary,
                               ),
-                            ],
-                          ),
-                          Text(
-                              '${workout.exerciseDataList!.length} ${TextConstants.exercisesUppercase}',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: context.colorScheme.secondary),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2),
-                          Text(_getWorkoutMinutes(),
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: context.colorScheme.secondary),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                        Text(
+                            '${workout.exerciseDataList!.length} ${TextConstants.exercisesUppercase}',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: context.colorScheme.secondary),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2),
+                        Text(_getWorkoutMinutes(),
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: context.colorScheme.secondary),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2),
+                      ],
                     ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                LinearPercentIndicator(
-                  percent: workout.currentProgress! / workout.progress!,
-                  progressColor: context.colorScheme.primary,
-                  barRadius: const Radius.circular(100),
-                  backgroundColor:
-                      context.colorScheme.primary.withOpacity(0.12),
-                  lineHeight: 6,
-                  padding: EdgeInsets.zero,
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              LinearPercentIndicator(
+                percent: workout.currentProgress! / workout.progress!,
+                progressColor: context.colorScheme.primary,
+                barRadius: const Radius.circular(100),
+                backgroundColor: context.colorScheme.primary.withOpacity(0.12),
+                lineHeight: 6,
+                padding: EdgeInsets.zero,
+              ),
+            ],
           );
         },
       ),

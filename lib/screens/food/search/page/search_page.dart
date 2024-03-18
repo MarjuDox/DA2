@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diabetes/core/animation/animation.dart';
 import 'package:diabetes/core/common_widget/base_screen.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/model/food/auto_complete.dart';
 import 'package:diabetes/screens/common_widget/diabetes_loading.dart';
 import 'package:diabetes/screens/food/recipe_infor/bloc/recipe_infor_bloc.dart';
@@ -33,8 +34,17 @@ class SearchPage extends StatelessWidget {
                 child: TextField(
                   decoration: InputDecoration(
                       hintText: "Search Recipes..",
+                      hintStyle: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color:
+                            context.colorScheme.outlineVariant.withOpacity(0.6),
+                      ),
                       suffixIcon: IconButton(
-                        icon: const Icon(Icons.search, color: Colors.redAccent),
+                        icon: Icon(
+                          Icons.search,
+                          color: context.colorScheme.outlineVariant
+                              .withOpacity(0.6),
+                        ),
                         onPressed: () {},
                       ),
                       contentPadding: const EdgeInsets.symmetric(
@@ -51,7 +61,8 @@ class SearchPage extends StatelessWidget {
                           borderSide: BorderSide(
                             width: 1,
                             style: BorderStyle.solid,
-                            color: Colors.black.withOpacity(.5),
+                            color: context.colorScheme.outlineVariant
+                                .withOpacity(0.6),
                           ),
                           borderRadius: BorderRadius.circular(15))),
                   onChanged: (value) {
