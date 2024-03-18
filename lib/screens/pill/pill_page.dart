@@ -26,9 +26,7 @@ class _PillPageState extends ConsumerState<SchedulePage> {
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 "Your Pill Schedule",
-                style: TextStyle(
-                  fontSize: 24,
-                ),
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
             SizedBox(
