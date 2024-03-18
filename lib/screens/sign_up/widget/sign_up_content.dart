@@ -1,3 +1,4 @@
+import 'package:diabetes/core/common_widget/base_screen.dart';
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
 import 'package:diabetes/core/extension/context_extension.dart';
@@ -19,10 +20,7 @@ class SignUpContent extends StatelessWidget {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: ColorConstants.white,
+      child: BaseScreen(
         child: Stack(
           children: [
             _createMainData(context),

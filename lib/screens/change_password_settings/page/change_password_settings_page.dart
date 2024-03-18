@@ -1,6 +1,6 @@
+import 'package:diabetes/core/common_widget/base_screen.dart';
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
-import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/core/service/validation_service.dart';
 import 'package:diabetes/screens/change_password_settings/bloc/change_password_settings_bloc.dart';
 import 'package:diabetes/screens/common_widget/diabetes_button.dart';
@@ -85,58 +85,61 @@ class _ChangePasswordSettingsState extends State {
     ChangePasswordSettingsBloc _bloc = BlocProvider.of(context);
     double height = MediaQuery.of(context).size.height;
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-          child: SizedBox(
-            height: height - 140 - MediaQuery.of(context).padding.bottom,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const SizedBox(height: 15),
-              const Text(TextConstants.newPassword,
-                  style: TextStyle(fontWeight: FontWeight.w600)),
-              SettingsContainer(
-                child: SettingsTextField(
-                  controller: _newPassController,
-                  obscureText: true,
-                  placeHolder: TextConstants.passwordPlaceholder,
-                ),
-              ),
-              if (isNewPassInvalid)
-                const Text(TextConstants.passwordErrorText,
-                    style: TextStyle(color: ColorConstants.errorColor)),
-              const SizedBox(height: 10),
-              const Text(TextConstants.confirmPassword,
-                  style: TextStyle(fontWeight: FontWeight.w600)),
-              SettingsContainer(
-                child: SettingsTextField(
-                  controller: _confirmPassController,
-                  obscureText: true,
-                  placeHolder: TextConstants.confirmPasswordPlaceholder,
-                ),
-              ),
-              if (isConfirmPassInvalid)
-                const Text(TextConstants.confirmPasswordErrorText,
-                    style: TextStyle(color: ColorConstants.errorColor)),
-              const Spacer(),
-              DiabetesButton(
-                title: TextConstants.save,
-                isEnabled: true,
-                onTap: () {
-                  FocusScope.of(context).unfocus();
-                  setState(() {
-                    isNewPassInvalid =
-                        !ValidationService.password(_newPassController.text);
-                    isConfirmPassInvalid =
-                        _newPassController.text != _confirmPassController.text;
-                  });
-                  if (!(isNewPassInvalid || isConfirmPassInvalid)) {
-                    _bloc.add(ChangePasswordSettings(
-                        newPass: _newPassController.text));
-                  }
-                },
-              ),
-            ]),
+      child: BaseScreen(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+            child: SizedBox(
+              height: height - 140 - MediaQuery.of(context).padding.bottom,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 15),
+                    const Text(TextConstants.newPassword,
+                        style: TextStyle(fontWeight: FontWeight.w600)),
+                    SettingsContainer(
+                      child: SettingsTextField(
+                        controller: _newPassController,
+                        obscureText: true,
+                        placeHolder: TextConstants.passwordPlaceholder,
+                      ),
+                    ),
+                    if (isNewPassInvalid)
+                      const Text(TextConstants.passwordErrorText,
+                          style: TextStyle(color: ColorConstants.errorColor)),
+                    const SizedBox(height: 10),
+                    const Text(TextConstants.confirmPassword,
+                        style: TextStyle(fontWeight: FontWeight.w600)),
+                    SettingsContainer(
+                      child: SettingsTextField(
+                        controller: _confirmPassController,
+                        obscureText: true,
+                        placeHolder: TextConstants.confirmPasswordPlaceholder,
+                      ),
+                    ),
+                    if (isConfirmPassInvalid)
+                      const Text(TextConstants.confirmPasswordErrorText,
+                          style: TextStyle(color: ColorConstants.errorColor)),
+                    const Spacer(),
+                    DiabetesButton(
+                      title: TextConstants.save,
+                      isEnabled: true,
+                      onTap: () {
+                        FocusScope.of(context).unfocus();
+                        setState(() {
+                          isNewPassInvalid = !ValidationService.password(
+                              _newPassController.text);
+                          isConfirmPassInvalid = _newPassController.text !=
+                              _confirmPassController.text;
+                        });
+                        if (!(isNewPassInvalid || isConfirmPassInvalid)) {
+                          _bloc.add(ChangePasswordSettings(
+                              newPass: _newPassController.text));
+                        }
+                      },
+                    ),
+                  ]),
+            ),
           ),
         ),
       ),

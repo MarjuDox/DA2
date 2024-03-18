@@ -1,5 +1,4 @@
-
-
+import 'package:diabetes/core/common_widget/base_screen.dart';
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
 import 'package:diabetes/core/service/validation_service.dart';
@@ -23,24 +22,24 @@ class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: double.infinity,
-      width: double.infinity,
-      color: ColorConstants.white,
+    return BaseScreen(
       child: Stack(
         children: [
           _createMainData(context),
           BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
-            buildWhen: (_, currState) => currState is ForgotPasswordLoading || currState is ForgotPasswordError || currState is ForgotPasswordSuccess,
+            buildWhen: (_, currState) =>
+                currState is ForgotPasswordLoading ||
+                currState is ForgotPasswordError ||
+                currState is ForgotPasswordSuccess,
             builder: (context, state) {
               if (state is ForgotPasswordLoading) {
                 return _createLoading();
               } else if (state is ForgotPasswordSuccess) {
-                return SizedBox();
+                return const SizedBox();
               } else if (state is ForgotPasswordError) {
-                return SizedBox();
+                return const SizedBox();
               }
-              return SizedBox();
+              return const SizedBox();
             },
           ),
         ],
@@ -49,7 +48,7 @@ class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
   }
 
   Widget _createLoading() {
-    return DiabetesLoading();
+    return const DiabetesLoading();
   }
 
   Widget _createMainData(BuildContext context) {
@@ -57,12 +56,15 @@ class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
     return SafeArea(
       child: SingleChildScrollView(
         child: SizedBox(
-          height: height - 30 - MediaQuery.of(context).padding.bottom - kToolbarHeight,
+          height: height -
+              30 -
+              MediaQuery.of(context).padding.bottom -
+              kToolbarHeight,
           child: Column(
             children: [
-              Spacer(flex: 2),
+              const Spacer(flex: 2),
               _createForm(context),
-              Spacer(flex: 3),
+              const Spacer(flex: 3),
               _createResetPasswordButton(context),
               const SizedBox(height: 30),
             ],
@@ -85,7 +87,7 @@ class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
           isError: _isTextFieldError,
           onTextChanged: () {
             setState(() {
-              _isButtonEnabled = bloc.emailController.text.length > 0;
+              _isButtonEnabled = bloc.emailController.text.isNotEmpty;
             });
           },
         );
@@ -106,7 +108,8 @@ class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
               FocusScope.of(context).unfocus();
               if (_isButtonEnabled) {
                 setState(() {
-                  _isTextFieldError = !ValidationService.email(bloc.emailController.text);
+                  _isTextFieldError =
+                      !ValidationService.email(bloc.emailController.text);
                 });
                 if (!_isTextFieldError) {
                   bloc.add(ForgotPasswordTappedEvent());

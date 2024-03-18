@@ -1,3 +1,4 @@
+import 'package:diabetes/core/common_widget/base_screen.dart';
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/data_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
@@ -11,32 +12,29 @@ class ReminderContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      color: ColorConstants.white,
-      child: _createDetailedReminder(context),
-    );
+    return _createDetailedReminder(context);
   }
 
   Widget _createDetailedReminder(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      child: ListView(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _createSelectTime(),
-              const SizedBox(height: 20),
-              _createTimePicker(context),
-              const SizedBox(height: 20),
-              _createRepeating(),
-              const SizedBox(height: 15),
-              _createDayRepeating(context),
-            ],
-          ),
-        ],
+    return BaseScreen(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: ListView(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _createSelectTime(),
+                const SizedBox(height: 20),
+                _createTimePicker(context),
+                const SizedBox(height: 20),
+                _createRepeating(),
+                const SizedBox(height: 15),
+                _createDayRepeating(context),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

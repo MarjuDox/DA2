@@ -1,3 +1,4 @@
+import 'package:diabetes/core/common_widget/base_screen.dart';
 import 'package:diabetes/core/const/text_constants.dart';
 import 'package:diabetes/model/workout_model.dart';
 import 'package:diabetes/screens/common_widget/diabetes_button.dart';
@@ -10,7 +11,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class WorkoutDetailsPage extends StatelessWidget {
   final WorkoutModel workout;
 
-  WorkoutDetailsPage({
+  const WorkoutDetailsPage({
+    super.key,
     required this.workout,
   });
 
@@ -32,7 +34,7 @@ class WorkoutDetailsPage extends StatelessWidget {
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
             floatingActionButton: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: DiabetesButton(
                 title: workout.currentProgress == 0
                     ? TextConstants.start
@@ -46,7 +48,7 @@ class WorkoutDetailsPage extends StatelessWidget {
                 },
               ),
             ),
-            body: WorkoutDetailsContent(workout: workout),
+            body: BaseScreen(child: WorkoutDetailsContent(workout: workout)),
           );
         },
         listenWhen: (_, currState) =>
