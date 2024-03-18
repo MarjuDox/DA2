@@ -589,6 +589,7 @@ class TextConstants {
   static const String calendar = "Calendar";
   static const String reminder = "Reminder";
   static const String chatBot = "ChatBot Assistant";
+  static const String favoriteFood = "Favorite Food";
   static const String rateUsOn = "Rate us on ";
   static const String terms = "Terms & Conditions";
 
