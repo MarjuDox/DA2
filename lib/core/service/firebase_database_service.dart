@@ -28,4 +28,13 @@ abstract class FirebaseDatabaseService {
       await schedules.doc(schedule.uid).set(schedule.toMap());
     }
   }
+
+  static Future<void> deleteUserSchedule(PillScheduleModel schedule) async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      CollectionReference schedules =
+          FirebaseFirestore.instance.collection('schedules');
+      await schedules.doc(schedule.uid).delete();
+    }
+  }
 }

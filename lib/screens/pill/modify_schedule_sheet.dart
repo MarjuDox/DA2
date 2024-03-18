@@ -2,6 +2,8 @@ import 'package:diabetes/core/common_widget/dropdown_menu_x.dart';
 import 'package:diabetes/core/const/enum.dart';
 import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/core/extension/datetime_extension.dart';
+import 'package:diabetes/core/service/firebase_database_service.dart';
+import 'package:diabetes/core/service/firebase_storage_service.dart';
 import 'package:diabetes/model/pill_schedule/pill_schedule_model.dart';
 import 'package:diabetes/screens/common_widget/chip_button.dart';
 import 'package:diabetes/screens/common_widget/diabetes_button.dart';
@@ -11,7 +13,6 @@ import 'package:diabetes/screens/pill/widget/time_chip.dart';
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
@@ -28,6 +29,8 @@ class ModifyScheduleSheet extends ConsumerStatefulWidget {
 class _ModifyScheduleSheetState extends ConsumerState<ModifyScheduleSheet> {
   late final controller =
       TextEditingController(text: widget.schedule?.medicineName);
+
+  late final DateTime? scheduleBeginDate = widget.schedule?.startDate;
 
   @override
   void initState() {
@@ -295,7 +298,8 @@ class _ModifyScheduleSheetState extends ConsumerState<ModifyScheduleSheet> {
                                   var endDate = ref.read(scheduleEndProvider);
                                   final dateSelected = await showDatePicker(
                                       context: context,
-                                      firstDate: DateTime.now(),
+                                      firstDate:
+                                          scheduleBeginDate ?? DateTime.now(),
                                       initialDate: beginDate,
                                       lastDate: endDate ?? DateTime(3000));
                                   if (dateSelected != null) {
@@ -425,7 +429,7 @@ class _ModifyScheduleSheetState extends ConsumerState<ModifyScheduleSheet> {
                   ),
                 ),
                 const SizedBox(
-                  height: 32,
+                  height: 16,
                 ),
                 Consumer(builder: (context, ref, child) {
                   final formIsValid = ref.watch(formIsValidProvider);
@@ -487,6 +491,26 @@ class _ModifyScheduleSheetState extends ConsumerState<ModifyScheduleSheet> {
                 const SizedBox(
                   height: 16,
                 ),
+                if (widget.schedule != null)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                    child: FilledButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(
+                          context.colorScheme.surfaceVariant.withOpacity(0.6),
+                        ),
+                      ),
+                      child: Text(
+                        'Delete schedule',
+                        style: TextStyle(
+                          color: context.colorScheme.error.withOpacity(0.7),
+                        ),
+                      ),
+                      onPressed: () async {
+                        Navigator.of(context).pop(true);
+                      },
+                    ),
+                  ),
               ],
             ),
           ),

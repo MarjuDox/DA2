@@ -2,7 +2,7 @@ import 'package:diabetes/core/service/firebase_database_service.dart';
 import 'package:diabetes/model/pill_schedule/pill_schedule_model.dart';
 import 'package:diabetes/screens/common_widget/card_x.dart';
 import 'package:diabetes/screens/common_widget/shimmerx.dart';
-import 'package:diabetes/screens/pill/add_schedule_sheet.dart';
+import 'package:diabetes/screens/pill/modify_schedule_sheet.dart';
 import 'package:diabetes/screens/pill/pill_viewmodel.dart';
 import 'package:diabetes/screens/pill/widget/pill_schedule_card.dart';
 import 'package:diabetes/screens/sign_in/page/sign_in_page.dart';
@@ -49,16 +49,20 @@ class PillScheduleSection extends ConsumerWidget {
                           builder: (context) => const SignInPage()));
                       return;
                     }
-                    final result =
-                        await showModalBottomSheet<PillScheduleModel>(
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (context) => ModifyScheduleSheet(
-                                  userId: user.uid,
-                                  schedule: item,
-                                ));
-                    if (result != null) {
+                    final result = await showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (context) => ModifyScheduleSheet(
+                              userId: user.uid,
+                              schedule: item,
+                            ));
+                    if (result is PillScheduleModel) {
                       FirebaseDatabaseService.addUserSchedule(result)
+                          .then((value) {
+                        ref.invalidate(pillScheduleListProvider);
+                      });
+                    } else if (result is bool && result == true) {
+                      FirebaseDatabaseService.deleteUserSchedule(item)
                           .then((value) {
                         ref.invalidate(pillScheduleListProvider);
                       });

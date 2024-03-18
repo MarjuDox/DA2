@@ -1,5 +1,3 @@
-import 'package:diabetes/core/const/color_constants.dart';
-import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 
 class DiabetesButton extends StatelessWidget {

@@ -5,7 +5,7 @@ import 'package:diabetes/model/pill_schedule/pill_schedule_model.dart';
 import 'package:diabetes/screens/common_widget/card_x.dart';
 import 'package:diabetes/screens/common_widget/shimmerx.dart';
 import 'package:diabetes/screens/common_widget/text_shimmerable.dart';
-import 'package:diabetes/screens/pill/add_schedule_sheet.dart';
+import 'package:diabetes/screens/pill/modify_schedule_sheet.dart';
 import 'package:diabetes/screens/pill/pill_viewmodel.dart';
 import 'package:diabetes/screens/pill/widget/day_chip.dart';
 import 'package:diabetes/screens/pill/widget/pill_card.dart';
@@ -117,13 +117,13 @@ class HomeTodayPill extends StatelessWidget {
                       return;
                     }
                     final result =
-                        await showModalBottomSheet<PillScheduleModel>(
+                        await showModalBottomSheet(
                             context: context,
                             isScrollControlled: true,
                             builder: (context) => ModifyScheduleSheet(
                                   userId: user.uid,
                                 ));
-                    if (result != null) {
+                    if (result is PillScheduleModel) {
                       FirebaseDatabaseService.addUserSchedule(result)
                           .then((value) {
                         ref.invalidate(pillListProvider);
