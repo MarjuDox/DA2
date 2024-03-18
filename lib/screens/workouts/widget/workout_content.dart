@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WorkoutContent extends StatelessWidget {
-  WorkoutContent({Key? key}) : super(key: key);
+  const WorkoutContent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,26 +24,30 @@ class WorkoutContent extends StatelessWidget {
     return BlocBuilder<WorkoutsBloc, WorkoutsState>(
       buildWhen: (_, currState) => currState is ReloadWorkoutsState,
       builder: (context, state) {
-        return Padding(
-          padding: const EdgeInsets.only(top: 50),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Text(
-                  TextConstants.workouts,
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 22),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Text(
+                    TextConstants.workouts,
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 5),
-              Expanded(
-                child: ListView(
-                  children:
-                      bloc.workouts.map((e) => _createWorkoutCard(e)).toList(),
+                const SizedBox(height: 16),
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    children: bloc.workouts
+                        .map((e) => _createWorkoutCard(e))
+                        .toList(),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
@@ -57,6 +61,3 @@ class WorkoutContent extends StatelessWidget {
     );
   }
 }
-
-
-  

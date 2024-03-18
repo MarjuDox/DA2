@@ -4,8 +4,6 @@ import 'package:diabetes/firebase_options.dart';
 import 'package:diabetes/model/user_model.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:path_provider/path_provider.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // ignore: depend_on_referenced_packages
 import 'package:timezone/data/latest.dart' as tz;
@@ -25,8 +23,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  var dir = await getApplicationDocumentsDirectory();
-  await Hive.initFlutter(dir.path);
+  await Hive.initFlutter();
   await Hive.openBox('Favorite');
   runApp(const ProviderScope(child: MyApp()));
 }
