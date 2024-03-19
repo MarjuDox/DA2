@@ -19,10 +19,8 @@ class FavoriteScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: context.colorScheme.surfaceVariant.withOpacity(0.1),
-          title: Text(
+          title: const Text(
             TextConstants.favoriteFood,
-            style: Theme.of(context).textTheme.displayLarge,
           ),
         ),
         body: BaseScreen(
@@ -53,7 +51,11 @@ class FavoriteScreen extends StatelessWidget {
                     ),
                   );
                 }
-                return ListView.builder(
+                return ListView.separated(
+                    padding: const EdgeInsets.all(16),
+                    separatorBuilder: (context, index) => const SizedBox(
+                          height: 16,
+                        ),
                     itemBuilder: (context, i) {
                       final info = box.getAt(i);
                       final data = Recipe.fromJson(info);

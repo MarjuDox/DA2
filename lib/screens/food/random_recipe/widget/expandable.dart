@@ -1,3 +1,4 @@
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 
 class ExpandableGroup extends StatefulWidget {
@@ -36,7 +37,7 @@ class ExpandableGroup extends StatefulWidget {
   /// Default value `Theme.of(context).appBarTheme.color`
   final Color? headerBackgroundColor;
 
-  ExpandableGroup(
+  const ExpandableGroup(
       {Key? key,
       this.isExpanded = false,
       required this.header,
@@ -71,21 +72,22 @@ class _ExpandableGroupState extends State<ExpandableGroup> {
   Widget _wrapHeader() {
     List<Widget> children = [];
     if (!widget.isExpanded) {
-      children.add(Divider());
+      children.add(Divider(
+        color: context.colorScheme.secondary.withOpacity(0.1),
+      ));
     }
     children.add(ListTile(
-      contentPadding: widget.headerEdgeInsets != null
-          ? widget.headerEdgeInsets
-          : EdgeInsets.only(left: 0.0, right: 16.0),
+      contentPadding: widget.headerEdgeInsets ??
+          const EdgeInsets.only(left: 0.0, right: 16.0),
       title: widget.header,
       trailing: _isExpanded
-          ? widget.expandedIcon ?? Icon(Icons.keyboard_arrow_down)
-          : widget.collapsedIcon ?? Icon(Icons.keyboard_arrow_right),
+          ? widget.expandedIcon ?? const Icon(Icons.keyboard_arrow_down)
+          : widget.collapsedIcon ?? const Icon(Icons.keyboard_arrow_right),
       onTap: () => _updateExpandState(!_isExpanded),
     ));
     return Ink(
-      color:
-          widget.headerBackgroundColor ?? Theme.of(context).appBarTheme.backgroundColor,
+      color: widget.headerBackgroundColor ??
+          Theme.of(context).appBarTheme.backgroundColor,
       child: Column(
         children: children,
       ),
@@ -97,7 +99,11 @@ class _ExpandableGroupState extends State<ExpandableGroup> {
     titles.add(_wrapHeader());
     titles.addAll(widget.items);
     return Column(
-      children: ListTile.divideTiles(tiles: titles, context: context).toList(),
+      children: ListTile.divideTiles(
+        tiles: titles,
+        context: context,
+        color: context.colorScheme.secondary.withOpacity(0.1),
+      ).toList(),
     );
   }
 }

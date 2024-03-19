@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/model/food/recipe.dart';
 import 'package:flutter/material.dart';
 
@@ -12,15 +13,13 @@ class IngredientsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 170,
+      height: 172,
       child: ListView(
         shrinkWrap: true,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         children: [
-          const SizedBox(
-            width: 26,
-          ),
           ...recipe.extendedIngredients!.map((ingredient) {
             return InkWell(
               onTap: () {
@@ -37,17 +36,14 @@ class IngredientsWidget extends StatelessWidget {
                           Container(
                             height: 250,
                             width: 250,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[50],
+                            padding: const EdgeInsets.all(20),
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
                             ),
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: CachedNetworkImage(
-                                imageUrl:
-                                    "http://spoonacular.com/cdn/ingredients_500x500/${ingredient.image}",
-                              ),
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  "http://spoonacular.com/cdn/ingredients_500x500/${ingredient.image}",
+                              fit: BoxFit.contain,
                             ),
                           ),
                           const SizedBox(
@@ -110,7 +106,7 @@ class IngredientsWidget extends StatelessWidget {
                               ],
                             ),
                           ),
-                          SizedBox(height: 20)
+                          const SizedBox(height: 20)
                         ],
                       ),
                     ),
@@ -122,23 +118,28 @@ class IngredientsWidget extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                        height: 100,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          boxShadow: const [
-                            BoxShadow(
-                              offset: Offset(2, 2),
-                              blurRadius: 5,
-                              color: Color.fromRGBO(0, 0, 0, 0.20),
-                            )
-                          ],
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                          image: DecorationImage(
-                              fit: BoxFit.contain,
-                              image: CachedNetworkImageProvider(
-                                  "http://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}")),
-                        )),
+                      height: 100,
+                      width: 100,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: context.colorScheme.shadow.withOpacity(0.05),
+                            spreadRadius: 3,
+                            blurRadius: 10,
+                            offset: const Offset(
+                                0, 5), // changes position of shadow
+                          ),
+                        ],
+                        shape: BoxShape.circle,
+                        color: context.colorScheme.surface,
+                      ),
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            "http://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}",
+                        fit: BoxFit.contain,
+                      ),
+                    ),
                     Container(
                       width: 100,
                       padding: const EdgeInsets.all(8),
@@ -146,9 +147,10 @@ class IngredientsWidget extends StatelessWidget {
                         ingredient.name!,
                         textAlign: TextAlign.center,
                         maxLines: 2,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                        ),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            color:
+                                context.colorScheme.secondary.withOpacity(0.8)),
                       ),
                     ),
                   ],

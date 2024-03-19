@@ -1,3 +1,4 @@
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/screens/common_widget/diabetes_loading.dart';
 import 'package:diabetes/screens/food/random_recipe/widget/recipe_info_success_widget.dart';
 import 'package:diabetes/screens/food/recipe_infor/bloc/recipe_infor_bloc.dart';
@@ -23,37 +24,39 @@ class _RecipeInfoState extends State<RecipeInfo> {
 
   @override
   Widget build(BuildContext context) {
-    return MediaQuery(
-      data: MediaQuery.of(context)
-          .copyWith(textScaler: const TextScaler.linear(1.0)),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: BlocBuilder<RecipeInfoBloc, RecipeInfoState>(
-          builder: (context, state) {
-            if (state is RecipeInfoLoadState) {
-              return const Center(child: DiabetesLoading());
-            } else if (state is RecipeInfoSuccesState) {
-              return RecipeInfoWidget(
-                equipment: state.equipment,
-                info: state.recipe,
-                nutrient: state.nutrient,
-                similarlist: state.similar,
-              );
-              //return const SizedBox();
-            } else if (state is RecipeInfoErrorState) {
-              return Center(
-                child: Container(
-                  child: const Text("Error"),
-                ),
-              );
-            } else {
-              return Center(
-                child: Container(
-                  child: const Text("Noting happingng"),
-                ),
-              );
-            }
-          },
+    return Material(
+      child: MediaQuery(
+        data: MediaQuery.of(context)
+            .copyWith(textScaler: const TextScaler.linear(1.0)),
+        child: Scaffold(
+          backgroundColor: context.colorScheme.surfaceVariant.withOpacity(0.1),
+          body: BlocBuilder<RecipeInfoBloc, RecipeInfoState>(
+            builder: (context, state) {
+              if (state is RecipeInfoLoadState) {
+                return const Center(child: DiabetesLoading());
+              } else if (state is RecipeInfoSuccesState) {
+                return RecipeInfoWidget(
+                  equipment: state.equipment,
+                  info: state.recipe,
+                  nutrient: state.nutrient,
+                  similarlist: state.similar,
+                );
+                //return const SizedBox();
+              } else if (state is RecipeInfoErrorState) {
+                return Center(
+                  child: Container(
+                    child: const Text("Error"),
+                  ),
+                );
+              } else {
+                return Center(
+                  child: Container(
+                    child: const Text("Noting happingng"),
+                  ),
+                );
+              }
+            },
+          ),
         ),
       ),
     );

@@ -3,6 +3,7 @@ import 'package:diabetes/core/animation/animation.dart';
 import 'package:diabetes/core/common_widget/base_screen.dart';
 import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/model/food/auto_complete.dart';
+import 'package:diabetes/screens/common_widget/card_x.dart';
 import 'package:diabetes/screens/common_widget/diabetes_loading.dart';
 import 'package:diabetes/screens/food/recipe_infor/bloc/recipe_infor_bloc.dart';
 import 'package:diabetes/screens/food/recipe_infor/page/recipe_infor_screen.dart';
@@ -11,6 +12,7 @@ import 'package:diabetes/screens/food/search/search_results/bloc/search_results_
 import 'package:diabetes/screens/food/search/search_results/page/search_results_screen.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchPage extends StatelessWidget {
@@ -207,47 +209,39 @@ class CategoryTitle extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
       child: DelayedDisplay(
         delay: const Duration(microseconds: 600),
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          decoration: BoxDecoration(boxShadow: const [
-            BoxShadow(
-              offset: Offset(-2, -2),
-              blurRadius: 12,
-              color: Color.fromRGBO(0, 0, 0, 0.05),
-            ),
-            BoxShadow(
-              offset: Offset(2, 2),
-              blurRadius: 5,
-              color: Color.fromRGBO(0, 0, 0, 0.10),
-            )
-          ], borderRadius: BorderRadius.circular(10), color: Colors.white),
-          child: ListTile(
-              leading: Container(
-                  width: 100,
-                  height: 60,
-                  decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                          image: CachedNetworkImageProvider(image),
-                          fit: BoxFit.cover))),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => BlocProvider(
-                      create: (context) => SearchResultsBloc(),
-                      child: SearchResults(
-                        id: text,
-                      ),
-                    ),
+        child: CardX(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => BlocProvider(
+                  create: (context) => SearchResultsBloc(),
+                  child: SearchResults(
+                    id: text,
                   ),
-                );
-              },
-              title: Text(
-                text,
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
-              trailing: const Icon(Icons.arrow_right_alt)),
+            );
+          },
+          padding: EdgeInsets.zero,
+          child: Row(
+            children: [
+              Expanded(
+                flex: 2,
+                child: AspectRatio(
+                  aspectRatio: 5 / 4,
+                  child: CachedNetworkImage(imageUrl: image, fit: BoxFit.cover),
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                flex: 3,
+                child: Text(
+                  text,
+                  style: const TextStyle(fontSize: 18),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

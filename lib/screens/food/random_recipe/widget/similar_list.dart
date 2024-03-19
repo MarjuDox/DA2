@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diabetes/model/food/similar_list.dart';
+import 'package:diabetes/screens/common_widget/card_x.dart';
 import 'package:diabetes/screens/food/recipe_infor/bloc/recipe_infor_bloc.dart';
 import 'package:diabetes/screens/food/recipe_infor/page/recipe_infor_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,15 +15,13 @@ class SimilarListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 280,
-      child: ListView(
+      child: ListView.separated(
+        padding: const EdgeInsets.all(16),
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
-        children: [
-          const SizedBox(
-            width: 26,
-          ),
-          ...items.map((e) => RecipeCardWidget(items: e)).toList(),
-        ],
+        itemCount: items.length,
+        itemBuilder: (context, index) => RecipeCardWidget(items: items[index]),
+        separatorBuilder: (context, index) => const SizedBox(width: 16),
       ),
     );
   }
@@ -43,84 +42,63 @@ class RecipeCardWidget extends StatefulWidget {
 class _RecipeCardWidgetState extends State<RecipeCardWidget> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => BlocProvider(
-                  create: (context) => RecipeInfoBloc(),
-                  child: RecipeInfo(
-                    id: widget.items.id,
-                  ),
-                )));
-      },
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Container(
-          decoration: BoxDecoration(
-            boxShadow: const [
-              BoxShadow(
-                offset: Offset(-2, -2),
-                blurRadius: 12,
-                color: Color.fromRGBO(0, 0, 0, 0.05),
-              ),
-              BoxShadow(
-                offset: Offset(2, 2),
-                blurRadius: 5,
-                color: Color.fromRGBO(0, 0, 0, 0.10),
-              )
-            ],
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          margin: const EdgeInsets.all(8),
-          width: 200,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10)),
-                child: Container(
-                  foregroundDecoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10)),
-                  ),
-                  width: double.infinity,
-                  child: CachedNetworkImage(
-                    imageUrl: widget.items.image,
-                    fit: BoxFit.cover,
-                    width: 200,
-                    height: 150,
-                  ),
+    return SizedBox(
+      width: 200,
+      child: CardX(
+        padding: EdgeInsets.zero,
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => BlocProvider(
+                    create: (context) => RecipeInfoBloc(),
+                    child: RecipeInfo(
+                      id: widget.items.id,
+                    ),
+                  )));
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+              child: Container(
+                foregroundDecoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10)),
+                ),
+                width: double.infinity,
+                child: CachedNetworkImage(
+                  imageUrl: widget.items.image,
+                  fit: BoxFit.cover,
+                  width: 200,
+                  height: 150,
                 ),
               ),
-              const SizedBox(
-                height: 10,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                widget.items.name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
-              Container(
-                padding: const EdgeInsets.all(9),
-                child: Text(
-                  widget.items.name,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: Text(
+                "Ready in ${widget.items.readyInMinutes} Min",
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                child: Text(
-                  "Ready in " + widget.items.readyInMinutes + " Min",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

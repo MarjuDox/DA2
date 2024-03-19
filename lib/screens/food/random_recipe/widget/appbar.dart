@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diabetes/core/animation/animation.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/model/food/recipe.dart';
 import 'package:diabetes/screens/food/random_recipe/widget/favorite_bottom.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
@@ -19,9 +20,6 @@ class MySliverAppBar extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    final appBarSize = maxExtent - shrinkOffset;
-    final proportion = 2 - (maxExtent / appBarSize);
-    final percent = proportion < 0 || proportion > 1 ? 0.0 : proportion;
     return ConstrainedBox(
       constraints: BoxConstraints(minHeight: maxExtent),
       child: Stack(
@@ -31,7 +29,7 @@ class MySliverAppBar extends SliverPersistentHeaderDelegate {
         children: [
           Positioned(
               child: Container(
-            color: Colors.white,
+            color: context.colorScheme.primary,
             child: Opacity(
               opacity: (1 - shrinkOffset / expandedHeight),
               child: Stack(
@@ -42,7 +40,7 @@ class MySliverAppBar extends SliverPersistentHeaderDelegate {
                   Positioned(
                     child: CachedNetworkImage(
                       imageUrl: info.image!,
-                      height: 270,
+                      height: 300,
                       width: double.infinity,
                       fit: BoxFit.cover,
                     ),
@@ -82,11 +80,13 @@ class MySliverAppBar extends SliverPersistentHeaderDelegate {
                         child: Row(
                           children: [
                             Text(
-                              info.spoonacularScore!.roundToDouble().toStringAsFixed(2),
+                              info.spoonacularScore!
+                                  .roundToDouble()
+                                  .toStringAsFixed(2),
                             ),
-                            const SizedBox(width: 10),
+                            const SizedBox(width: 6),
                             Icon(
-                              Icons.star_outlined,
+                              Icons.star_rounded,
                               color: Theme.of(context).primaryColor,
                             )
                           ],
@@ -108,7 +108,7 @@ class MySliverAppBar extends SliverPersistentHeaderDelegate {
   double get maxExtent => expandedHeight;
 
   @override
-  double get minExtent => kToolbarHeight;
+  double get minExtent => kToolbarHeight + 25;
 
   @override
   OverScrollHeaderStretchConfiguration get stretchConfiguration =>
@@ -141,11 +141,11 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       uriPrefix: 'https://diabetesdemo.page.link/',
       link: Uri.parse(
           'https://diabetesdemo.page.link/demo/?id=${widget.info.id}'),
-      androidParameters: AndroidParameters(
+      androidParameters: const AndroidParameters(
         packageName: 'com.da2.diabetes.diabetes',
         minimumVersion: 125,
       ),
-      googleAnalyticsParameters: GoogleAnalyticsParameters(
+      googleAnalyticsParameters: const GoogleAnalyticsParameters(
         campaign: 'example-promo',
         medium: 'social',
         source: 'orkut',
@@ -163,7 +163,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
     //   DynamicLinkParametersOptions(
     //       shortDynamicLinkPathLength: ShortDynamicLinkPathLength.unguessable),
     // );
-    final dynamicLink = await FirebaseDynamicLinks.instance.buildShortLink(parameters);
+    final dynamicLink =
+        await FirebaseDynamicLinks.instance.buildShortLink(parameters);
     final Uri shortUrl = dynamicLink.shortUrl;
     return shortUrl;
   }
@@ -174,21 +175,9 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       backgroundColor: Colors.transparent,
       elevation: 0,
       automaticallyImplyLeading: true,
-      leading: GestureDetector(
-        onTap: () {
-          Navigator.pop(context);
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Container(
-            // padding: EdgeInsets.all(4),
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white,
-            ),
-            child: const Icon(Icons.arrow_back, color: Colors.black),
-          ),
-        ),
+      leading: IconButton(
+        onPressed: Navigator.of(context).maybePop,
+        icon: Icon(CupertinoIcons.back, color: context.colorScheme.onPrimary),
       ),
       actions: [
         IconButton(
@@ -198,24 +187,18 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               'check out This tasty recipe $url',
             );
           },
-          icon: const Icon(CupertinoIcons.share, color: Colors.black),
+          icon:
+              Icon(CupertinoIcons.share, color: context.colorScheme.onPrimary),
         )
       ],
-      // title: Opacity(
-      //   opacity: (0 + widget.shrinkOffset / widget.expandedHeight),
-      //   child: Text(
-      //     "Spoonacular",
-      //     style: Theme.of(context).textTheme.headline1,
-      //   ),
-      // ),
-      title: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8),
+      title: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Text(
           'Recipe Information',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
-            color: Colors.black,
+            color: context.colorScheme.onPrimary,
           ),
         ),
       ),

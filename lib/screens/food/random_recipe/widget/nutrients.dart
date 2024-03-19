@@ -1,3 +1,4 @@
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/model/food/nutrients.dart';
 import 'package:diabetes/screens/food/random_recipe/widget/expandable.dart';
 import 'package:flutter/material.dart';
@@ -10,122 +11,58 @@ class NutrientsWidgets extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-      child: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: ExpandableGroup(
+        isExpanded: false,
+        collapsedIcon: const Icon(Icons.chevron_left),
+        header: const Text(
+          "Nutrients",
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        child: ExpandableGroup(
-          isExpanded: false,
-          collapsedIcon: const Icon(Icons.arrow_drop_down),
-          header: const Text(
-            "Nutrients",
-            style: TextStyle(fontWeight: FontWeight.bold),
+        items: [
+          item(
+              icon: Icons.fireplace,
+              title: "Calories",
+              value: nutrient.calories),
+          item(icon: Icons.face_outlined, title: "Fat", value: nutrient.fat),
+          item(
+              icon: Icons.bakery_dining,
+              title: "Carbohydrates",
+              value: nutrient.carbs),
+          item(
+              icon: Icons.bolt_outlined,
+              title: "Protein",
+              value: nutrient.protein),
+        ],
+      ),
+    );
+  }
+
+  ListTile item(
+      {required IconData icon, required String title, required String value}) {
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(vertical: 16),
+      leading: LayoutBuilder(builder: (context, constraint) {
+        return Container(
+          padding: const EdgeInsets.all(6),
+          decoration: BoxDecoration(
+            color: context.colorScheme.secondary.withOpacity(0.05),
+            shape: BoxShape.circle,
           ),
-          items: [
-            ListTile(
-                contentPadding: const EdgeInsets.all(10),
-                leading: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.fireplace,
-                    size: 35,
-                    color: Colors.orange,
-                  ),
-                ),
-                title: const Text(
-                  "calories",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                trailing: Text(
-                  nutrient.calories,
-                  style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold),
-                )),
-            ListTile(
-                contentPadding: EdgeInsets.all(10),
-                leading: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.face_outlined,
-                    size: 35,
-                    color: Colors.orange,
-                  ),
-                ),
-                title: const Text(
-                  "Fat",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                trailing: Text(
-                  nutrient.fat,
-                  style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold),
-                )),
-            ListTile(
-                contentPadding: EdgeInsets.all(10),
-                leading: Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.bakery_dining,
-                    size: 35,
-                    color: Colors.orange,
-                  ),
-                ),
-                title: const Text(
-                  "carbohydrates",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                trailing: Text(
-                  nutrient.carbs,
-                  style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold),
-                )),
-            ListTile(
-              contentPadding: EdgeInsets.all(10),
-              leading: Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.bolt_outlined,
-                  size: 35,
-                  color: Colors.orange,
-                ),
-              ),
-              title: const Text(
-                "Protein",
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-              ),
-              trailing: Text(
-                nutrient.protein,
-                style: const TextStyle(
-                    fontSize: 18,
-                    color: Colors.green,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
-        ),
+          child: Icon(
+            icon,
+            size: constraint.maxWidth * 0.1,
+            color: context.colorScheme.primary,
+          ),
+        );
+      }),
+      title: Text(
+        title,
+      ),
+      trailing: Text(
+        value,
+        style: const TextStyle(
+            fontSize: 16, color: Colors.green, fontWeight: FontWeight.w500),
       ),
     );
   }
@@ -140,39 +77,32 @@ class NutrientsbadWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-      child: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: ExpandableGroup(
+        isExpanded: false,
+        collapsedIcon: const Icon(Icons.chevron_left),
+        header: const Text(
+          "Bad for health Nutrients.",
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        child: ExpandableGroup(
-          isExpanded: false,
-          collapsedIcon: const Icon(Icons.arrow_drop_down),
-          header: const Text(
-            "Bad for health Nutrients.",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          items: [
-            ...nutrient.bad.map((nutri) {
-              return ListTile(
-                contentPadding: EdgeInsets.all(10),
-                subtitle: Text("${nutri.percentOfDailyNeeds}% of Daily needs."),
-                title: Text(
-                  nutri.name.toString(),
-                  style: const TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                trailing: Text(
-                  nutri.amount,
-                  style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold),
-                ),
-              );
-            }).toList()
-          ],
-        ),
+        items: [
+          ...nutrient.bad.map((nutri) {
+            return ListTile(
+              contentPadding: const EdgeInsets.symmetric(vertical: 10),
+              subtitle: Text("${nutri.percentOfDailyNeeds}% of Daily needs."),
+              title: Text(
+                nutri.name.toString(),
+              ),
+              trailing: Text(
+                nutri.amount,
+                style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.green,
+                    fontWeight: FontWeight.w500),
+              ),
+            );
+          }).toList()
+        ],
       ),
     );
   }
@@ -187,42 +117,32 @@ class NutrientsgoodWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-      child: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10),
-          ),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: ExpandableGroup(
+        isExpanded: false,
+        collapsedIcon: const Icon(Icons.chevron_left),
+        header: const Text(
+          "good for health Nutrients.",
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        child: ExpandableGroup(
-          isExpanded: false,
-          collapsedIcon: const Icon(Icons.arrow_drop_down),
-          header: const Text(
-            "good for health Nutrients.",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          items: [
-            ...nutrient.good.map((nutri) {
-              return ListTile(
-                contentPadding: const EdgeInsets.all(10),
-                subtitle: Text("${nutri.percentOfDailyNeeds}% of Daily needs."),
-                title: Text(
-                  nutri.name.toString(),
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                trailing: Text(
-                  nutri.amount,
-                  style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold),
-                ),
-              );
-            }).toList()
-          ],
-        ),
+        items: [
+          ...nutrient.good.map((nutri) {
+            return ListTile(
+              contentPadding: const EdgeInsets.symmetric(vertical: 10),
+              subtitle: Text("${nutri.percentOfDailyNeeds}% of Daily needs."),
+              title: Text(
+                nutri.name.toString(),
+              ),
+              trailing: Text(
+                nutri.amount,
+                style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.green,
+                    fontWeight: FontWeight.w500),
+              ),
+            );
+          }).toList()
+        ],
       ),
     );
   }

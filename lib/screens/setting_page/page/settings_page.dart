@@ -12,9 +12,11 @@ import 'package:diabetes/screens/reminder/page/reminder_page.dart';
 import 'package:diabetes/screens/setting_page/bloc/settings_bloc.dart';
 import 'package:diabetes/screens/sign_in/page/sign_in_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -111,6 +113,7 @@ class _SettingsPageState extends State {
               ),
               const SizedBox(height: 15),
               SettingsContainer(
+                icon: FluentIcons.clock_24_filled,
                 withArrow: true,
                 onTap: () {
                   Navigator.push(context,
@@ -121,6 +124,7 @@ class _SettingsPageState extends State {
                         TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
               ),
               SettingsContainer(
+                icon: FluentIcons.bot_24_filled,
                 withArrow: true,
                 onTap: () {
                   Navigator.push(context,
@@ -131,6 +135,7 @@ class _SettingsPageState extends State {
                         TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
               ),
               SettingsContainer(
+                icon: FluentIcons.heart_24_filled,
                 withArrow: true,
                 onTap: () {
                   Navigator.push(
@@ -144,6 +149,7 @@ class _SettingsPageState extends State {
               ),
               if (!kIsWeb)
                 SettingsContainer(
+                  icon: FluentIcons.star_24_filled,
                   child: Text(
                       '${TextConstants.rateUsOn}${Platform.isIOS ? 'App store' : 'Play market'}',
                       style: const TextStyle(
@@ -160,6 +166,7 @@ class _SettingsPageState extends State {
               //         style:
               //             TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
               SettingsContainer(
+                  icon: FluentIcons.sign_out_24_filled,
                   child: const Text(TextConstants.signOut,
                       style:
                           TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
@@ -168,36 +175,40 @@ class _SettingsPageState extends State {
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (_) => const SignInPage()));
                   }),
-              const SizedBox(height: 15),
-              const Text(TextConstants.joinUs,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-              const SizedBox(height: 15),
+              const SizedBox(height: 22),
+              Text(TextConstants.joinUs,
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: context.colorScheme.secondary)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextButton(
+                  IconButton(
                       onPressed: () => launch('https://www.facebook.com/'),
-                      style: TextButton.styleFrom(
-                          shape: const CircleBorder(),
-                          backgroundColor: Colors.white,
-                          elevation: 1),
-                      child: Image.asset(PathConstants.facebook)),
-                  TextButton(
+                      icon: Icon(
+                        MdiIcons.facebook,
+                        size: 24,
+                      )),
+                  IconButton(
                       onPressed: () => launch('https://www.instagram.com/'),
                       style: TextButton.styleFrom(
                           shape: const CircleBorder(),
                           backgroundColor: Colors.white,
                           elevation: 1),
-                      child: Image.asset(PathConstants.instagram)),
-                  TextButton(
+                      icon: Icon(MdiIcons.instagram)),
+                  IconButton(
                       onPressed: () => launch('https://twitter.com'),
                       style: TextButton.styleFrom(
                           shape: const CircleBorder(),
                           backgroundColor: Colors.white,
                           elevation: 1),
-                      child: Image.asset(PathConstants.twitter)),
+                      icon: Icon(MdiIcons.twitter)),
                 ],
-              )
+              ),
+              const SizedBox(
+                height: 16,
+              ),
             ]),
           ),
         ),

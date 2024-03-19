@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/model/food/equipments.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,7 @@ class EquipmentsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 170,
+      height: 172,
       child: ListView(
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
@@ -27,20 +28,24 @@ class EquipmentsListView extends StatelessWidget {
                   Container(
                     height: 100,
                     width: 100,
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.white,
-                      boxShadow: const [
+                      boxShadow: [
                         BoxShadow(
-                          offset: Offset(2, 2),
-                          blurRadius: 5,
-                          color: Color.fromRGBO(0, 0, 0, 0.20),
-                        )
+                          color: context.colorScheme.shadow.withOpacity(0.05),
+                          spreadRadius: 3,
+                          blurRadius: 10,
+                          offset:
+                              const Offset(0, 5), // changes position of shadow
+                        ),
                       ],
-                      image: DecorationImage(
-                          fit: BoxFit.contain,
-                          image: CachedNetworkImageProvider(
-                              "http://spoonacular.com/cdn/equipment_100x100/${equipment.image}")),
+                    ),
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          "http://spoonacular.com/cdn/equipment_100x100/${equipment.image}",
+                      fit: BoxFit.contain,
                     ),
                   ),
                   Container(
@@ -48,9 +53,11 @@ class EquipmentsListView extends StatelessWidget {
                     padding: const EdgeInsets.all(8),
                     child: Text(
                       equipment.name!,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                      ),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color:
+                              context.colorScheme.secondary.withOpacity(0.8)),
                     ),
                   ),
                 ],

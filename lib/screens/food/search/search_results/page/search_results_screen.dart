@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diabetes/core/common_widget/base_screen.dart';
 import 'package:diabetes/core/extension/context_extension.dart';
@@ -8,7 +10,7 @@ import 'package:diabetes/screens/food/recipe_infor/bloc/recipe_infor_bloc.dart';
 import 'package:diabetes/screens/food/recipe_infor/page/recipe_infor_screen.dart';
 import 'package:diabetes/screens/food/search/search_results/bloc/search_results_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchResults extends StatefulWidget {
@@ -30,56 +32,58 @@ class _SearchResultsState extends State<SearchResults> {
 
   @override
   Widget build(BuildContext context) {
-    return MediaQuery(
-      data: MediaQuery.of(context)
-          .copyWith(textScaler: const TextScaler.linear(1.0)),
-      child: Scaffold(
-        backgroundColor: context.colorScheme.surfaceVariant.withOpacity(0.1),
-        appBar: AppBar(
-          elevation: 0,
-          iconTheme: const IconThemeData(color: Colors.black),
-          title: Text(
-            "All your search result",
-            style: Theme.of(context).textTheme.titleLarge,
+    return Material(
+      child: MediaQuery(
+        data: MediaQuery.of(context)
+            .copyWith(textScaler: const TextScaler.linear(1.0)),
+        child: Scaffold(
+          backgroundColor: context.colorScheme.surfaceVariant.withOpacity(0.1),
+          appBar: AppBar(
+            elevation: 0,
+            iconTheme: const IconThemeData(color: Colors.black),
+            title: Text(
+              "All your search result",
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
           ),
-        ),
-        body: BlocBuilder<SearchResultsBloc, SearchResultsState>(
-          builder: (context, state) {
-            if (state is SearchResultsLoading) {
-              return const Center(child: DiabetesLoading());
-            } else if (state is SearchResultsSuccess) {
-              return SafeArea(
-                  child: BaseScreen(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: GridView(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 10 / 11,
+          body: BlocBuilder<SearchResultsBloc, SearchResultsState>(
+            builder: (context, state) {
+              if (state is SearchResultsLoading) {
+                return const Center(child: DiabetesLoading());
+              } else if (state is SearchResultsSuccess) {
+                return SafeArea(
+                    child: BaseScreen(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: GridView(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 10 / 11,
+                      ),
+                      physics: const BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics()),
+                      children: [
+                        ...state.results.map((result) {
+                          return SearchResultItem(
+                            result: result,
+                          );
+                        }).toList()
+                      ],
                     ),
-                    physics: const BouncingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics()),
-                    children: [
-                      ...state.results.map((result) {
-                        return SearchResultItem(
-                          result: result,
-                        );
-                      }).toList()
-                    ],
                   ),
-                ),
-              ));
-            } else if (state is SearchResultsError) {
-              return const Center(
-                child: Text("Error"),
-              );
-            } else {
-              return const Center(
-                child: Text("Noting happingng"),
-              );
-            }
-          },
+                ));
+              } else if (state is SearchResultsError) {
+                return const Center(
+                  child: Text("Error"),
+                );
+              } else {
+                return const Center(
+                  child: Text("Noting happingng"),
+                );
+              }
+            },
+          ),
         ),
       ),
     );

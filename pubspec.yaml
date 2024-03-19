@@ -80,6 +80,7 @@ dependencies:
   uuid: ^4.3.3
   # get Day in week
   jiffy: ^6.2.2 
+  material_design_icons_flutter: ^7.0.7296
 
 dev_dependencies:
   flutter_test:
