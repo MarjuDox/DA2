@@ -10,7 +10,7 @@ class BaseScreen extends StatelessWidget {
       alignment: Alignment.center,
       child: ConstrainedBox(
         constraints: const BoxConstraints(
-          maxWidth: 462,
+          maxWidth: 600,
           maxHeight: 900,
         ),
         child: child,

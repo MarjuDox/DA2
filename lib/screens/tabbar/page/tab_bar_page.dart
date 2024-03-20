@@ -33,54 +33,88 @@ class _TabBarPageState extends State<TabBarPage> {
     super.initState();
   }
 
+  final int _selectedIndex = 0;
+  NavigationRailLabelType labelType = NavigationRailLabelType.all;
+  bool showLeading = false;
+  bool showTrailing = false;
+  double groupAlignment = -1.0;
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<TabBarBloc>(
-      create: (BuildContext context) => TabBarBloc(),
-      child: BlocConsumer<TabBarBloc, TabBarState>(
-        listener: (context, state) {},
-        buildWhen: (_, currState) =>
-            currState is TabBarInitial || currState is TabBarItemSelectedState,
-        builder: (context, state) {
-          final bloc = BlocProvider.of<TabBarBloc>(context);
-          return Scaffold(
-            drawer: Drawer(
-              // Add a ListView to the drawer. This ensures the user can scroll
-              // through the options in the drawer if there isn't enough vertical
-              // space to fit everything.
-              child: ListView(
-                // Important: Remove any padding from the ListView.
-                padding: EdgeInsets.zero,
+    return LayoutBuilder(builder: (context, constraint) {
+      return BlocProvider<TabBarBloc>(
+        create: (BuildContext context) => TabBarBloc(),
+        child: BlocConsumer<TabBarBloc, TabBarState>(
+          listener: (context, state) {},
+          buildWhen: (_, currState) =>
+              currState is TabBarInitial ||
+              currState is TabBarItemSelectedState,
+          builder: (context, state) {
+            final bloc = BlocProvider.of<TabBarBloc>(context);
+            return Scaffold(
+              body: Row(
                 children: [
-                  const DrawerHeader(
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
+                  if (constraint.maxWidth >= 900)
+                    NavigationRail(
+                      groupAlignment: groupAlignment,
+                      selectedIndex: bloc.currentIndex,
+                      onDestinationSelected: (index) {
+                        bloc.add(TabBarItemTappedEvent(index: index));
+                      },
+                      labelType: labelType,
+                      leading: showLeading
+                          ? FloatingActionButton(
+                              elevation: 0,
+                              onPressed: () {
+                                // Add your onPressed code here!
+                              },
+                              child: const Icon(Icons.add),
+                            )
+                          : const SizedBox(),
+                      trailing: showTrailing
+                          ? IconButton(
+                              onPressed: () {
+                                // Add your onPressed code here!
+                              },
+                              icon: const Icon(Icons.more_horiz_rounded),
+                            )
+                          : const SizedBox(),
+                      destinations: const <NavigationRailDestination>[
+                        NavigationRailDestination(
+                            selectedIcon: Icon(FluentIcons.home_24_filled),
+                            icon: Icon(FluentIcons.home_24_regular),
+                            label: Text('Home')),
+                        NavigationRailDestination(
+                            selectedIcon: Icon(FluentIcons.pill_24_filled),
+                            icon: Icon(FluentIcons.pill_24_regular),
+                            label: Text('Schedule')),
+                        NavigationRailDestination(
+                            selectedIcon:
+                                Icon(FluentIcons.accessibility_20_filled),
+                            icon: Icon(FluentIcons.accessibility_24_regular),
+                            label: Text('Workout')),
+                        NavigationRailDestination(
+                            selectedIcon: Icon(FluentIcons.food_24_filled),
+                            icon: Icon(FluentIcons.food_24_regular),
+                            label: Text('Food')),
+                        NavigationRailDestination(
+                            selectedIcon: Icon(FluentIcons.settings_24_filled),
+                            icon: Icon(FluentIcons.settings_24_regular),
+                            label: Text('Setting')),
+                      ],
                     ),
-                    child: Text('Drawer Header'),
-                  ),
-                  ListTile(
-                    title: const Text('Item 1'),
-                    onTap: () {
-                      // Update the state of the app.
-                      // ...
-                    },
-                  ),
-                  ListTile(
-                    title: const Text('Item 2'),
-                    onTap: () {
-                      // Update the state of the app.
-                      // ...
-                    },
-                  ),
+                  const VerticalDivider(thickness: 1, width: 1),
+                  Expanded(child: _createBody(context, bloc.currentIndex)),
                 ],
               ),
-            ),
-            body: _createBody(context, bloc.currentIndex),
-            bottomNavigationBar: _createdBottomTabBar(context),
-          );
-        },
-      ),
-    );
+              bottomNavigationBar: constraint.maxWidth < 900
+                  ? _createdBottomTabBar(context)
+                  : null,
+            );
+          },
+        ),
+      );
+    });
   }
 
   Widget _createdBottomTabBar(BuildContext context) {

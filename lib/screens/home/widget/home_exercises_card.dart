@@ -16,7 +16,6 @@ class WorkoutCard extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     return CardX(
       onTap: onTap,
       padding: EdgeInsets.zero,
@@ -27,7 +26,7 @@ class WorkoutCard extends StatelessWidget {
           right: 12,
         ),
         height: 160,
-        width: screenWidth * 0.6,
+        width: 250,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: color,
