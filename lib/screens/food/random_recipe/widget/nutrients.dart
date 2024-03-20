@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/model/food/nutrients.dart';
 import 'package:diabetes/screens/food/random_recipe/widget/expandable.dart';
@@ -51,7 +53,7 @@ class NutrientsWidgets extends StatelessWidget {
           ),
           child: Icon(
             icon,
-            size: constraint.maxWidth * 0.1,
+            size: min(constraint.maxWidth * 0.1, 30),
             color: context.colorScheme.primary,
           ),
         );
