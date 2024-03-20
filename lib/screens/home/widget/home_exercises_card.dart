@@ -1,5 +1,6 @@
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/model/workout_model.dart';
+import 'package:diabetes/screens/common_widget/card_x.dart';
 import 'package:flutter/material.dart';
 
 class WorkoutCard extends StatelessWidget {
@@ -7,7 +8,8 @@ class WorkoutCard extends StatelessWidget {
   final WorkoutModel workout;
   final Function() onTap;
 
-  WorkoutCard({
+  const WorkoutCard({
+    super.key,
     required this.color,
     required this.workout,
     required this.onTap,
@@ -15,8 +17,9 @@ class WorkoutCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    return GestureDetector(
+    return CardX(
       onTap: onTap,
+      padding: EdgeInsets.zero,
       child: Container(
         padding: const EdgeInsets.only(
           left: 20,
@@ -40,7 +43,7 @@ class WorkoutCard extends StatelessWidget {
                     const SizedBox(height: 5),
                     Text(
                       "${workout.title} title",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: ColorConstants.white,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -49,7 +52,7 @@ class WorkoutCard extends StatelessWidget {
                     const SizedBox(height: 10),
                     Text(
                       "${workout.exercises} exercises",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: ColorConstants.white,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -58,7 +61,7 @@ class WorkoutCard extends StatelessWidget {
                     const SizedBox(height: 5),
                     Text(
                       "${workout.minutes} minutes",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: ColorConstants.white,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,

@@ -1,6 +1,6 @@
-
 import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/extension/context_extension.dart';
+import 'package:diabetes/screens/common_widget/card_x.dart';
 import 'package:flutter/material.dart';
 
 class DataWorkouts extends StatelessWidget {
@@ -9,7 +9,8 @@ class DataWorkouts extends StatelessWidget {
   final String count;
   final String text;
 
-  DataWorkouts({
+  const DataWorkouts({
+    super.key,
     required this.icon,
     required this.title,
     required this.count,
@@ -18,22 +19,7 @@ class DataWorkouts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      height: 90,
-      width: screenWidth * 0.5,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: ColorConstants.white,
-        boxShadow: [
-          BoxShadow(
-            color: context.colorScheme.shadow.withOpacity(0.12),
-            blurRadius: 5.0,
-            spreadRadius: 1.1,
-          ),
-        ],
-      ),
+    return CardX(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -43,18 +29,21 @@ class DataWorkouts extends StatelessWidget {
               const SizedBox(width: 10),
               Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ],
           ),
+          const SizedBox(
+            height: 8,
+          ),
           Row(
             children: [
               Text(
                 count,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w700,
                 ),
@@ -62,7 +51,7 @@ class DataWorkouts extends StatelessWidget {
               const SizedBox(width: 10),
               Text(
                 text,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: ColorConstants.grey,
