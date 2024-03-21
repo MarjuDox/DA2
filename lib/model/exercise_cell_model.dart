@@ -1,5 +1,3 @@
-import 'package:diabetes/core/const/color_constants.dart';
-import 'package:diabetes/core/const/path_constants.dart';
 import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/model/exercise_model.dart';
 import 'package:diabetes/model/workout_model.dart';

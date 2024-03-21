@@ -13,9 +13,11 @@ class ExercisesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      scrollDirection: Axis.vertical,
       padding: const EdgeInsets.fromLTRB(20, 10, 20, 80),
       itemCount: exercises.length,
       itemBuilder: (context, index) {
+        return Text(index.toString());
         return ExerciseCell(
           currentExercise: exercises[index],
           nextExercise:

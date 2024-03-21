@@ -1,10 +1,8 @@
-import 'package:diabetes/core/const/color_constants.dart';
 import 'package:diabetes/core/const/text_constants.dart';
 import 'package:diabetes/core/extension/context_extension.dart';
 import 'package:diabetes/model/workout_model.dart';
 import 'package:diabetes/screens/common_widget/card_x.dart';
 import 'package:diabetes/screens/workouts/bloc/workouts_bloc.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -28,6 +26,7 @@ class WorkoutCard extends StatelessWidget {
         buildWhen: (_, currState) => currState is CardTappedState,
         builder: (context, state) {
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Row(
                 children: [

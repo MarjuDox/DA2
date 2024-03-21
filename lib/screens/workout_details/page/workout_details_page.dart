@@ -6,6 +6,7 @@ import 'package:diabetes/screens/start_workout/page/start_workout_page.dart';
 import 'package:diabetes/screens/workout_details/bloc/workout_details_bloc.dart';
 import 'package:diabetes/screens/workout_details/widget/workout_detail_content.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WorkoutDetailsPage extends StatelessWidget {
@@ -33,22 +34,25 @@ class WorkoutDetailsPage extends StatelessWidget {
           return Scaffold(
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: DiabetesButton(
-                title: workout.currentProgress == 0
-                    ? TextConstants.start
-                    : TextConstants.continueT,
-                onTap: () {
-                  final index = workout.currentProgress ==
-                          workout.exerciseDataList!.length
-                      ? 0
-                      : workout.currentProgress;
-                  bloc.add(StartTappedEvent(index: index));
-                },
-              ),
-            ),
-            body: BaseScreen(child: WorkoutDetailsContent(workout: workout)),
+            body: BaseScreen(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(child: WorkoutDetailsContent(workout: workout)),
+                DiabetesButton(
+                  title: workout.currentProgress == 0
+                      ? TextConstants.start
+                      : TextConstants.continueT,
+                  onTap: () {
+                    final index = workout.currentProgress ==
+                            workout.exerciseDataList!.length
+                        ? 0
+                        : workout.currentProgress;
+                    bloc.add(StartTappedEvent(index: index));
+                  },
+                ),
+              ],
+            )),
           );
         },
         listenWhen: (_, currState) =>
