@@ -64,7 +64,7 @@ class HomeContent extends StatelessWidget {
                         slivers: [
                           SliverAppBar(
                             stretch: true,
-                            expandedHeight: 120,
+                            expandedHeight: 140,
                             flexibleSpace: FlexibleSpaceBar(
                               background: _createProfileData(context),
                             ),
@@ -350,7 +350,7 @@ class HomeContent extends StatelessWidget {
   Widget _createProfileData(BuildContext context) {
     return Container(
       color: context.colorScheme.primary,
-      padding: const EdgeInsets.fromLTRB(16, 40, 16, 20),
+      padding: const EdgeInsets.fromLTRB(16, 40, 16, 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
