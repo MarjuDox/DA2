@@ -81,6 +81,7 @@ dependencies:
   # get Day in week
   jiffy: ^6.2.2 
   material_design_icons_flutter: ^7.0.7296
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
@@ -115,3 +116,9 @@ fonts:
     - asset: assets/fonts/NotoSans/static/NotoSans-Regular.ttf
     - asset: assets/fonts/NotoSans/static/NotoSans-Bold.ttf
       weight: 700
+
+flutter_launcher_icons:
+  image_path: "assets/images/app_icon.png"
+  android: true
+  web:
+    generate: true

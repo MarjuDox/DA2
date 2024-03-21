@@ -420,10 +420,10 @@ class HomeContent extends StatelessWidget {
       children: [
         const SizedBox(height: 22),
         _showStartWorkout(context, bloc),
-        const SizedBox(height: 30),
-        _createExercisesList(context),
-        const SizedBox(height: 25),
-        _showProgress(bloc),
+        // const SizedBox(height: 30),
+        // _createExercisesList(context),
+        // const SizedBox(height: 25),
+        // _showProgress(bloc),
         const SizedBox(height: 16),
       ],
     );
