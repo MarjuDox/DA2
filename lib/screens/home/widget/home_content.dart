@@ -437,40 +437,43 @@ class HomeContent extends StatelessWidget {
 
   Widget _createStartWorkout(BuildContext context, HomeBloc bloc) {
     final blocTabBar = BlocProvider.of<TabBarBloc>(context);
-    return CardX(
-      child: Column(
-        children: [
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image(
-                image: AssetImage(PathConstants.light),
-                width: 24,
-                height: 24,
-              ),
-              SizedBox(width: 10),
-              Text(TextConstants.didYouKnow,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))
-            ],
-          ),
-          const SizedBox(height: 16),
-          const Text(TextConstants.sportActivity,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
-          const SizedBox(height: 4),
-          const Text(TextConstants.signToStart,
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: ColorConstants.textGrey)),
-          const SizedBox(height: 24),
-          DiabetesButton(
-            title: TextConstants.startWorkout,
-            onTap: () {
-              blocTabBar.add(
-                  TabBarItemTappedEvent(index: blocTabBar.currentIndex = 2));
-            },
-          ),
-        ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: CardX(
+        child: Column(
+          children: [
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image(
+                  image: AssetImage(PathConstants.light),
+                  width: 24,
+                  height: 24,
+                ),
+                SizedBox(width: 10),
+                Text(TextConstants.didYouKnow,
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))
+              ],
+            ),
+            const SizedBox(height: 16),
+            const Text(TextConstants.sportActivity,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+            const SizedBox(height: 4),
+            const Text(TextConstants.signToStart,
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: ColorConstants.textGrey)),
+            const SizedBox(height: 24),
+            DiabetesButton(
+              title: TextConstants.startWorkout,
+              onTap: () {
+                blocTabBar.add(
+                    TabBarItemTappedEvent(index: blocTabBar.currentIndex = 2));
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
