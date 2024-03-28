@@ -1,14 +1,15 @@
 {
-    "java.compile.nullAnalysis.mode": "automatic",
-    "java.configuration.updateBuildConfiguration": "interactive",
-    "cSpell.words": [
-        "appbar",
-        "cupertino",
-        "curr",
-        "Dataworkouts",
-        "filex",
-        "infor",
-        "Nutrientsgood",
-        "RGBO"
-    ]
+  "java.compile.nullAnalysis.mode": "automatic",
+  "java.configuration.updateBuildConfiguration": "interactive",
+  "cSpell.words": [
+    "appbar",
+    "cupertino",
+    "curr",
+    "Dataworkouts",
+    "filex",
+    "infor",
+    "Nutrientsgood",
+    "RGBO"
+  ],
+  "dart.flutterSdkPath": ".fvm/versions/3.19.3"
 }
