@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:awesome_notifications_fcm/awesome_notifications_fcm.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +46,7 @@ class AwesomeNotificationImpl extends NotificationManager
     final createResult = await Future.wait(dayOfWeeks.map((dayOfWeek) {
       return _noti.createNotification(
           schedule: NotificationCalendar(
-            weekday: dayOfWeek.index,
+            weekday: dayOfWeek.index + 1,
             hour: timeOfDay.hour,
             minute: timeOfDay.minute,
           ),
@@ -100,7 +102,7 @@ class AwesomeNotificationImpl extends NotificationManager
     print('Notification FCM initialize v4: $notiFCMInitializeResult');
 
     final token = await getFirebaseToken();
-    print('Token Firebase: '+token.toString());
+    print('Token Firebase: $token');
   }
 
   // Request FCM token to Firebase
@@ -124,7 +126,8 @@ class AwesomeNotificationImpl extends NotificationManager
 
   @override
   Future<void> init() async {
-    final awesomeNotificationInitialize = await AwesomeNotifications().initialize(
+    final awesomeNotificationInitialize =
+        await AwesomeNotifications().initialize(
       NotificationConstants.logo,
       NotificationConstants.channels,
       debug: true,
@@ -182,7 +185,7 @@ class NotificationController extends ChangeNotifier {
     }
 
     print("starting long task");
-    await Future.delayed(Duration(seconds: 4));
+    await Future.delayed(const Duration(seconds: 4));
     print("long task done");
   }
 

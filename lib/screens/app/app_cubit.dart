@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:diabetes/core/service/firebase_database_service.dart';
 import 'package:diabetes/core/service/notification/notification_constants.dart';
@@ -22,23 +24,30 @@ class AppCubit extends Cubit<AppState> {
 
   Future<void> getAllSchedulesAndRenewScheduleNotifications() async {
     final pillSchedules = await FirebaseDatabaseService.getUserSchedule();
-    await _cancelAllSchedulesAndAddSchedules(pillSchedules);
+    await _cancelAllSchedulesAndAddSchedules(pillSchedules
+        .where((element) => element.isActiveAt(DateTime.now()))
+        .toList());
   }
 
   Future<void> _cancelAllSchedulesAndAddSchedules(
       List<PillScheduleModel> pillSchedules) async {
     await _notificationManager.cancelAllSchedulednotification(
         channelKey: FNotificationChannelEnum.prescription.toKey());
+    int id = 0;
     for (var pillSchedule in pillSchedules) {
       for (var time in pillSchedule.times) {
-        await _notificationManager.createSchedulednotification(
-            0, // notificationId
-            dayOfWeeks:
-                pillSchedule.daysInWeek.map((e) => e.toDayOfWeek()).toList(),
-            timeOfDay: time,
-            title: pillSchedule.medicineName,
-            body: pillSchedule.note.label,
-            channelKey: FNotificationChannelEnum.prescription.toKey());
+        try {
+          await _notificationManager.createSchedulednotification(
+              id++, // notificationId
+              dayOfWeeks:
+                  pillSchedule.daysInWeek.map((e) => e.toDayOfWeek()).toList(),
+              timeOfDay: time,
+              title: pillSchedule.medicineName,
+              body: pillSchedule.note.label,
+              channelKey: FNotificationChannelEnum.prescription.toKey());
+        } catch (e) {
+          log(e.toString());
+        }
       }
     }
   }

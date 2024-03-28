@@ -92,7 +92,7 @@ class PillScheduleModel {
           (x) => DayInWeek.fromJson(x),
         ),
       ),
-      dose: map['dose'] as double,
+      dose: (map['dose'] as num? ?? 0).toDouble(),
       unit: MedicineUnit.fromJson(map['unit']),
       takenPill: map['takenPill'] == null
           ? {}

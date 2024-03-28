@@ -17,6 +17,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -115,9 +116,14 @@ class _SettingsPageState extends State {
               SettingsContainer(
                 icon: FluentIcons.clock_24_filled,
                 withArrow: true,
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const ReminderPage()));
+                onTap: () async {
+                  final result = await Permission.notification.request();
+                  if (result.isGranted && mounted && context.mounted) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const ReminderPage()));
+                  }
                 },
                 child: const Text(TextConstants.reminder,
                     style:
