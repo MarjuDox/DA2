@@ -8,6 +8,7 @@ import 'package:diabetes/core/extension/datetime_extension.dart';
 import 'package:diabetes/core/service/firebase_database_service.dart';
 import 'package:diabetes/model/pill_schedule/pill_schedule_model.dart';
 import 'package:diabetes/model/workout_model.dart';
+import 'package:diabetes/screens/app/app_cubit.dart';
 import 'package:diabetes/screens/common_widget/card_x.dart';
 import 'package:diabetes/screens/common_widget/diabetes_button.dart';
 import 'package:diabetes/screens/common_widget/shimmerx.dart';
@@ -296,6 +297,9 @@ class HomeContent extends StatelessWidget {
                                                   .then((value) {
                                                 ref.invalidate(
                                                     pillListProvider);
+                                                context
+                                                    .read<AppCubit>()
+                                                    .getAllSchedulesAndRenewScheduleNotifications();
                                               });
                                             },
                                           ),

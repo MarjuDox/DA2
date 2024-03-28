@@ -1,5 +1,6 @@
 import 'package:diabetes/core/service/firebase_database_service.dart';
 import 'package:diabetes/model/pill_schedule/pill_schedule_model.dart';
+import 'package:diabetes/screens/app/app_cubit.dart';
 import 'package:diabetes/screens/common_widget/card_x.dart';
 import 'package:diabetes/screens/common_widget/shimmerx.dart';
 import 'package:diabetes/screens/pill/modify_schedule_sheet.dart';
@@ -9,6 +10,7 @@ import 'package:diabetes/screens/sign_in/page/sign_in_page.dart';
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -58,11 +60,17 @@ class PillScheduleSection extends ConsumerWidget {
                       FirebaseDatabaseService.addUserSchedule(result)
                           .then((value) {
                         ref.invalidate(pillScheduleListProvider);
+                        context
+                            .read<AppCubit>()
+                            .getAllSchedulesAndRenewScheduleNotifications();
                       });
                     } else if (result is bool && result == true) {
                       FirebaseDatabaseService.deleteUserSchedule(item)
                           .then((value) {
                         ref.invalidate(pillScheduleListProvider);
+                        context
+                            .read<AppCubit>()
+                            .getAllSchedulesAndRenewScheduleNotifications();
                       });
                     }
                   },
